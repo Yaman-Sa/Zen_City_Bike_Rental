@@ -1,0 +1,587 @@
+customer_id,age,gender,user_type,phone,email,home_region,full_address
+C-0084,18,Female,Customer,+1-555-1528,user_0084@zencity-bikes.com,Downtown,862 Main St
+C-1400,18,Female,Customer,+1-555-5848,user_1400@zencity-bikes.com,Downtown,664 Main St
+C-0113,18,Female,Customer,+1-555-5872,user_0113@zencity-bikes.com,Downtown,436 Main St
+C-0031,18,Female,Customer,+1-555-5032,user_0031@zencity-bikes.com,Downtown,127 Main St
+C-1470,18,Female,Customer,+1-555-1144,user_1470@zencity-bikes.com,Downtown,55 Main St
+C-1264,18,Female,Customer,+1-555-2944,user_1264@zencity-bikes.com,Downtown,937 Main St
+C-0013,18,Female,Customer,+1-555-9592,user_0013@zencity-bikes.com,Downtown,124 Main St
+C-1266,18,Female,Customer,+1-555-2728,user_1266@zencity-bikes.com,Downtown,190 Main St
+C-1250,18,Female,Customer,+1-555-4624,user_1250@zencity-bikes.com,Downtown,574 Main St
+C-1251,18,Female,Customer,+1-555-6304,user_1251@zencity-bikes.com,Downtown,544 Main St
+C-1487,18,Female,Customer,+1-555-5536,user_1487@zencity-bikes.com,Downtown,469 Main St
+C-1354,18,Female,Customer,+1-555-1456,user_1354@zencity-bikes.com,Downtown,223 Main St
+C-1620,22,Female,Subscriber,+1-555-6572,user_1620@zencity-bikes.com,Downtown,524 Broadway Ave
+C-1463,22,Female,Subscriber,+1-555-7460,user_1463@zencity-bikes.com,Downtown,773 Broadway Ave
+C-1297,22,Female,Subscriber,+1-555-5564,user_1297@zencity-bikes.com,Downtown,524 Broadway Ave
+C-1547,22,Female,Subscriber,+1-555-7772,user_1547@zencity-bikes.com,Downtown,59 Broadway Ave
+C-1332,22,Female,Subscriber,+1-555-3236,user_1332@zencity-bikes.com,Downtown,536 Broadway Ave
+C-1453,22,Female,Subscriber,+1-555-7028,user_1453@zencity-bikes.com,Downtown,980 Broadway Ave
+C-0124,22,Female,Subscriber,+1-555-5060,user_0124@zencity-bikes.com,Downtown,191 Broadway Ave
+C-1589,22,Female,Subscriber,+1-555-7508,user_1589@zencity-bikes.com,Downtown,587 Broadway Ave
+C-1488,22,Female,Subscriber,+1-555-7364,user_1488@zencity-bikes.com,Downtown,479 Broadway Ave
+C-0079,22,Female,Subscriber,+1-555-3908,user_0079@zencity-bikes.com,Downtown,281 Broadway Ave
+C-0092,22,Female,Subscriber,+1-555-8612,user_0092@zencity-bikes.com,Downtown,746 Broadway Ave
+C-1510,22,Female,Subscriber,+1-555-2684,user_1510@zencity-bikes.com,Downtown,371 Broadway Ave
+C-1628,22,Female,Subscriber,+1-555-1916,user_1628@zencity-bikes.com,Downtown,62 Broadway Ave
+C-1643,22,Female,Subscriber,+1-555-6764,user_1643@zencity-bikes.com,Downtown,968 Broadway Ave
+C-1578,22,Female,Subscriber,+1-555-9596,user_1578@zencity-bikes.com,Downtown,704 Broadway Ave
+C-0047,22,Female,Subscriber,+1-555-5612,user_0047@zencity-bikes.com,Downtown,275 Broadway Ave
+C-1416,26,Female,Subscriber,+1-555-1176,user_1416@zencity-bikes.com,Downtown,600 Oak Lane
+C-1610,26,Female,Subscriber,+1-555-1968,user_1610@zencity-bikes.com,Downtown,618 Oak Lane
+C-1657,26,Female,Subscriber,+1-555-5352,user_1657@zencity-bikes.com,Downtown,168 Oak Lane
+C-1296,26,Female,Subscriber,+1-555-2352,user_1296@zencity-bikes.com,Downtown,255 Oak Lane
+C-1386,26,Female,Subscriber,+1-555-3048,user_1386@zencity-bikes.com,Downtown,852 Oak Lane
+C-1435,26,Female,Subscriber,+1-555-2400,user_1435@zencity-bikes.com,Downtown,240 Oak Lane
+C-1336,26,Female,Subscriber,+1-555-7776,user_1336@zencity-bikes.com,Downtown,459 Oak Lane
+C-1340,26,Female,Subscriber,+1-555-8784,user_1340@zencity-bikes.com,Downtown,558 Oak Lane
+C-0116,26,Female,Subscriber,+1-555-2688,user_0116@zencity-bikes.com,Downtown,150 Oak Lane
+C-0150,26,Female,Subscriber,+1-555-1320,user_0150@zencity-bikes.com,Downtown,951 Oak Lane
+C-1523,26,Female,Subscriber,+1-555-7104,user_1523@zencity-bikes.com,Downtown,822 Oak Lane
+C-0073,26,Female,Subscriber,+1-555-4608,user_0073@zencity-bikes.com,Downtown,342 Oak Lane
+C-0002,26,Female,Subscriber,+1-555-8496,user_0002@zencity-bikes.com,Downtown,36 Oak Lane
+C-0105,26,Female,Subscriber,+1-555-2256,user_0105@zencity-bikes.com,Downtown,708 Oak Lane
+C-1299,26,Female,Subscriber,+1-555-9336,user_1299@zencity-bikes.com,Downtown,768 Oak Lane
+C-1277,30,Female,Customer,+1-555-2452,user_1277@zencity-bikes.com,Downtown,526 Main St
+C-1349,30,Female,Customer,+1-555-4492,user_1349@zencity-bikes.com,Downtown,1 Main St
+C-1646,30,Female,Customer,+1-555-3580,user_1646@zencity-bikes.com,Downtown,34 Main St
+C-0085,30,Female,Customer,+1-555-1660,user_0085@zencity-bikes.com,Downtown,535 Main St
+C-0119,30,Female,Customer,+1-555-8740,user_0119@zencity-bikes.com,Downtown,505 Main St
+C-1253,30,Female,Customer,+1-555-7948,user_1253@zencity-bikes.com,Downtown,496 Main St
+C-1559,30,Female,Customer,+1-555-9412,user_1559@zencity-bikes.com,Downtown,34 Main St
+C-1298,30,Female,Customer,+1-555-1972,user_1298@zencity-bikes.com,Downtown,253 Main St
+C-0075,30,Female,Customer,+1-555-6940,user_0075@zencity-bikes.com,Downtown,352 Main St
+C-1480,30,Female,Customer,+1-555-4540,user_1480@zencity-bikes.com,Downtown,409 Main St
+C-1614,30,Female,Customer,+1-555-4084,user_1614@zencity-bikes.com,Downtown,871 Main St
+C-0062,30,Female,Customer,+1-555-1564,user_0062@zencity-bikes.com,Downtown,673 Main St
+C-0069,30,Female,Customer,+1-555-5644,user_0069@zencity-bikes.com,Downtown,937 Main St
+C-1443,30,Female,Customer,+1-555-6148,user_1443@zencity-bikes.com,Downtown,766 Main St
+C-1506,30,Female,Customer,+1-555-2188,user_1506@zencity-bikes.com,Downtown,973 Main St
+C-0042,34,Female,Subscriber,+1-555-5216,user_0042@zencity-bikes.com,Downtown,599 Broadway Ave
+C-0059,34,Female,Subscriber,+1-555-5384,user_0059@zencity-bikes.com,Downtown,848 Broadway Ave
+C-1464,34,Female,Subscriber,+1-555-2048,user_1464@zencity-bikes.com,Downtown,725 Broadway Ave
+C-0015,34,Female,Subscriber,+1-555-3824,user_0015@zencity-bikes.com,Downtown,404 Broadway Ave
+C-1419,34,Female,Subscriber,+1-555-8864,user_1419@zencity-bikes.com,Downtown,935 Broadway Ave
+C-1439,34,Female,Subscriber,+1-555-6128,user_1439@zencity-bikes.com,Downtown,251 Broadway Ave
+C-1294,34,Female,Subscriber,+1-555-3560,user_1294@zencity-bikes.com,Downtown,617 Broadway Ave
+C-1257,34,Female,Subscriber,+1-555-4832,user_1257@zencity-bikes.com,Downtown,728 Broadway Ave
+C-1268,34,Female,Subscriber,+1-555-5432,user_1268@zencity-bikes.com,Downtown,140 Broadway Ave
+C-1388,34,Female,Subscriber,+1-555-2744,user_1388@zencity-bikes.com,Downtown,908 Broadway Ave
+C-1368,34,Female,Subscriber,+1-555-5168,user_1368@zencity-bikes.com,Downtown,182 Broadway Ave
+C-1454,38,Female,Subscriber,+1-555-3876,user_1454@zencity-bikes.com,Downtown,222 Oak Lane
+C-0034,38,Female,Subscriber,+1-555-7284,user_0034@zencity-bikes.com,Downtown,723 Oak Lane
+C-1468,38,Female,Subscriber,+1-555-8220,user_1468@zencity-bikes.com,Downtown,480 Oak Lane
+C-1412,38,Female,Subscriber,+1-555-7716,user_1412@zencity-bikes.com,Downtown,165 Oak Lane
+C-1472,38,Female,Subscriber,+1-555-4716,user_1472@zencity-bikes.com,Downtown,486 Oak Lane
+C-1383,38,Female,Subscriber,+1-555-8268,user_1383@zencity-bikes.com,Downtown,105 Oak Lane
+C-1520,38,Female,Subscriber,+1-555-2724,user_1520@zencity-bikes.com,Downtown,537 Oak Lane
+C-1512,38,Female,Subscriber,+1-555-3588,user_1512@zencity-bikes.com,Downtown,78 Oak Lane
+C-1376,42,Female,Customer,+1-555-8728,user_1376@zencity-bikes.com,Downtown,340 Main St
+C-0036,42,Female,Customer,+1-555-9760,user_0036@zencity-bikes.com,Downtown,760 Main St
+C-1286,42,Female,Customer,+1-555-7576,user_1286@zencity-bikes.com,Downtown,934 Main St
+C-1613,42,Female,Customer,+1-555-5488,user_1613@zencity-bikes.com,Downtown,268 Main St
+C-1492,42,Female,Customer,+1-555-1408,user_1492@zencity-bikes.com,Downtown,661 Main St
+C-1329,42,Female,Customer,+1-555-8320,user_1329@zencity-bikes.com,Downtown,607 Main St
+C-1405,42,Female,Customer,+1-555-9232,user_1405@zencity-bikes.com,Downtown,466 Main St
+C-0089,42,Female,Customer,+1-555-7528,user_0089@zencity-bikes.com,Downtown,967 Main St
+C-1516,42,Female,Customer,+1-555-7600,user_1516@zencity-bikes.com,Downtown,976 Main St
+C-1607,42,Female,Customer,+1-555-1096,user_1607@zencity-bikes.com,Downtown,133 Main St
+C-1599,46,Female,Subscriber,+1-555-9260,user_1599@zencity-bikes.com,Downtown,773 Broadway Ave
+C-0168,46,Female,Subscriber,+1-555-6860,user_0168@zencity-bikes.com,Downtown,299 Broadway Ave
+C-1573,46,Female,Subscriber,+1-555-9068,user_1573@zencity-bikes.com,Downtown,878 Broadway Ave
+C-1450,46,Female,Subscriber,+1-555-1076,user_1450@zencity-bikes.com,Downtown,185 Broadway Ave
+C-1650,46,Female,Subscriber,+1-555-2516,user_1650@zencity-bikes.com,Downtown,788 Broadway Ave
+C-1541,46,Female,Subscriber,+1-555-5660,user_1541@zencity-bikes.com,Downtown,782 Broadway Ave
+C-1556,46,Female,Subscriber,+1-555-8132,user_1556@zencity-bikes.com,Downtown,743 Broadway Ave
+C-1558,50,Female,Subscriber,+1-555-7560,user_1558@zencity-bikes.com,Downtown,981 Oak Lane
+C-1501,50,Female,Subscriber,+1-555-4584,user_1501@zencity-bikes.com,Downtown,354 Oak Lane
+C-1345,50,Female,Subscriber,+1-555-7752,user_1345@zencity-bikes.com,Downtown,669 Oak Lane
+C-0151,50,Female,Subscriber,+1-555-8400,user_0151@zencity-bikes.com,Downtown,246 Oak Lane
+C-1371,50,Female,Subscriber,+1-555-8304,user_1371@zencity-bikes.com,Downtown,213 Oak Lane
+C-0143,50,Female,Subscriber,+1-555-6672,user_0143@zencity-bikes.com,Downtown,930 Oak Lane
+C-1544,50,Female,Subscriber,+1-555-1368,user_1544@zencity-bikes.com,Downtown,279 Oak Lane
+C-1361,50,Female,Subscriber,+1-555-5088,user_1361@zencity-bikes.com,Downtown,777 Oak Lane
+C-0127,50,Female,Subscriber,+1-555-4824,user_0127@zencity-bikes.com,Downtown,981 Oak Lane
+C-1539,50,Female,Subscriber,+1-555-8832,user_1539@zencity-bikes.com,Downtown,633 Oak Lane
+C-0020,54,Female,Customer,+1-555-8692,user_0020@zencity-bikes.com,Downtown,412 Main St
+C-1429,54,Female,Customer,+1-555-6340,user_1429@zencity-bikes.com,Downtown,148 Main St
+C-1304,54,Female,Customer,+1-555-6964,user_1304@zencity-bikes.com,Downtown,178 Main St
+C-1639,54,Female,Customer,+1-555-3700,user_1639@zencity-bikes.com,Downtown,136 Main St
+C-0049,54,Female,Customer,+1-555-1876,user_0049@zencity-bikes.com,Downtown,787 Main St
+C-1421,54,Female,Customer,+1-555-4372,user_1421@zencity-bikes.com,Downtown,799 Main St
+C-0166,54,Female,Customer,+1-555-5572,user_0166@zencity-bikes.com,Downtown,712 Main St
+C-1415,54,Female,Customer,+1-555-9364,user_1415@zencity-bikes.com,Downtown,625 Main St
+C-0109,54,Female,Customer,+1-555-6628,user_0109@zencity-bikes.com,Downtown,625 Main St
+C-1585,54,Female,Customer,+1-555-5404,user_1585@zencity-bikes.com,Downtown,139 Main St
+C-1508,58,Female,Subscriber,+1-555-8576,user_1508@zencity-bikes.com,Downtown,431 Broadway Ave
+C-1287,58,Female,Subscriber,+1-555-6656,user_1287@zencity-bikes.com,Downtown,689 Broadway Ave
+C-1574,58,Female,Subscriber,+1-555-3584,user_1574@zencity-bikes.com,Downtown,695 Broadway Ave
+C-1280,58,Female,Subscriber,+1-555-8168,user_1280@zencity-bikes.com,Downtown,311 Broadway Ave
+C-1602,58,Female,Subscriber,+1-555-6248,user_1602@zencity-bikes.com,Downtown,551 Broadway Ave
+C-1387,58,Female,Subscriber,+1-555-9128,user_1387@zencity-bikes.com,Downtown,569 Broadway Ave
+C-1303,58,Female,Subscriber,+1-555-2672,user_1303@zencity-bikes.com,Downtown,800 Broadway Ave
+C-1567,58,Female,Subscriber,+1-555-5576,user_1567@zencity-bikes.com,Downtown,518 Broadway Ave
+C-1436,58,Female,Subscriber,+1-555-9680,user_1436@zencity-bikes.com,Downtown,887 Broadway Ave
+C-1407,58,Female,Subscriber,+1-555-3560,user_1407@zencity-bikes.com,Downtown,626 Broadway Ave
+C-1385,58,Female,Subscriber,+1-555-4424,user_1385@zencity-bikes.com,Downtown,923 Broadway Ave
+C-0077,58,Female,Subscriber,+1-555-9560,user_0077@zencity-bikes.com,Downtown,137 Broadway Ave
+C-0046,58,Female,Subscriber,+1-555-7760,user_0046@zencity-bikes.com,Downtown,551 Broadway Ave
+C-1446,62,Female,Subscriber,+1-555-5076,user_1446@zencity-bikes.com,Downtown,585 Oak Lane
+C-1495,62,Female,Subscriber,+1-555-4164,user_1495@zencity-bikes.com,Downtown,987 Oak Lane
+C-1476,62,Female,Subscriber,+1-555-4716,user_1476@zencity-bikes.com,Downtown,117 Oak Lane
+C-1437,62,Female,Subscriber,+1-555-1404,user_1437@zencity-bikes.com,Downtown,693 Oak Lane
+C-1391,62,Female,Subscriber,+1-555-6516,user_1391@zencity-bikes.com,Downtown,918 Oak Lane
+C-0152,62,Female,Subscriber,+1-555-8292,user_0152@zencity-bikes.com,Downtown,165 Oak Lane
+C-1262,62,Female,Subscriber,+1-555-3468,user_1262@zencity-bikes.com,Downtown,876 Oak Lane
+C-0086,62,Female,Subscriber,+1-555-2268,user_0086@zencity-bikes.com,Downtown,693 Oak Lane
+C-1430,62,Female,Subscriber,+1-555-9300,user_1430@zencity-bikes.com,Downtown,318 Oak Lane
+C-1475,62,Female,Subscriber,+1-555-4572,user_1475@zencity-bikes.com,Downtown,234 Oak Lane
+C-1265,62,Female,Subscriber,+1-555-7620,user_1265@zencity-bikes.com,Downtown,285 Oak Lane
+C-1256,19,Male,Subscriber,+1-555-6401,user_1256@zencity-bikes.com,North Side,362 Broadway Ave
+C-1357,19,Male,Subscriber,+1-555-7865,user_1357@zencity-bikes.com,North Side,494 Broadway Ave
+C-1334,19,Male,Subscriber,+1-555-7673,user_1334@zencity-bikes.com,North Side,95 Broadway Ave
+C-0121,19,Male,Subscriber,+1-555-6929,user_0121@zencity-bikes.com,North Side,395 Broadway Ave
+C-0070,19,Male,Subscriber,+1-555-9665,user_0070@zencity-bikes.com,North Side,548 Broadway Ave
+C-1609,19,Male,Subscriber,+1-555-9329,user_1609@zencity-bikes.com,North Side,320 Broadway Ave
+C-1320,19,Male,Subscriber,+1-555-2609,user_1320@zencity-bikes.com,North Side,278 Broadway Ave
+C-1483,19,Male,Subscriber,+1-555-7625,user_1483@zencity-bikes.com,North Side,227 Broadway Ave
+C-1583,19,Male,Subscriber,+1-555-3377,user_1583@zencity-bikes.com,North Side,317 Broadway Ave
+C-1500,19,Male,Subscriber,+1-555-8441,user_1500@zencity-bikes.com,North Side,242 Broadway Ave
+C-0083,19,Male,Subscriber,+1-555-4529,user_0083@zencity-bikes.com,North Side,47 Broadway Ave
+C-1284,19,Male,Subscriber,+1-555-6185,user_1284@zencity-bikes.com,North Side,668 Broadway Ave
+C-1282,19,Male,Subscriber,+1-555-1553,user_1282@zencity-bikes.com,North Side,950 Broadway Ave
+C-1432,19,Male,Subscriber,+1-555-7217,user_1432@zencity-bikes.com,North Side,296 Broadway Ave
+C-0110,23,Male,Subscriber,+1-555-7629,user_0110@zencity-bikes.com,North Side,411 Oak Lane
+C-1337,23,Male,Subscriber,+1-555-4341,user_1337@zencity-bikes.com,North Side,318 Oak Lane
+C-1363,23,Male,Subscriber,+1-555-9501,user_1363@zencity-bikes.com,North Side,735 Oak Lane
+C-0141,23,Male,Subscriber,+1-555-3045,user_0141@zencity-bikes.com,North Side,885 Oak Lane
+C-1499,23,Male,Subscriber,+1-555-5541,user_1499@zencity-bikes.com,North Side,60 Oak Lane
+C-1359,23,Male,Subscriber,+1-555-2901,user_1359@zencity-bikes.com,North Side,237 Oak Lane
+C-0027,23,Male,Subscriber,+1-555-3261,user_0027@zencity-bikes.com,North Side,570 Oak Lane
+C-1580,23,Male,Subscriber,+1-555-6477,user_1580@zencity-bikes.com,North Side,429 Oak Lane
+C-1582,23,Male,Subscriber,+1-555-4653,user_1582@zencity-bikes.com,North Side,855 Oak Lane
+C-1323,23,Male,Subscriber,+1-555-1749,user_1323@zencity-bikes.com,North Side,624 Oak Lane
+C-1584,23,Male,Subscriber,+1-555-9621,user_1584@zencity-bikes.com,North Side,432 Oak Lane
+C-1353,23,Male,Subscriber,+1-555-3093,user_1353@zencity-bikes.com,North Side,744 Oak Lane
+C-1455,23,Male,Subscriber,+1-555-6525,user_1455@zencity-bikes.com,North Side,234 Oak Lane
+C-1410,23,Male,Subscriber,+1-555-8709,user_1410@zencity-bikes.com,North Side,285 Oak Lane
+C-0107,23,Male,Subscriber,+1-555-4413,user_0107@zencity-bikes.com,North Side,723 Oak Lane
+C-1348,23,Male,Subscriber,+1-555-6477,user_1348@zencity-bikes.com,North Side,996 Oak Lane
+C-1374,27,Male,Customer,+1-555-5425,user_1374@zencity-bikes.com,North Side,385 Main St
+C-1625,27,Male,Customer,+1-555-1321,user_1625@zencity-bikes.com,North Side,106 Main St
+C-1319,27,Male,Customer,+1-555-9865,user_1319@zencity-bikes.com,North Side,46 Main St
+C-1382,27,Male,Customer,+1-555-5857,user_1382@zencity-bikes.com,North Side,502 Main St
+C-1452,27,Male,Customer,+1-555-1393,user_1452@zencity-bikes.com,North Side,961 Main St
+C-1569,27,Male,Customer,+1-555-2281,user_1569@zencity-bikes.com,North Side,328 Main St
+C-1380,27,Male,Customer,+1-555-1129,user_1380@zencity-bikes.com,North Side,589 Main St
+C-1408,27,Male,Customer,+1-555-6025,user_1408@zencity-bikes.com,North Side,274 Main St
+C-1445,27,Male,Customer,+1-555-8425,user_1445@zencity-bikes.com,North Side,829 Main St
+C-1252,31,Male,Subscriber,+1-555-7037,user_1252@zencity-bikes.com,North Side,152 Broadway Ave
+C-0149,31,Male,Subscriber,+1-555-3389,user_0149@zencity-bikes.com,North Side,77 Broadway Ave
+C-1587,31,Male,Subscriber,+1-555-8477,user_1587@zencity-bikes.com,North Side,611 Broadway Ave
+C-0132,31,Male,Subscriber,+1-555-2045,user_0132@zencity-bikes.com,North Side,560 Broadway Ave
+C-1532,31,Male,Subscriber,+1-555-9821,user_1532@zencity-bikes.com,North Side,731 Broadway Ave
+C-1507,31,Male,Subscriber,+1-555-9269,user_1507@zencity-bikes.com,North Side,791 Broadway Ave
+C-1538,31,Male,Subscriber,+1-555-4277,user_1538@zencity-bikes.com,North Side,785 Broadway Ave
+C-0158,31,Male,Subscriber,+1-555-5693,user_0158@zencity-bikes.com,North Side,995 Broadway Ave
+C-1381,31,Male,Subscriber,+1-555-6053,user_1381@zencity-bikes.com,North Side,734 Broadway Ave
+C-1456,31,Male,Subscriber,+1-555-5909,user_1456@zencity-bikes.com,North Side,797 Broadway Ave
+C-1269,31,Male,Subscriber,+1-555-5525,user_1269@zencity-bikes.com,North Side,206 Broadway Ave
+C-1327,31,Male,Subscriber,+1-555-4949,user_1327@zencity-bikes.com,North Side,845 Broadway Ave
+C-0131,31,Male,Subscriber,+1-555-8237,user_0131@zencity-bikes.com,North Side,38 Broadway Ave
+C-0048,35,Male,Subscriber,+1-555-4641,user_0048@zencity-bikes.com,North Side,528 Oak Lane
+C-0101,35,Male,Subscriber,+1-555-6441,user_0101@zencity-bikes.com,North Side,690 Oak Lane
+C-1565,35,Male,Subscriber,+1-555-1641,user_1565@zencity-bikes.com,North Side,867 Oak Lane
+C-1330,35,Male,Subscriber,+1-555-7209,user_1330@zencity-bikes.com,North Side,540 Oak Lane
+C-0100,35,Male,Subscriber,+1-555-7233,user_0100@zencity-bikes.com,North Side,33 Oak Lane
+C-1617,35,Male,Subscriber,+1-555-5577,user_1617@zencity-bikes.com,North Side,726 Oak Lane
+C-1632,35,Male,Subscriber,+1-555-9441,user_1632@zencity-bikes.com,North Side,225 Oak Lane
+C-1469,35,Male,Subscriber,+1-555-4665,user_1469@zencity-bikes.com,North Side,390 Oak Lane
+C-1562,35,Male,Subscriber,+1-555-6537,user_1562@zencity-bikes.com,North Side,39 Oak Lane
+C-1525,35,Male,Subscriber,+1-555-3585,user_1525@zencity-bikes.com,North Side,12 Oak Lane
+C-1438,35,Male,Subscriber,+1-555-8433,user_1438@zencity-bikes.com,North Side,747 Oak Lane
+C-0028,39,Male,Customer,+1-555-9349,user_0028@zencity-bikes.com,North Side,79 Main St
+C-1652,39,Male,Customer,+1-555-9925,user_1652@zencity-bikes.com,North Side,385 Main St
+C-1514,39,Male,Customer,+1-555-4573,user_1514@zencity-bikes.com,North Side,370 Main St
+C-1551,39,Male,Customer,+1-555-4765,user_1551@zencity-bikes.com,North Side,580 Main St
+C-0167,39,Male,Customer,+1-555-1789,user_0167@zencity-bikes.com,North Side,232 Main St
+C-1328,39,Male,Customer,+1-555-9973,user_1328@zencity-bikes.com,North Side,910 Main St
+C-0165,39,Male,Customer,+1-555-5653,user_0165@zencity-bikes.com,North Side,172 Main St
+C-1622,39,Male,Customer,+1-555-4405,user_1622@zencity-bikes.com,North Side,31 Main St
+C-1518,39,Male,Customer,+1-555-7741,user_1518@zencity-bikes.com,North Side,433 Main St
+C-0051,39,Male,Customer,+1-555-4549,user_0051@zencity-bikes.com,North Side,265 Main St
+C-1630,39,Male,Customer,+1-555-8653,user_1630@zencity-bikes.com,North Side,220 Main St
+C-1355,39,Male,Customer,+1-555-8893,user_1355@zencity-bikes.com,North Side,928 Main St
+C-0056,39,Male,Customer,+1-555-1213,user_0056@zencity-bikes.com,North Side,277 Main St
+C-1271,39,Male,Customer,+1-555-8005,user_1271@zencity-bikes.com,North Side,445 Main St
+C-0140,39,Male,Customer,+1-555-3061,user_0140@zencity-bikes.com,North Side,118 Main St
+C-1593,39,Male,Customer,+1-555-4765,user_1593@zencity-bikes.com,North Side,346 Main St
+C-0045,39,Male,Customer,+1-555-7021,user_0045@zencity-bikes.com,North Side,631 Main St
+C-0117,39,Male,Customer,+1-555-6589,user_0117@zencity-bikes.com,North Side,829 Main St
+C-1570,43,Male,Subscriber,+1-555-7577,user_1570@zencity-bikes.com,North Side,908 Broadway Ave
+C-1316,43,Male,Subscriber,+1-555-6929,user_1316@zencity-bikes.com,North Side,782 Broadway Ave
+C-1563,43,Male,Subscriber,+1-555-7721,user_1563@zencity-bikes.com,North Side,296 Broadway Ave
+C-1618,43,Male,Subscriber,+1-555-7817,user_1618@zencity-bikes.com,North Side,59 Broadway Ave
+C-0099,43,Male,Subscriber,+1-555-3137,user_0099@zencity-bikes.com,North Side,401 Broadway Ave
+C-0030,43,Male,Subscriber,+1-555-6977,user_0030@zencity-bikes.com,North Side,479 Broadway Ave
+C-1648,43,Male,Subscriber,+1-555-9545,user_1648@zencity-bikes.com,North Side,662 Broadway Ave
+C-1466,43,Male,Subscriber,+1-555-2969,user_1466@zencity-bikes.com,North Side,359 Broadway Ave
+C-1312,43,Male,Subscriber,+1-555-2369,user_1312@zencity-bikes.com,North Side,560 Broadway Ave
+C-1411,43,Male,Subscriber,+1-555-1457,user_1411@zencity-bikes.com,North Side,377 Broadway Ave
+C-0147,47,Male,Subscriber,+1-555-6069,user_0147@zencity-bikes.com,North Side,849 Oak Lane
+C-0068,47,Male,Subscriber,+1-555-2925,user_0068@zencity-bikes.com,North Side,513 Oak Lane
+C-1490,47,Male,Subscriber,+1-555-4173,user_1490@zencity-bikes.com,North Side,771 Oak Lane
+C-1555,47,Male,Subscriber,+1-555-3333,user_1555@zencity-bikes.com,North Side,867 Oak Lane
+C-1301,47,Male,Subscriber,+1-555-7773,user_1301@zencity-bikes.com,North Side,924 Oak Lane
+C-1458,47,Male,Subscriber,+1-555-3045,user_1458@zencity-bikes.com,North Side,642 Oak Lane
+C-1549,47,Male,Subscriber,+1-555-1581,user_1549@zencity-bikes.com,North Side,114 Oak Lane
+C-1448,47,Male,Subscriber,+1-555-9405,user_1448@zencity-bikes.com,North Side,882 Oak Lane
+C-1344,47,Male,Subscriber,+1-555-3309,user_1344@zencity-bikes.com,North Side,753 Oak Lane
+C-1373,47,Male,Subscriber,+1-555-4101,user_1373@zencity-bikes.com,North Side,78 Oak Lane
+C-1426,47,Male,Subscriber,+1-555-2541,user_1426@zencity-bikes.com,North Side,948 Oak Lane
+C-0163,51,Male,Customer,+1-555-4129,user_0163@zencity-bikes.com,North Side,898 Main St
+C-1533,51,Male,Customer,+1-555-8809,user_1533@zencity-bikes.com,North Side,340 Main St
+C-1338,51,Male,Customer,+1-555-8353,user_1338@zencity-bikes.com,North Side,577 Main St
+C-0006,51,Male,Customer,+1-555-6817,user_0006@zencity-bikes.com,North Side,463 Main St
+C-1433,51,Male,Customer,+1-555-5281,user_1433@zencity-bikes.com,North Side,574 Main St
+C-0114,55,Male,Subscriber,+1-555-8069,user_0114@zencity-bikes.com,North Side,689 Broadway Ave
+C-1270,55,Male,Subscriber,+1-555-9269,user_1270@zencity-bikes.com,North Side,242 Broadway Ave
+C-1390,55,Male,Subscriber,+1-555-8453,user_1390@zencity-bikes.com,North Side,983 Broadway Ave
+C-1504,55,Male,Subscriber,+1-555-2069,user_1504@zencity-bikes.com,North Side,692 Broadway Ave
+C-1489,55,Male,Subscriber,+1-555-4253,user_1489@zencity-bikes.com,North Side,824 Broadway Ave
+C-1462,55,Male,Subscriber,+1-555-2069,user_1462@zencity-bikes.com,North Side,953 Broadway Ave
+C-1543,55,Male,Subscriber,+1-555-7709,user_1543@zencity-bikes.com,North Side,122 Broadway Ave
+C-1634,55,Male,Subscriber,+1-555-3485,user_1634@zencity-bikes.com,North Side,596 Broadway Ave
+C-1441,55,Male,Subscriber,+1-555-3749,user_1441@zencity-bikes.com,North Side,932 Broadway Ave
+C-1503,55,Male,Subscriber,+1-555-6773,user_1503@zencity-bikes.com,North Side,995 Broadway Ave
+C-0021,55,Male,Subscriber,+1-555-7685,user_0021@zencity-bikes.com,North Side,377 Broadway Ave
+C-1566,55,Male,Subscriber,+1-555-4253,user_1566@zencity-bikes.com,North Side,95 Broadway Ave
+C-1461,55,Male,Subscriber,+1-555-5285,user_1461@zencity-bikes.com,North Side,686 Broadway Ave
+C-0061,55,Male,Subscriber,+1-555-4757,user_0061@zencity-bikes.com,North Side,221 Broadway Ave
+C-1655,55,Male,Subscriber,+1-555-8189,user_1655@zencity-bikes.com,North Side,134 Broadway Ave
+C-0018,55,Male,Subscriber,+1-555-5789,user_0018@zencity-bikes.com,North Side,164 Broadway Ave
+C-1260,55,Male,Subscriber,+1-555-2405,user_1260@zencity-bikes.com,North Side,308 Broadway Ave
+C-1295,59,Male,Subscriber,+1-555-1017,user_1295@zencity-bikes.com,North Side,180 Oak Lane
+C-1529,59,Male,Subscriber,+1-555-9273,user_1529@zencity-bikes.com,North Side,165 Oak Lane
+C-1473,59,Male,Subscriber,+1-555-1449,user_1473@zencity-bikes.com,North Side,594 Oak Lane
+C-1346,59,Male,Subscriber,+1-555-4089,user_1346@zencity-bikes.com,North Side,705 Oak Lane
+C-1515,59,Male,Subscriber,+1-555-2217,user_1515@zencity-bikes.com,North Side,921 Oak Lane
+C-1350,59,Male,Subscriber,+1-555-2049,user_1350@zencity-bikes.com,North Side,753 Oak Lane
+C-0123,59,Male,Subscriber,+1-555-1281,user_0123@zencity-bikes.com,North Side,273 Oak Lane
+C-1397,59,Male,Subscriber,+1-555-3057,user_1397@zencity-bikes.com,North Side,663 Oak Lane
+C-1536,59,Male,Subscriber,+1-555-3753,user_1536@zencity-bikes.com,North Side,918 Oak Lane
+C-1534,59,Male,Subscriber,+1-555-7809,user_1534@zencity-bikes.com,North Side,42 Oak Lane
+C-1369,59,Male,Subscriber,+1-555-6681,user_1369@zencity-bikes.com,North Side,714 Oak Lane
+C-0023,63,Male,Customer,+1-555-3277,user_0023@zencity-bikes.com,North Side,451 Main St
+C-1575,63,Male,Customer,+1-555-8605,user_1575@zencity-bikes.com,North Side,325 Main St
+C-1378,63,Male,Customer,+1-555-9421,user_1378@zencity-bikes.com,North Side,250 Main St
+C-1494,63,Male,Customer,+1-555-9493,user_1494@zencity-bikes.com,North Side,511 Main St
+C-0146,63,Male,Customer,+1-555-5461,user_0146@zencity-bikes.com,North Side,997 Main St
+C-1406,63,Male,Customer,+1-555-8389,user_1406@zencity-bikes.com,North Side,37 Main St
+C-0029,63,Male,Customer,+1-555-8197,user_0029@zencity-bikes.com,North Side,844 Main St
+C-1261,63,Male,Customer,+1-555-4237,user_1261@zencity-bikes.com,North Side,763 Main St
+C-0010,63,Male,Customer,+1-555-8221,user_0010@zencity-bikes.com,North Side,697 Main St
+C-1424,63,Male,Customer,+1-555-1549,user_1424@zencity-bikes.com,North Side,964 Main St
+C-1243,63,Male,Customer,+1-555-8077,user_1243@zencity-bikes.com,North Side,823 Main St
+C-0026,63,Male,Customer,+1-555-8389,user_0026@zencity-bikes.com,North Side,703 Main St
+C-1417,63,Male,Customer,+1-555-5437,user_1417@zencity-bikes.com,North Side,235 Main St
+C-0094,63,Male,Customer,+1-555-2053,user_0094@zencity-bikes.com,North Side,1 Main St
+C-1351,63,Male,Customer,+1-555-8917,user_1351@zencity-bikes.com,North Side,70 Main St
+C-0104,21,Male,Customer,+1-555-9379,user_0104@zencity-bikes.com,South Suburbs,766 Main St
+C-1594,21,Male,Customer,+1-555-8203,user_1594@zencity-bikes.com,South Suburbs,499 Main St
+C-1308,21,Male,Customer,+1-555-6355,user_1308@zencity-bikes.com,South Suburbs,883 Main St
+C-0102,21,Male,Customer,+1-555-4123,user_0102@zencity-bikes.com,South Suburbs,298 Main St
+C-1263,21,Male,Customer,+1-555-2515,user_1263@zencity-bikes.com,South Suburbs,643 Main St
+C-0033,21,Male,Customer,+1-555-1603,user_0033@zencity-bikes.com,South Suburbs,46 Main St
+C-0161,21,Male,Customer,+1-555-5323,user_0161@zencity-bikes.com,South Suburbs,391 Main St
+C-0041,21,Male,Customer,+1-555-3403,user_0041@zencity-bikes.com,South Suburbs,793 Main St
+C-0081,21,Male,Customer,+1-555-4003,user_0081@zencity-bikes.com,South Suburbs,619 Main St
+C-1249,21,Male,Customer,+1-555-2155,user_1249@zencity-bikes.com,South Suburbs,391 Main St
+C-1638,21,Male,Customer,+1-555-1963,user_1638@zencity-bikes.com,South Suburbs,847 Main St
+C-1326,21,Male,Customer,+1-555-5011,user_1326@zencity-bikes.com,South Suburbs,394 Main St
+C-1459,21,Male,Customer,+1-555-9907,user_1459@zencity-bikes.com,South Suburbs,745 Main St
+C-1315,25,Male,Subscriber,+1-555-1559,user_1315@zencity-bikes.com,South Suburbs,182 Broadway Ave
+C-0144,25,Male,Subscriber,+1-555-5783,user_0144@zencity-bikes.com,South Suburbs,833 Broadway Ave
+C-1401,25,Male,Subscriber,+1-555-7103,user_1401@zencity-bikes.com,South Suburbs,56 Broadway Ave
+C-1447,25,Male,Subscriber,+1-555-5783,user_1447@zencity-bikes.com,South Suburbs,68 Broadway Ave
+C-1305,25,Male,Subscriber,+1-555-8567,user_1305@zencity-bikes.com,South Suburbs,287 Broadway Ave
+C-1366,25,Male,Subscriber,+1-555-8207,user_1366@zencity-bikes.com,South Suburbs,665 Broadway Ave
+C-0011,29,Male,Subscriber,+1-555-3507,user_0011@zencity-bikes.com,South Suburbs,33 Oak Lane
+C-1601,29,Male,Subscriber,+1-555-7371,user_1601@zencity-bikes.com,South Suburbs,531 Oak Lane
+C-1649,29,Male,Subscriber,+1-555-4779,user_1649@zencity-bikes.com,South Suburbs,189 Oak Lane
+C-1656,29,Male,Subscriber,+1-555-6363,user_1656@zencity-bikes.com,South Suburbs,666 Oak Lane
+C-1460,29,Male,Subscriber,+1-555-5187,user_1460@zencity-bikes.com,South Suburbs,129 Oak Lane
+C-1588,29,Male,Subscriber,+1-555-9579,user_1588@zencity-bikes.com,South Suburbs,309 Oak Lane
+C-0038,29,Male,Subscriber,+1-555-6435,user_0038@zencity-bikes.com,South Suburbs,963 Oak Lane
+C-1360,29,Male,Subscriber,+1-555-6651,user_1360@zencity-bikes.com,South Suburbs,990 Oak Lane
+C-0024,29,Male,Subscriber,+1-555-4371,user_0024@zencity-bikes.com,South Suburbs,807 Oak Lane
+C-1484,29,Male,Subscriber,+1-555-7299,user_1484@zencity-bikes.com,South Suburbs,27 Oak Lane
+C-0139,29,Male,Subscriber,+1-555-4563,user_0139@zencity-bikes.com,South Suburbs,837 Oak Lane
+C-1642,29,Male,Subscriber,+1-555-3051,user_1642@zencity-bikes.com,South Suburbs,459 Oak Lane
+C-1420,29,Male,Subscriber,+1-555-9843,user_1420@zencity-bikes.com,South Suburbs,762 Oak Lane
+C-1273,33,Male,Customer,+1-555-6199,user_1273@zencity-bikes.com,South Suburbs,133 Main St
+C-1343,33,Male,Customer,+1-555-2671,user_1343@zencity-bikes.com,South Suburbs,637 Main St
+C-1560,33,Male,Customer,+1-555-3775,user_1560@zencity-bikes.com,South Suburbs,769 Main St
+C-1402,33,Male,Customer,+1-555-9463,user_1402@zencity-bikes.com,South Suburbs,544 Main St
+C-0055,33,Male,Customer,+1-555-9559,user_0055@zencity-bikes.com,South Suburbs,730 Main St
+C-0133,33,Male,Customer,+1-555-7759,user_0133@zencity-bikes.com,South Suburbs,469 Main St
+C-1267,33,Male,Customer,+1-555-2983,user_1267@zencity-bikes.com,South Suburbs,130 Main St
+C-0136,33,Male,Customer,+1-555-7567,user_0136@zencity-bikes.com,South Suburbs,628 Main St
+C-0098,33,Male,Customer,+1-555-8167,user_0098@zencity-bikes.com,South Suburbs,364 Main St
+C-1590,33,Male,Customer,+1-555-9943,user_1590@zencity-bikes.com,South Suburbs,664 Main St
+C-0148,33,Male,Customer,+1-555-7663,user_0148@zencity-bikes.com,South Suburbs,841 Main St
+C-1283,33,Male,Customer,+1-555-1999,user_1283@zencity-bikes.com,South Suburbs,667 Main St
+C-1375,33,Male,Customer,+1-555-3535,user_1375@zencity-bikes.com,South Suburbs,970 Main St
+C-1527,33,Male,Customer,+1-555-7903,user_1527@zencity-bikes.com,South Suburbs,631 Main St
+C-1365,33,Male,Customer,+1-555-4015,user_1365@zencity-bikes.com,South Suburbs,982 Main St
+C-0159,37,Male,Subscriber,+1-555-5579,user_0159@zencity-bikes.com,South Suburbs,359 Broadway Ave
+C-1347,37,Male,Subscriber,+1-555-7475,user_1347@zencity-bikes.com,South Suburbs,437 Broadway Ave
+C-1313,37,Male,Subscriber,+1-555-6851,user_1313@zencity-bikes.com,South Suburbs,794 Broadway Ave
+C-1524,37,Male,Subscriber,+1-555-6971,user_1524@zencity-bikes.com,South Suburbs,797 Broadway Ave
+C-0160,37,Male,Subscriber,+1-555-5747,user_0160@zencity-bikes.com,South Suburbs,950 Broadway Ave
+C-1595,37,Male,Subscriber,+1-555-9803,user_1595@zencity-bikes.com,South Suburbs,20 Broadway Ave
+C-1576,37,Male,Subscriber,+1-555-3827,user_1576@zencity-bikes.com,South Suburbs,974 Broadway Ave
+C-0017,37,Male,Subscriber,+1-555-1163,user_0017@zencity-bikes.com,South Suburbs,38 Broadway Ave
+C-1333,37,Male,Subscriber,+1-555-6395,user_1333@zencity-bikes.com,South Suburbs,482 Broadway Ave
+C-1427,37,Male,Subscriber,+1-555-4379,user_1427@zencity-bikes.com,South Suburbs,392 Broadway Ave
+C-0115,41,Male,Subscriber,+1-555-9087,user_0115@zencity-bikes.com,South Suburbs,438 Oak Lane
+C-0129,41,Male,Subscriber,+1-555-2247,user_0129@zencity-bikes.com,South Suburbs,60 Oak Lane
+C-1465,41,Male,Subscriber,+1-555-9135,user_1465@zencity-bikes.com,South Suburbs,351 Oak Lane
+C-1425,41,Male,Subscriber,+1-555-9903,user_1425@zencity-bikes.com,South Suburbs,444 Oak Lane
+C-0065,41,Male,Subscriber,+1-555-7599,user_0065@zencity-bikes.com,South Suburbs,921 Oak Lane
+C-1362,41,Male,Subscriber,+1-555-5079,user_1362@zencity-bikes.com,South Suburbs,885 Oak Lane
+C-0097,41,Male,Subscriber,+1-555-9807,user_0097@zencity-bikes.com,South Suburbs,771 Oak Lane
+C-0040,41,Male,Subscriber,+1-555-6495,user_0040@zencity-bikes.com,South Suburbs,78 Oak Lane
+C-1377,41,Male,Subscriber,+1-555-6975,user_1377@zencity-bikes.com,South Suburbs,171 Oak Lane
+C-1413,41,Male,Subscriber,+1-555-2727,user_1413@zencity-bikes.com,South Suburbs,540 Oak Lane
+C-1550,41,Male,Subscriber,+1-555-3735,user_1550@zencity-bikes.com,South Suburbs,243 Oak Lane
+C-0080,45,Male,Customer,+1-555-2803,user_0080@zencity-bikes.com,South Suburbs,355 Main St
+C-0067,45,Male,Customer,+1-555-4075,user_0067@zencity-bikes.com,South Suburbs,133 Main St
+C-1591,45,Male,Customer,+1-555-7963,user_1591@zencity-bikes.com,South Suburbs,331 Main St
+C-1530,45,Male,Customer,+1-555-4219,user_1530@zencity-bikes.com,South Suburbs,556 Main St
+C-1478,45,Male,Customer,+1-555-4843,user_1478@zencity-bikes.com,South Suburbs,145 Main St
+C-1290,45,Male,Customer,+1-555-4411,user_1290@zencity-bikes.com,South Suburbs,469 Main St
+C-0145,45,Male,Customer,+1-555-8803,user_0145@zencity-bikes.com,South Suburbs,685 Main St
+C-1479,45,Male,Customer,+1-555-4507,user_1479@zencity-bikes.com,South Suburbs,304 Main St
+C-1577,45,Male,Customer,+1-555-9523,user_1577@zencity-bikes.com,South Suburbs,172 Main St
+C-1258,45,Male,Customer,+1-555-5179,user_1258@zencity-bikes.com,South Suburbs,670 Main St
+C-0063,49,Male,Subscriber,+1-555-6911,user_0063@zencity-bikes.com,South Suburbs,89 Broadway Ave
+C-0170,49,Male,Subscriber,+1-555-3503,user_0170@zencity-bikes.com,South Suburbs,965 Broadway Ave
+C-0001,49,Male,Subscriber,+1-555-5519,user_0001@zencity-bikes.com,South Suburbs,785 Broadway Ave
+C-1254,49,Male,Subscriber,+1-555-9383,user_1254@zencity-bikes.com,South Suburbs,14 Broadway Ave
+C-0035,49,Male,Subscriber,+1-555-2615,user_0035@zencity-bikes.com,South Suburbs,734 Broadway Ave
+C-1379,49,Male,Subscriber,+1-555-5591,user_1379@zencity-bikes.com,South Suburbs,173 Broadway Ave
+C-1288,49,Male,Subscriber,+1-555-3311,user_1288@zencity-bikes.com,South Suburbs,17 Broadway Ave
+C-1561,49,Male,Subscriber,+1-555-6575,user_1561@zencity-bikes.com,South Suburbs,527 Broadway Ave
+C-1311,49,Male,Subscriber,+1-555-7391,user_1311@zencity-bikes.com,South Suburbs,515 Broadway Ave
+C-1342,49,Male,Subscriber,+1-555-4607,user_1342@zencity-bikes.com,South Suburbs,827 Broadway Ave
+C-0112,49,Male,Subscriber,+1-555-7511,user_0112@zencity-bikes.com,South Suburbs,743 Broadway Ave
+C-0037,53,Male,Subscriber,+1-555-6723,user_0037@zencity-bikes.com,South Suburbs,603 Oak Lane
+C-1606,53,Male,Subscriber,+1-555-3267,user_1606@zencity-bikes.com,South Suburbs,846 Oak Lane
+C-1451,53,Male,Subscriber,+1-555-8547,user_1451@zencity-bikes.com,South Suburbs,573 Oak Lane
+C-0162,53,Male,Subscriber,+1-555-5475,user_0162@zencity-bikes.com,South Suburbs,453 Oak Lane
+C-0125,53,Male,Subscriber,+1-555-2091,user_0125@zencity-bikes.com,South Suburbs,939 Oak Lane
+C-1502,53,Male,Subscriber,+1-555-1443,user_1502@zencity-bikes.com,South Suburbs,462 Oak Lane
+C-0076,53,Male,Subscriber,+1-555-2475,user_0076@zencity-bikes.com,South Suburbs,171 Oak Lane
+C-0130,53,Male,Subscriber,+1-555-8163,user_0130@zencity-bikes.com,South Suburbs,612 Oak Lane
+C-1493,53,Male,Subscriber,+1-555-2163,user_1493@zencity-bikes.com,South Suburbs,363 Oak Lane
+C-1519,53,Male,Subscriber,+1-555-4803,user_1519@zencity-bikes.com,South Suburbs,96 Oak Lane
+C-1557,53,Male,Subscriber,+1-555-9507,user_1557@zencity-bikes.com,South Suburbs,336 Oak Lane
+C-1477,53,Male,Subscriber,+1-555-6699,user_1477@zencity-bikes.com,South Suburbs,660 Oak Lane
+C-1592,53,Male,Subscriber,+1-555-1083,user_1592@zencity-bikes.com,South Suburbs,30 Oak Lane
+C-1422,53,Male,Subscriber,+1-555-3099,user_1422@zencity-bikes.com,South Suburbs,291 Oak Lane
+C-1568,57,Male,Customer,+1-555-2191,user_1568@zencity-bikes.com,South Suburbs,220 Main St
+C-1579,57,Male,Customer,+1-555-6247,user_1579@zencity-bikes.com,South Suburbs,712 Main St
+C-1603,57,Male,Customer,+1-555-1519,user_1603@zencity-bikes.com,South Suburbs,394 Main St
+C-1517,57,Male,Customer,+1-555-6799,user_1517@zencity-bikes.com,South Suburbs,625 Main St
+C-1526,57,Male,Customer,+1-555-7495,user_1526@zencity-bikes.com,South Suburbs,601 Main St
+C-0043,57,Male,Customer,+1-555-2071,user_0043@zencity-bikes.com,South Suburbs,487 Main St
+C-1423,57,Male,Customer,+1-555-5167,user_1423@zencity-bikes.com,South Suburbs,118 Main St
+C-1600,57,Male,Customer,+1-555-3343,user_1600@zencity-bikes.com,South Suburbs,481 Main St
+C-1384,57,Male,Customer,+1-555-2743,user_1384@zencity-bikes.com,South Suburbs,745 Main St
+C-0082,57,Male,Customer,+1-555-2935,user_0082@zencity-bikes.com,South Suburbs,289 Main St
+C-0137,57,Male,Customer,+1-555-2695,user_0137@zencity-bikes.com,South Suburbs,130 Main St
+C-1482,57,Male,Customer,+1-555-5431,user_1482@zencity-bikes.com,South Suburbs,283 Main St
+C-1434,57,Male,Customer,+1-555-3247,user_1434@zencity-bikes.com,South Suburbs,529 Main St
+C-1372,57,Male,Customer,+1-555-3799,user_1372@zencity-bikes.com,South Suburbs,613 Main St
+C-1314,57,Male,Customer,+1-555-4543,user_1314@zencity-bikes.com,South Suburbs,961 Main St
+C-1409,57,Male,Customer,+1-555-3895,user_1409@zencity-bikes.com,South Suburbs,943 Main St
+C-0054,57,Male,Customer,+1-555-4255,user_0054@zencity-bikes.com,South Suburbs,7 Main St
+C-1259,57,Male,Customer,+1-555-9775,user_1259@zencity-bikes.com,South Suburbs,802 Main St
+C-1605,61,Male,Subscriber,+1-555-8171,user_1605@zencity-bikes.com,South Suburbs,692 Broadway Ave
+C-0095,61,Male,Subscriber,+1-555-3011,user_0095@zencity-bikes.com,South Suburbs,941 Broadway Ave
+C-1581,61,Male,Subscriber,+1-555-7787,user_1581@zencity-bikes.com,South Suburbs,740 Broadway Ave
+C-0025,61,Male,Subscriber,+1-555-3011,user_0025@zencity-bikes.com,South Suburbs,158 Broadway Ave
+C-0122,61,Male,Subscriber,+1-555-2915,user_0122@zencity-bikes.com,South Suburbs,935 Broadway Ave
+C-1418,61,Male,Subscriber,+1-555-5675,user_1418@zencity-bikes.com,South Suburbs,536 Broadway Ave
+C-0066,61,Male,Subscriber,+1-555-2723,user_0066@zencity-bikes.com,South Suburbs,941 Broadway Ave
+C-0016,61,Male,Subscriber,+1-555-6635,user_0016@zencity-bikes.com,South Suburbs,956 Broadway Ave
+C-1631,61,Male,Subscriber,+1-555-3203,user_1631@zencity-bikes.com,South Suburbs,989 Broadway Ave
+C-1548,65,Male,Subscriber,+1-555-4983,user_1548@zencity-bikes.com,South Suburbs,951 Oak Lane
+C-0153,65,Male,Subscriber,+1-555-4743,user_0153@zencity-bikes.com,South Suburbs,774 Oak Lane
+C-1307,65,Male,Subscriber,+1-555-8415,user_1307@zencity-bikes.com,South Suburbs,756 Oak Lane
+C-0057,65,Male,Subscriber,+1-555-9999,user_0057@zencity-bikes.com,South Suburbs,774 Oak Lane
+C-1276,65,Male,Subscriber,+1-555-2967,user_1276@zencity-bikes.com,South Suburbs,762 Oak Lane
+C-1635,65,Male,Subscriber,+1-555-2991,user_1635@zencity-bikes.com,South Suburbs,831 Oak Lane
+C-1597,65,Male,Subscriber,+1-555-2343,user_1597@zencity-bikes.com,South Suburbs,147 Oak Lane
+C-1522,65,Male,Subscriber,+1-555-6207,user_1522@zencity-bikes.com,South Suburbs,96 Oak Lane
+C-1542,65,Male,Subscriber,+1-555-8007,user_1542@zencity-bikes.com,South Suburbs,474 Oak Lane
+C-1552,65,Male,Subscriber,+1-555-9447,user_1552@zencity-bikes.com,South Suburbs,420 Oak Lane
+C-1651,20,Female,Subscriber,+1-555-7770,user_1651@zencity-bikes.com,West End,732 Oak Lane
+C-1498,20,Female,Subscriber,+1-555-3594,user_1498@zencity-bikes.com,West End,309 Oak Lane
+C-0032,20,Female,Subscriber,+1-555-2178,user_0032@zencity-bikes.com,West End,252 Oak Lane
+C-0134,20,Female,Subscriber,+1-555-1818,user_0134@zencity-bikes.com,West End,378 Oak Lane
+C-1403,20,Female,Subscriber,+1-555-8106,user_1403@zencity-bikes.com,West End,906 Oak Lane
+C-1325,20,Female,Subscriber,+1-555-3762,user_1325@zencity-bikes.com,West End,189 Oak Lane
+C-1364,20,Female,Subscriber,+1-555-4458,user_1364@zencity-bikes.com,West End,822 Oak Lane
+C-1553,20,Female,Subscriber,+1-555-8130,user_1553@zencity-bikes.com,West End,633 Oak Lane
+C-0064,24,Female,Customer,+1-555-8302,user_0064@zencity-bikes.com,West End,976 Main St
+C-1509,24,Female,Customer,+1-555-7582,user_1509@zencity-bikes.com,West End,778 Main St
+C-1619,24,Female,Customer,+1-555-5902,user_1619@zencity-bikes.com,West End,223 Main St
+C-0108,24,Female,Customer,+1-555-5446,user_0108@zencity-bikes.com,West End,910 Main St
+C-1289,24,Female,Customer,+1-555-2686,user_1289@zencity-bikes.com,West End,994 Main St
+C-1396,24,Female,Customer,+1-555-4390,user_1396@zencity-bikes.com,West End,295 Main St
+C-1275,24,Female,Customer,+1-555-7558,user_1275@zencity-bikes.com,West End,934 Main St
+C-1293,24,Female,Customer,+1-555-9214,user_1293@zencity-bikes.com,West End,349 Main St
+C-1281,24,Female,Customer,+1-555-5278,user_1281@zencity-bikes.com,West End,355 Main St
+C-1246,24,Female,Customer,+1-555-1630,user_1246@zencity-bikes.com,West End,892 Main St
+C-1370,24,Female,Customer,+1-555-2182,user_1370@zencity-bikes.com,West End,571 Main St
+C-1389,24,Female,Customer,+1-555-5182,user_1389@zencity-bikes.com,West End,583 Main St
+C-0096,28,Female,Subscriber,+1-555-7298,user_0096@zencity-bikes.com,West End,845 Broadway Ave
+C-0088,28,Female,Subscriber,+1-555-8258,user_0088@zencity-bikes.com,West End,203 Broadway Ave
+C-1535,28,Female,Subscriber,+1-555-6026,user_1535@zencity-bikes.com,West End,473 Broadway Ave
+C-1546,28,Female,Subscriber,+1-555-8018,user_1546@zencity-bikes.com,West End,899 Broadway Ave
+C-0044,28,Female,Subscriber,+1-555-7466,user_0044@zencity-bikes.com,West End,77 Broadway Ave
+C-1444,28,Female,Subscriber,+1-555-8066,user_1444@zencity-bikes.com,West End,884 Broadway Ave
+C-1393,28,Female,Subscriber,+1-555-1874,user_1393@zencity-bikes.com,West End,443 Broadway Ave
+C-1467,28,Female,Subscriber,+1-555-6770,user_1467@zencity-bikes.com,West End,884 Broadway Ave
+C-0058,28,Female,Subscriber,+1-555-7394,user_0058@zencity-bikes.com,West End,158 Broadway Ave
+C-0005,28,Female,Subscriber,+1-555-3650,user_0005@zencity-bikes.com,West End,599 Broadway Ave
+C-1335,28,Female,Subscriber,+1-555-8930,user_1335@zencity-bikes.com,West End,20 Broadway Ave
+C-1440,28,Female,Subscriber,+1-555-9362,user_1440@zencity-bikes.com,West End,272 Broadway Ave
+C-1537,28,Female,Subscriber,+1-555-9650,user_1537@zencity-bikes.com,West End,65 Broadway Ave
+C-0154,28,Female,Subscriber,+1-555-8474,user_0154@zencity-bikes.com,West End,113 Broadway Ave
+C-1633,28,Female,Subscriber,+1-555-8354,user_1633@zencity-bikes.com,West End,695 Broadway Ave
+C-1414,28,Female,Subscriber,+1-555-9506,user_1414@zencity-bikes.com,West End,650 Broadway Ave
+C-0156,28,Female,Subscriber,+1-555-5522,user_0156@zencity-bikes.com,West End,968 Broadway Ave
+C-1449,28,Female,Subscriber,+1-555-6890,user_1449@zencity-bikes.com,West End,230 Broadway Ave
+C-1274,28,Female,Subscriber,+1-555-7010,user_1274@zencity-bikes.com,West End,449 Broadway Ave
+C-0091,28,Female,Subscriber,+1-555-7730,user_0091@zencity-bikes.com,West End,26 Broadway Ave
+C-1292,32,Female,Subscriber,+1-555-9222,user_1292@zencity-bikes.com,West End,222 Oak Lane
+C-1306,32,Female,Subscriber,+1-555-4686,user_1306@zencity-bikes.com,West End,492 Oak Lane
+C-1545,32,Female,Subscriber,+1-555-6534,user_1545@zencity-bikes.com,West End,126 Oak Lane
+C-1331,32,Female,Subscriber,+1-555-2262,user_1331@zencity-bikes.com,West End,102 Oak Lane
+C-1302,32,Female,Subscriber,+1-555-4590,user_1302@zencity-bikes.com,West End,990 Oak Lane
+C-1358,32,Female,Subscriber,+1-555-2838,user_1358@zencity-bikes.com,West End,390 Oak Lane
+C-1481,32,Female,Subscriber,+1-555-6102,user_1481@zencity-bikes.com,West End,450 Oak Lane
+C-1318,32,Female,Subscriber,+1-555-2502,user_1318@zencity-bikes.com,West End,846 Oak Lane
+C-1647,32,Female,Subscriber,+1-555-1038,user_1647@zencity-bikes.com,West End,183 Oak Lane
+C-1572,32,Female,Subscriber,+1-555-8214,user_1572@zencity-bikes.com,West End,744 Oak Lane
+C-1367,32,Female,Subscriber,+1-555-8694,user_1367@zencity-bikes.com,West End,801 Oak Lane
+C-1324,32,Female,Subscriber,+1-555-8190,user_1324@zencity-bikes.com,West End,684 Oak Lane
+C-1528,32,Female,Subscriber,+1-555-5814,user_1528@zencity-bikes.com,West End,405 Oak Lane
+C-0106,36,Female,Customer,+1-555-7858,user_0106@zencity-bikes.com,West End,640 Main St
+C-0071,36,Female,Customer,+1-555-6826,user_0071@zencity-bikes.com,West End,148 Main St
+C-1505,36,Female,Customer,+1-555-3970,user_1505@zencity-bikes.com,West End,487 Main St
+C-1392,36,Female,Customer,+1-555-7570,user_1392@zencity-bikes.com,West End,271 Main St
+C-1611,36,Female,Customer,+1-555-3082,user_1611@zencity-bikes.com,West End,355 Main St
+C-1317,36,Female,Customer,+1-555-1546,user_1317@zencity-bikes.com,West End,358 Main St
+C-1339,36,Female,Customer,+1-555-2218,user_1339@zencity-bikes.com,West End,742 Main St
+C-1457,36,Female,Customer,+1-555-8218,user_1457@zencity-bikes.com,West End,343 Main St
+C-1511,36,Female,Customer,+1-555-5170,user_1511@zencity-bikes.com,West End,229 Main St
+C-0074,36,Female,Customer,+1-555-8314,user_0074@zencity-bikes.com,West End,556 Main St
+C-1653,36,Female,Customer,+1-555-1618,user_1653@zencity-bikes.com,West End,475 Main St
+C-1279,36,Female,Customer,+1-555-8170,user_1279@zencity-bikes.com,West End,529 Main St
+C-1322,36,Female,Customer,+1-555-5626,user_1322@zencity-bikes.com,West End,280 Main St
+C-1636,36,Female,Customer,+1-555-3418,user_1636@zencity-bikes.com,West End,484 Main St
+C-1442,40,Female,Subscriber,+1-555-2222,user_1442@zencity-bikes.com,West End,134 Broadway Ave
+C-1571,40,Female,Subscriber,+1-555-7382,user_1571@zencity-bikes.com,West End,200 Broadway Ave
+C-0128,40,Female,Subscriber,+1-555-3926,user_0128@zencity-bikes.com,West End,920 Broadway Ave
+C-1248,40,Female,Subscriber,+1-555-6926,user_1248@zencity-bikes.com,West End,365 Broadway Ave
+C-0142,40,Female,Subscriber,+1-555-9422,user_0142@zencity-bikes.com,West End,413 Broadway Ave
+C-0138,40,Female,Subscriber,+1-555-3518,user_0138@zencity-bikes.com,West End,530 Broadway Ave
+C-0118,40,Female,Subscriber,+1-555-7526,user_0118@zencity-bikes.com,West End,848 Broadway Ave
+C-1278,40,Female,Subscriber,+1-555-3542,user_1278@zencity-bikes.com,West End,905 Broadway Ave
+C-1247,40,Female,Subscriber,+1-555-7190,user_1247@zencity-bikes.com,West End,647 Broadway Ave
+C-1554,40,Female,Subscriber,+1-555-6590,user_1554@zencity-bikes.com,West End,758 Broadway Ave
+C-0004,40,Female,Subscriber,+1-555-2414,user_0004@zencity-bikes.com,West End,947 Broadway Ave
+C-1564,40,Female,Subscriber,+1-555-9326,user_1564@zencity-bikes.com,West End,236 Broadway Ave
+C-0090,40,Female,Subscriber,+1-555-5174,user_0090@zencity-bikes.com,West End,278 Broadway Ave
+C-0009,40,Female,Subscriber,+1-555-5990,user_0009@zencity-bikes.com,West End,851 Broadway Ave
+C-1491,40,Female,Subscriber,+1-555-7430,user_1491@zencity-bikes.com,West End,824 Broadway Ave
+C-1255,40,Female,Subscriber,+1-555-8870,user_1255@zencity-bikes.com,West End,5 Broadway Ave
+C-1658,40,Female,Subscriber,+1-555-8126,user_1658@zencity-bikes.com,West End,665 Broadway Ave
+C-0072,40,Female,Subscriber,+1-555-2270,user_0072@zencity-bikes.com,West End,713 Broadway Ave
+C-1285,40,Female,Subscriber,+1-555-9014,user_1285@zencity-bikes.com,West End,932 Broadway Ave
+C-0078,40,Female,Subscriber,+1-555-4862,user_0078@zencity-bikes.com,West End,11 Broadway Ave
+C-1513,40,Female,Subscriber,+1-555-5198,user_1513@zencity-bikes.com,West End,995 Broadway Ave
+C-1486,44,Female,Subscriber,+1-555-3186,user_1486@zencity-bikes.com,West End,360 Oak Lane
+C-1398,44,Female,Subscriber,+1-555-1938,user_1398@zencity-bikes.com,West End,156 Oak Lane
+C-0126,44,Female,Subscriber,+1-555-7626,user_0126@zencity-bikes.com,West End,471 Oak Lane
+C-1244,44,Female,Subscriber,+1-555-2802,user_1244@zencity-bikes.com,West End,237 Oak Lane
+C-1598,44,Female,Subscriber,+1-555-4866,user_1598@zencity-bikes.com,West End,186 Oak Lane
+C-1352,44,Female,Subscriber,+1-555-7314,user_1352@zencity-bikes.com,West End,276 Oak Lane
+C-1640,44,Female,Subscriber,+1-555-2442,user_1640@zencity-bikes.com,West End,129 Oak Lane
+C-1474,44,Female,Subscriber,+1-555-7938,user_1474@zencity-bikes.com,West End,504 Oak Lane
+C-1641,44,Female,Subscriber,+1-555-2850,user_1641@zencity-bikes.com,West End,798 Oak Lane
+C-0039,44,Female,Subscriber,+1-555-8322,user_0039@zencity-bikes.com,West End,636 Oak Lane
+C-1404,44,Female,Subscriber,+1-555-3138,user_1404@zencity-bikes.com,West End,690 Oak Lane
+C-0053,44,Female,Subscriber,+1-555-9978,user_0053@zencity-bikes.com,West End,501 Oak Lane
+C-1428,44,Female,Subscriber,+1-555-4626,user_1428@zencity-bikes.com,West End,117 Oak Lane
+C-1531,44,Female,Subscriber,+1-555-9354,user_1531@zencity-bikes.com,West End,606 Oak Lane
+C-1496,44,Female,Subscriber,+1-555-7602,user_1496@zencity-bikes.com,West End,771 Oak Lane
+C-1310,44,Female,Subscriber,+1-555-9234,user_1310@zencity-bikes.com,West End,828 Oak Lane
+C-1615,44,Female,Subscriber,+1-555-2034,user_1615@zencity-bikes.com,West End,963 Oak Lane
+C-1356,48,Female,Customer,+1-555-9118,user_1356@zencity-bikes.com,West End,244 Main St
+C-1485,48,Female,Customer,+1-555-4150,user_1485@zencity-bikes.com,West End,766 Main St
+C-1300,48,Female,Customer,+1-555-3334,user_1300@zencity-bikes.com,West End,427 Main St
+C-1604,48,Female,Customer,+1-555-6334,user_1604@zencity-bikes.com,West End,16 Main St
+C-1627,48,Female,Customer,+1-555-5566,user_1627@zencity-bikes.com,West End,418 Main St
+C-0007,48,Female,Customer,+1-555-5110,user_0007@zencity-bikes.com,West End,637 Main St
+C-0022,48,Female,Customer,+1-555-7918,user_0022@zencity-bikes.com,West End,682 Main St
+C-0050,52,Female,Subscriber,+1-555-6986,user_0050@zencity-bikes.com,West End,614 Broadway Ave
+C-1399,52,Female,Subscriber,+1-555-2594,user_1399@zencity-bikes.com,West End,821 Broadway Ave
+C-1395,52,Female,Subscriber,+1-555-3770,user_1395@zencity-bikes.com,West End,503 Broadway Ave
+C-0014,52,Female,Subscriber,+1-555-7442,user_0014@zencity-bikes.com,West End,998 Broadway Ave
+C-1321,52,Female,Subscriber,+1-555-4442,user_1321@zencity-bikes.com,West End,869 Broadway Ave
+C-1586,52,Female,Subscriber,+1-555-6218,user_1586@zencity-bikes.com,West End,26 Broadway Ave
+C-1309,52,Female,Subscriber,+1-555-4586,user_1309@zencity-bikes.com,West End,923 Broadway Ave
+C-0164,52,Female,Subscriber,+1-555-5642,user_0164@zencity-bikes.com,West End,296 Broadway Ave
+C-0052,52,Female,Subscriber,+1-555-3458,user_0052@zencity-bikes.com,West End,569 Broadway Ave
+C-1291,52,Female,Subscriber,+1-555-5066,user_1291@zencity-bikes.com,West End,566 Broadway Ave
+C-0008,52,Female,Subscriber,+1-555-4154,user_0008@zencity-bikes.com,West End,59 Broadway Ave
+C-0157,56,Female,Subscriber,+1-555-2958,user_0157@zencity-bikes.com,West End,897 Oak Lane
+C-1497,56,Female,Subscriber,+1-555-4206,user_1497@zencity-bikes.com,West End,201 Oak Lane
+C-1624,56,Female,Subscriber,+1-555-4110,user_1624@zencity-bikes.com,West End,60 Oak Lane
+C-0103,56,Female,Subscriber,+1-555-3150,user_0103@zencity-bikes.com,West End,783 Oak Lane
+C-0087,56,Female,Subscriber,+1-555-2910,user_0087@zencity-bikes.com,West End,273 Oak Lane
+C-0135,56,Female,Subscriber,+1-555-1638,user_0135@zencity-bikes.com,West End,450 Oak Lane
+C-0169,56,Female,Subscriber,+1-555-4206,user_0169@zencity-bikes.com,West End,210 Oak Lane
+C-1596,60,Female,Customer,+1-555-6178,user_1596@zencity-bikes.com,West End,661 Main St
+C-1608,60,Female,Customer,+1-555-4138,user_1608@zencity-bikes.com,West End,682 Main St
+C-1637,60,Female,Customer,+1-555-3370,user_1637@zencity-bikes.com,West End,67 Main St
+C-0111,60,Female,Customer,+1-555-5458,user_0111@zencity-bikes.com,West End,706 Main St
+C-1621,60,Female,Customer,+1-555-4162,user_1621@zencity-bikes.com,West End,661 Main St
+C-1540,60,Female,Customer,+1-555-7786,user_1540@zencity-bikes.com,West End,730 Main St
+C-1272,60,Female,Customer,+1-555-2794,user_1272@zencity-bikes.com,West End,958 Main St
+C-0019,60,Female,Customer,+1-555-8362,user_0019@zencity-bikes.com,West End,937 Main St
+C-0060,60,Female,Customer,+1-555-5338,user_0060@zencity-bikes.com,West End,658 Main St
+C-1471,60,Female,Customer,+1-555-1882,user_1471@zencity-bikes.com,West End,397 Main St
+C-0012,60,Female,Customer,+1-555-2842,user_0012@zencity-bikes.com,West End,178 Main St
+C-0003,60,Female,Customer,+1-555-5698,user_0003@zencity-bikes.com,West End,442 Main St
+C-1612,60,Female,Customer,+1-555-9178,user_1612@zencity-bikes.com,West End,916 Main St
+C-1521,60,Female,Customer,+1-555-7066,user_1521@zencity-bikes.com,West End,955 Main St
+C-1245,60,Female,Customer,+1-555-6514,user_1245@zencity-bikes.com,West End,781 Main St
+C-0120,64,Female,Subscriber,+1-555-1190,user_0120@zencity-bikes.com,West End,353 Broadway Ave
+C-0093,64,Female,Subscriber,+1-555-3254,user_0093@zencity-bikes.com,West End,257 Broadway Ave
+C-1654,64,Female,Subscriber,+1-555-5582,user_1654@zencity-bikes.com,West End,776 Broadway Ave
+C-1644,64,Female,Subscriber,+1-555-5630,user_1644@zencity-bikes.com,West End,923 Broadway Ave
+C-1623,64,Female,Subscriber,+1-555-5870,user_1623@zencity-bikes.com,West End,875 Broadway Ave
+C-1629,64,Female,Subscriber,+1-555-4262,user_1629@zencity-bikes.com,West End,248 Broadway Ave
+C-1645,64,Female,Subscriber,+1-555-3806,user_1645@zencity-bikes.com,West End,431 Broadway Ave
+C-1394,64,Female,Subscriber,+1-555-9758,user_1394@zencity-bikes.com,West End,884 Broadway Ave
+C-1626,64,Female,Subscriber,+1-555-8630,user_1626@zencity-bikes.com,West End,404 Broadway Ave
+C-1341,64,Female,Subscriber,+1-555-6734,user_1341@zencity-bikes.com,West End,614 Broadway Ave
+C-1431,64,Female,Subscriber,+1-555-9182,user_1431@zencity-bikes.com,West End,353 Broadway Ave
+C-0155,64,Female,Subscriber,+1-555-3446,user_0155@zencity-bikes.com,West End,548 Broadway Ave
+C-1616,64,Female,Subscriber,+1-555-9662,user_1616@zencity-bikes.com,West End,626 Broadway Ave
