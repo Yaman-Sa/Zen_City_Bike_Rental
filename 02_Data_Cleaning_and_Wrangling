@@ -1,3 +1,102 @@
 **everything we do to check and clean data will be here**
 
 
+
+
+
+
+
+While a status filter is a valid way to exclude closed stations from a final report, I adopted a source-level filtration strategy within my * dimension lookup catalog. This guarantees referential integrity at the table definition level, preventing the risk of join fan-outs and ensuring that no downstream analysis can accidentally reference legacy identifiers
+
+-- Final Complete CTE Data Cleaning & Imputation Script (Type Mismatch Fixed)
+WITH DeduplicatedRentals AS (
+  SELECT *,
+    -- 1. Identify & treat row-level duplicates by keeping the most recent entry
+    ROW_NUMBER() OVER(PARTITION BY trip_id ORDER BY start_time DESC) as row_num
+  FROM `bqproj-488319.zen_city.rentals`
+  -- 2. Identify & treat nulls in the primary key
+  WHERE trip_id IS NOT NULL
+),
+
+-- 3. Calculate Global Medians for continuous physical station attributes
+GlobalStationMedians AS (
+  SELECT
+    APPROX_QUANTILES(number_of_docks, 2)[OFFSET(1)] AS median_docks,
+    APPROX_QUANTILES(footprint_length, 2)[OFFSET(1)] AS median_length,
+    APPROX_QUANTILES(footprint_width, 2)[OFFSET(1)] AS median_width
+  FROM `bqproj-488319.zen_city.station_info`
+),
+
+-- 4. Clean and Impute the master station profile catalog using the medians
+CleanedStationProfiles AS (
+  SELECT
+    s.station_id,
+    -- THE NEW FILTER COLUMN: Bring status in so we can filter out 'closed' later
+    s.status AS station_status,
+    -- Fill missing operational strings with 'Unknown'
+    COALESCE(s.property_type, 'Unknown') AS clean_property_type,
+    COALESCE(s.power_type, 'Unknown') AS clean_power_type,
+    COALESCE(s.address, 'Unknown') AS clean_address,
+    -- THE FIX: Cast the INT64 city_asset_number to a STRING before filling with 'Unknown'
+    COALESCE(CAST(s.city_asset_number AS STRING), 'Unknown') AS clean_city_asset_number,
+    -- Impute continuous physical dimensions using overall table medians
+    COALESCE(s.number_of_docks, m.median_docks) AS clean_number_of_docks,
+    COALESCE(s.footprint_length, m.median_length) AS clean_footprint_length,
+    COALESCE(s.footprint_width, m.median_width) AS clean_footprint_width
+  FROM `bqproj-488319.zen_city.station_info` s
+  CROSS JOIN GlobalStationMedians m
+  -- Optimized Dimension Filter: Drop the legacy 'closed' Lavaca record explicitly 
+  WHERE s.station_id != 1007
+),
+
+-- 5. Primary Cleaning Stage for transactional rental records
+CleanedRentals AS (
+  SELECT
+    trip_id,
+    subscriber_type,
+    bike_id,
+    bike_type,
+    start_time,
+    customer_id,
+    start_station_id AS clean_start_station_id,
+    -- Standardization (Trimming trailing or hidden whitespaces)
+    TRIM(start_station_name) AS clean_start_station_name,
+    end_station_id AS clean_end_station_id,
+    TRIM(end_station_name) AS clean_end_station_name,
+    duration_minutes
+  FROM DeduplicatedRentals
+  WHERE row_num = 1 -- Retains only unique records
+    -- Preserve transactions by allowing unregistered station IDs to pass through
+    AND start_station_id IS NOT NULL 
+    AND end_station_id IS NOT NULL 
+    AND start_station_name IS NOT NULL 
+    AND end_station_name IS NOT NULL
+    -- Remove extreme operational outliers (Trips under 1 minute or over 24 hours)
+    AND duration_minutes > 1 
+    AND duration_minutes < 1440
+)
+
+-- 6. Final Output Assembly: LEFT JOIN to prevent data loss
+SELECT 
+  cr.*,
+  -- Inject clean physical dimensions or explicitly flag unregistered stations
+  COALESCE(start_st.clean_property_type, 'Unregistered Station') AS start_station_property_type,
+  COALESCE(start_st.clean_power_type, 'Unknown') AS start_station_power_type,
+  COALESCE(start_st.clean_number_of_docks, (SELECT median_docks FROM GlobalStationMedians)) AS start_station_docks,
+  COALESCE(start_st.clean_footprint_length, (SELECT median_length FROM GlobalStationMedians)) AS start_station_footprint_length,
+  COALESCE(start_st.clean_footprint_width, (SELECT median_width FROM GlobalStationMedians)) AS start_station_footprint_width,
+  
+  COALESCE(end_st.clean_property_type, 'Unregistered Station') AS end_station_property_type,
+  COALESCE(end_st.clean_power_type, 'Unknown') AS end_station_power_type,
+  COALESCE(end_st.clean_number_of_docks, (SELECT median_docks FROM GlobalStationMedians)) AS end_station_docks,
+  COALESCE(end_st.clean_footprint_length, (SELECT median_length FROM GlobalStationMedians)) AS end_station_footprint_length,
+  COALESCE(end_st.clean_footprint_width, (SELECT median_width FROM GlobalStationMedians)) AS end_station_footprint_width
+FROM CleanedRentals cr
+LEFT JOIN CleanedStationProfiles start_st 
+  ON cr.clean_start_station_id = start_st.station_id
+LEFT JOIN CleanedStationProfiles end_st 
+  ON cr.clean_end_station_id = end_st.station_id
+-- THE NEW FILTER: Drops trips linked to 'closed' stations.
+-- The IS NULL condition ensures your 'Unregistered Stations' are still kept in the data.
+WHERE (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
+  AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL);
