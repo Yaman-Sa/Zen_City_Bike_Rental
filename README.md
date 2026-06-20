@@ -64,7 +64,7 @@ Based on our exploratory data analysis, we proposed four high-impact directives:
 
 
 ##📦 Zen-City-Project
-* ┣ 📂 Raw_Tables/                     # Original datasets (station_info, rentals, customers)#
+* ┣ 📂 Raw_Tables/                     # Original datasets (station_info, rentals, customers)
 * ┣ 📂 SQL/                            # Complete, raw .sql scripts (e.g., Master Data Cleaning CTE)
 * ┣ 📂 Visualizations/                 # Charts and graphs generated via BQ Studio and Python
 * ┣ 📜 README.md                       # Executive summary, project goals, and navigation map
