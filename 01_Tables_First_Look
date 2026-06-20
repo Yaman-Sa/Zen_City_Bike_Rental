@@ -84,11 +84,49 @@ WHERE
   station_id IN (1007, 3294)
 ---
 ** Same Table!** 
-* in both queries I got the exact me table, suggesting that the count of trips for each distinct ID is **1** .
+* in both queries I got the exact same table, suggesting that the count of trips for each distinct ID is **1** .
 * filtiring the 1007 ID would be removng one trip from the record with 16585 trips in total, which could be the right move.
 * however , for future projects with same situation but bigger data percentage Ill keep this row.
 
 
 --- 
 
+**Checking the rental table and the two stations ID's (1007, 3294)**
+*on chcking the stations ID's , in this table we have two: start_stion_id and end_station_id.
+*first I checked the two statios id (1007, 3294) for both start and end stations.(noticed that the total of 26 trips were end stastions id and all refered to the 3294 ID) 
+*for confirmaion I checked if the 1007 station is indeed with no records.(resulted in confirmation of empty record)
+
+
+--reviewing the (1007 and 3294) stations
+SELECT 
+  *
+FROM 
+  `bqproj-488319.zen_city.station_info`
+WHERE 
+
+  station_id IN (1007, 3294);
+--checking the Status , I found that Station '1007' is Closed.
+---
+
+--checking total trips (Rental Table) with ID's 1007 and 3294
+SELECT *
+FROM `bqproj-488319.zen_city.rentals`
+WHERE start_station_id IN (1007, 3294)
+   OR end_station_id IN (1007, 3294);
+-- total of 26 trips registered to ID 3294 (no rentals involving ID 1007)
+
+
+--checking total 1007 ID in trips (Rental Table)
+SELECT *
+FROM `bqproj-488319.zen_city.rentals`
+WHERE start_station_id IN (1007)
+   OR end_station_id IN (1007);
+--0 trips registered to ID 1007 (no rentals involving ID 1007)
+
+### 4.Sumarry :
+* the primary keys for all tables is with no duplicates
+* the Customers table and Rental table with no Nulls
+* Station table has some Nulls Cells, and station name dupliate to station ID ('Lavaca & 6th' station with two ID's 1007 and 3294)
+* on check I found out that the station ID 1007 is with **Closed** status, and after further check on rental table I found that there is no record for this station.
+* we can simply filter the station with the ID 1007 from Station_ID table, and move forward with no loss of data.
 
