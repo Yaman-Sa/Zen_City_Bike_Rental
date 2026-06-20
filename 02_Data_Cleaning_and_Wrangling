@@ -2,6 +2,12 @@
 
 ###**01.starting with the data Raw tables**
 *lets recall the given tables and structure:*
+*Data tables: we have 3 sources that we could and will use,Table names:
+* ● `bqproj-488319.zen_city.station_info`   
+* ● `bqproj-488319.zen_city.rentals`
+* ● `bqproj-488319.zen_city.customers`
+
+
 
 
 
@@ -25,8 +31,16 @@ SELECT
 FROM `bqproj-488319.zen_city.station_info`
 ;
 
-**understanding the tables:**
-* **Status in station_info table :** looking at the table I noticed that some stationsare marked as *Closed* as its status, suggesting that there are no longer active.
+
+**checkig for consistancy, regarding names and id:**
+* in a check on customers table there was no conflict on the name and id.
+* in a check onstation_id table there was **one** name for two distinct stations id, 1007 and 3294.
+* checking the trips regarding the 1007 and 3294 IDs I found one trip regarding 1007 .
+* before I decided what to do I went into further investigating, despite the first imprision of fitering one row wont hur thoverall integrity of the data and honesty of the model nd predition (from totalof 16585 rows in total).
+
+
+**understanding the tables: deeper investigtion**
+* **Status in station_info table :** looking at the table I noticed that some stations are marked as *Closed* as its status, suggesting that there are no longer active.
 * checking percentage and number of such stations I got :--------------------------------
 
 * **cleaning:** for better accuracy , with keeping in mind the posible "effect" of these stations to the ones wit trips records with them, however these trips are very tiny percntage!, total trips related are about 81 trips in total out of 16585 rows in total.
@@ -68,11 +82,13 @@ CleanedStationProfiles AS (
 * ##**checking for missing start_station_id,start_station_name,end_station_id,end_station_name**
 * in previous **step 01** I already showed that in the data we are missing is the null_address (including end_station_id,start_station_id) and no Station_name missing .
 * we check this specific station id missing and get the statin name attached .
-* result: 1 trip with the end station named 'Springfest 2022'
+* result: 1 trip with the end station named **'Springfest 2022'**
+* discusion: it is a unique event, no station with this name in station_id table and no assigned station_id to it,and it one trip over all, and the trip is 12mins log, more than usual, still logically its hard to believe tha in an event there was only one rent when we would expect more, also 12mins trip when we would expect more time for the festival, leading me to invistigate more into this case.
+*
 
 
 
-* ##**checking for ghoust customers**
+* ##**checking for ghost customers**
 * Clean, as **01** spcified.
 
 ---
