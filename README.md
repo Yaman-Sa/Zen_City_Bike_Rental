@@ -64,10 +64,10 @@ Based on our exploratory data analysis, we proposed four high-impact directives:
 
 
 📦 Zen-City-Project
- ┣ 📂 Raw_Tables/                     # Original datasets (station_info, rentals, customers)
- ┣ 📂 SQL/                            # Complete, raw .sql scripts (e.g., Master Data Cleaning CTE)
- ┣ 📂 Visualizations/                 # Charts and graphs generated via BQ Studio and Python
- ┣ 📜 README.md                       # Executive summary, project goals, and navigation map
- ┣ 📜 01_Tables_First_Look.md         # Initial data exploration, primary key validation, and null checks
- ┣ 📜 02_Data_Cleaning_and_Wrangling.md # Data imputation strategy, outlier handling, and the unified CTE
- ┗ 📜 03_Analysis_and_Predictions.md  # Student demographic analysis, infrastructure bottlenecks, and Q2 predictions
+* ┣ 📂 Raw_Tables/                     # Original datasets (station_info, rentals, customers)
+* ┣ 📂 SQL/                            # Complete, raw .sql scripts (e.g., Master Data Cleaning CTE)
+* ┣ 📂 Visualizations/                 # Charts and graphs generated via BQ Studio and Python
+* ┣ 📜 README.md                       # Executive summary, project goals, and navigation map
+* ┣ 📜 01_Tables_First_Look.md         # Initial data exploration, primary key validation, and null checks
+* ┣ 📜 02_Data_Cleaning_and_Wrangling.md # Data imputation strategy, outlier handling, and the unified CTE
+* ┗ 📜 03_Analysis_and_Predictions.md  # Student demographic analysis, infrastructure bottlenecks, and Q2 predictions
