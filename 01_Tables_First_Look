@@ -1,0 +1,30 @@
+# 01. Raw Tables: First Look & Initial Data Audit
+
+## 📋 Overview & Objective
+[cite_start]Before implementing any data cleaning models or structural modifications, a comprehensive raw audit was performed across Zen City's database[cite: 2125]. [cite_start]The objective of this "first look" phase is to inspect the foundational schema, confirm data types, validate primary key integrity, map out missing or corrupted information, and surface initial behavioral anomalies directly within the raw datasets[cite: 2125, 2126]. 
+
+[cite_start]By establishing a clear understanding of the uncleaned baseline data, we ensure our downstream data-cleaning filters do not inadvertently distort our Q2 business predictions[cite: 2114, 2118].
+
+---
+
+## 🗂️ Table Inventory & Profiles
+[cite_start]The analysis relies on three core relational tables hosted within BigQuery[cite: 2127]:
+1. [cite_start]`bqproj-488319.zen_city.station_info`: Hardware and logistical metadata for all bike stations[cite: 2127, 2128].
+2. [cite_start]`bqproj-488319.zen_city.rentals`: Granular transactional log of individual bike trips[cite: 2127].
+3. [cite_start]`bqproj-488319.zen_city.customers`: Demographic breakdown of registered bike-sharing users[cite: 2127].
+
+### **Raw Row Counts & Unique Identifiers**
+[cite_start]To evaluate table scale and structural dimensions, the total volume of entries was cross-referenced against unique business keys[cite: 2127, 2129]:
+
+| Table Name | Assigned Unique Key | Raw Row Count | Non-Duplicate Row Count | Duplicate Count |
+| :--- | :--- | :--- | :--- | :--- |
+| `zen_city.station_info` | `station_id` (INTEGER) | [cite_start]16,585  | [cite_start]16,585  | [cite_start]0  |
+| `zen_city.rentals` | `trip_id` (INTEGER) | [cite_start]102  | [cite_start]102  | [cite_start]0  |
+| `zen_city.customers` | `customer_id` (STRING) | [cite_start]586  | [cite_start]586  | [cite_start]0  |
+
+### **Baseline SQL Verification Snippet**
+```sql
+-- Validating uniqueness of primary keys across tables
+SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT station_id) AS unique_keys FROM `bqproj-488319.zen_city.station_info`;
+SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT trip_id) AS unique_keys FROM `bqproj-488319.zen_city.rentals`;
+SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT customer_id) AS unique_keys FROM `bqproj-488319.zen_city.customers`;
