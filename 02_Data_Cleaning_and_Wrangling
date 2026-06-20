@@ -7,10 +7,23 @@
 * ● `bqproj-488319.zen_city.rentals`
 * ● `bqproj-488319.zen_city.customers`
 
+* **Based on the tables**, we need to filter duplicates using the unique identifiers for each dataset:
+* customers: The customer_id (STRING) is the unique identifier.
+* station_info: The station_id (INTEGER) is the unique identifier.
+* rentals: The trip_id (INTEGER) is the unique identifier.
+
+**checking primary keys duplicates**
+* `bqproj-488319.zen_city.station_info`         16585         16585       0 duplicates(primary keys)
+* `bqproj-488319.zen_city.rentals`              102           102         0 duplicates(primary keys)
+* `bqproj-488319.zen_city.customers`            586           586         0 duplicates(primary keys)
+
+**cheking the Nulls Cells:**
+* in zen_city.rentals        0 Nulls Cells.
+* in zen_city.customers      0 Nulls Cells.
+* in zen_city.station_info   there are Nulls Cells.
 
 
-
-
+**investigating and identifying the zen_city.station_info Nulls**
 -- nulls in tables counter 
 -- station info nulls counter
 SELECT
