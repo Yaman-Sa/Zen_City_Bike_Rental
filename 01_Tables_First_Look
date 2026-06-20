@@ -97,36 +97,59 @@ WHERE
 *for confirmaion I checked if the 1007 station is indeed with no records.(resulted in confirmation of empty record)
 
 
---reviewing the (1007 and 3294) stations
+
+### 4. Summary of Initial Observations & Data Integrity
+
+Following an exhaustive first look at the schema and contents of the core tables, here are the foundational baselines and anomalies discovered:
+
+* **Primary Key Integrity:** Verified that the primary keys across all relational tables contain zero duplicate records, establishing a reliable baseline for entity resolution.
+* **Data Missingness (Null Analysis):** The transactional `rentals` table and the `customers` profile table are completely populated with no `NULL` values. The dimension table `station_info` contains a few isolated `NULL` cells that will require minor imputation downstream.
+* **Structural Anomaly ("Lavaca & 6th"):** Identified a critical data redundancy where a single physical location name, *"Lavaca & 6th"*, maps to two distinct identification codes: `1007` and `3294`.
+* **Deep-Dive Verification:** Cross-referencing these two keys against the transactional `rentals` logs revealed that station ID `1007` is officially categorized as **Closed** and has exactly **0 historical trip records** associated with it (neither as a source nor a destination).
+* **Strategic Engineering Action:** Because ID `1007` has zero transactional footprint, it functions purely as a legacy "Ghost Station" row. Rather than over-engineering a complex lookup remap, we can safely drop/filter out ID `1007` from our master dimension catalog during data staging with zero data loss or metric distortion.
+
+---
+
+### 🔍 Investigative SQL Audits
+
+The following exploratory queries were executed in BigQuery to isolate, verify, and resolve the "Ghost Station" edge case before committing to downstream data transformations:
+
+```sql
+-- ====================================================================
+-- Step 1: Reviewing the duplicate name rows in the station dimension table
+-- ====================================================================
 SELECT 
-  *
+  station_id,
+  name,
+  status,
+  number_of_docks
 FROM 
   `bqproj-488319.zen_city.station_info`
 WHERE 
-
   station_id IN (1007, 3294);
---checking the Status , I found that Station '1007' is Closed.
----
+-- Result: Revealed that Station '1007' is explicitly marked as "Closed".
 
---checking total trips (Rental Table) with ID's 1007 and 3294
-SELECT *
-FROM `bqproj-488319.zen_city.rentals`
-WHERE start_station_id IN (1007, 3294)
-   OR end_station_id IN (1007, 3294);
--- total of 26 trips registered to ID 3294 (no rentals involving ID 1007)
+-- ====================================================================
+-- Step 2: Checking total transactional footprint for BOTH station IDs
+-- ====================================================================
+SELECT 
+  COUNT(*) as total_trips
+FROM 
+  `bqproj-488319.zen_city.rentals`
+WHERE 
+  start_station_id IN (1007, 3294)
+  OR end_station_id IN (1007, 3294);
+-- Result: Found a total of 26 trips registered system-wide.
 
-
---checking total 1007 ID in trips (Rental Table)
-SELECT *
-FROM `bqproj-488319.zen_city.rentals`
-WHERE start_station_id IN (1007)
-   OR end_station_id IN (1007);
---0 trips registered to ID 1007 (no rentals involving ID 1007)
-
-### 4.Sumarry :
-* the primary keys for all tables is with no duplicates
-* the Customers table and Rental table with no Nulls
-* Station table has some Nulls Cells, and station name dupliate to station ID ('Lavaca & 6th' station with two ID's 1007 and 3294)
-* on check I found out that the station ID 1007 is with **Closed** status, and after further check on rental table I found that there is no record for this station.
-* we can simply filter the station with the ID 1007 from Station_ID table, and move forward with no loss of data.
-
+-- ====================================================================
+-- Step 3: Isolating the closed ID (1007) to ensure zero active dependencies
+-- ====================================================================
+SELECT 
+  COUNT(*) as total_ghost_trips
+FROM 
+  `bqproj-488319.zen_city.rentals`
+WHERE 
+  start_station_id = 1007 
+  OR end_station_id = 1007;
+-- Result: Exactly 0 trips registered to ID 1007. 
+-- Conclusion: Safely confirmed as a non-utilized entity.
