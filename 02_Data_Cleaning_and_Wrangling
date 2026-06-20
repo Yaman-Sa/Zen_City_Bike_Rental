@@ -5,6 +5,33 @@
 
 
 
+-- nulls in tables counter 
+-- station info nulls counter
+SELECT
+  COUNTIF(station_id IS NULL) AS null_station_id,
+  COUNTIF(name IS NULL) AS null_name,
+  COUNTIF(status IS NULL) AS null_status,
+  COUNTIF(address IS NULL) AS null_address,
+  COUNTIF(alternate_name IS NULL) AS null_alternate_name,
+  COUNTIF(city_asset_number IS NULL) AS null_city_asset_number,
+  COUNTIF(property_type IS NULL) AS null_property_type,
+  COUNTIF(number_of_docks IS NULL) AS null_number_of_docks,
+  COUNTIF(power_type IS NULL) AS null_power_type,
+  COUNTIF(footprint_length IS NULL) AS null_footprint_length,
+  COUNTIF(footprint_width IS NULL) AS null_footprint_width,
+  COUNTIF(notes IS NULL) AS null_notes,
+  COUNTIF(council_district IS NULL) AS null_council_district,
+  COUNTIF(modified_date IS NULL) AS null_modified_date
+FROM `bqproj-488319.zen_city.station_info`
+;
+
+**understanding the tables:**
+* **Status in station_info table :** looking at the table I noticed that some stationsare marked as *Closed* as its status, suggesting that there are no longer active.
+* checking percentage and number of such stations I got :--------------------------------
+
+* **cleaning:** for better accuracy , with keeping in mind the posible "effect" of these stations to the ones wit trips records with them, however these trips are very tiny percntage!, total trips related are about 81 trips in total out of 16585 rows in total.
+* **decision:** filtering these trips lowers our data percentage by less than 0.5% only, but giving us overall more accurate predictions accunting to the active stations , again keeping in mind that there are in total 81 rows filtered had little to no "effect" on our related stations.
+
 
 ---
 
