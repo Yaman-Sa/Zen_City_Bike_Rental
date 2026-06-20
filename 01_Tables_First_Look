@@ -28,3 +28,67 @@
 SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT station_id) AS unique_keys FROM `bqproj-488319.zen_city.station_info`;
 SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT trip_id) AS unique_keys FROM `bqproj-488319.zen_city.rentals`;
 SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT customer_id) AS unique_keys FROM `bqproj-488319.zen_city.customers`;
+
+---
+
+### 3. Attribute-Level Duplicate & Name Consistency Check
+Moving beyond primary keys, a secondary audit was conducted on descriptive fields (`name` attributes) to find hidden data redundancies:
+* **`customers.name` Check**: Evaluated for name redundancy. The result showed 0 duplicate customer names, meaning each registered user is associated with a singular, distinct account.
+* **`station_info.name` Check**: Uncovered critical logical duplicate vulnerabilities. Multiple rows share the exact same station name but are assigned completely different `station_id` markers (e.g., "Lavaca & 6th" split between ID `1007` and `3294`). 
+
+**SQL Snippet to detect descriptive name overlaps:**
+```sql
+SELECT name, COUNT(*) as occurrence_count 
+FROM `bqproj-488319.zen_city.station_info` 
+GROUP BY name 
+HAVING COUNT(*) > 1;
+
+### 4. Deep-Dive Anomaly: "Lavaca & 6th" Station Identifier Split
+* **The Mismatch:** The station name **"Lavaca & 6th"** is mapped to two completely distinct identification codes: `1007` and `3294`.
+* **The Operational Cause:** An audit of the operational `status` column revealed that station `1007` is explicitly marked as **Closed**, while station `3294` is marked as **Active**. This confirms that they represent the exact same physical location over different operational windows (likely due to a hardware swap, kiosk upgrade, or system re-indexing).
+* **The Analytical Impact:** If left uncorrected, any historical rental logs tied to the older ID `1007` would be isolated from the current station's metrics, resulting in an artificial underreporting of long-term traffic patterns at this high-density intersection.
+* **The Data Preservation Strategy:** To maintain data continuity and accurately map network volume, we will implement conditional remapping logic during the wrangling phase. All transactional logs under ID `1007` will be combined into ID `3294`. Although the absolute volume of trips originating from ID `1007` is relatively small, this step ensures perfect alignment for our downstream spatial aggregation models.
+
+/*
+=============================================================================
+Script: eda_isolate_lavaca_station.sql
+Phase: 01 - Exploratory Data Analysis & Raw Table Audit
+Objective: Isolate the "Lavaca & 6th" anomaly by matching by name or explicit 
+           IDs to confirm the operational status conflict (Closed vs. Active).
+=============================================================================
+*/
+
+SELECT 
+  station_id,
+  name AS station_name,
+  status AS operational_status,
+  address,
+  number_of_docks,
+  modified_date
+FROM 
+  `bqproj-488319.zen_city.station_info`
+WHERE 
+  -- Search explicitly for the duplicate text name or suspected IDs
+  TRIM(name) = 'Lavaca & 6th' 
+  OR station_id IN (1007, 3294)
+ORDER BY 
+  operational_status DESC;
+---
+
+SELECT 
+  *
+FROM 
+  `bqproj-488319.zen_city.station_info`
+WHERE 
+
+  station_id IN (1007, 3294)
+---
+** Same Table!** 
+* in both queries I got the exact me table, suggesting that the count of trips for each distinct ID is **1** .
+* filtiring the 1007 ID would be removng one trip from the record with 16585 trips in total, which could be the right move.
+* however , for future projects with same situation but bigger data percentage Ill keep this row.
+
+
+--- 
+
+
