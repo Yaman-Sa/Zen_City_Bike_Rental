@@ -6,9 +6,58 @@
 
 
 
+---
+
+### **02. Station ID 1007 (the ghost station)**
+*During the initial audit of the station_info catalog, a significant risk to downstream data integrity was identified regarding station ID 1007.
+*The Discovery: A review of the status column revealed that station 1007 is marked as 'Closed'.
+*The Risk: Leaving legacy or inactive entities in a dimension table is a "data trap." If a analyst joins the rentals table to this "dirty" catalog, it can lead to join fan-outs or ambiguous results that skew volume metrics.
+*The Strategic Decision: Rather than filtering at the final reporting stage, I implemented an upstream, source-level filtration strategy within my CTE architecture.
+* **Note:** By explicitly filtering WHERE station_id != 1007 during the creation of my final `CleanedStationProfiles` catalog, I ensured that the dimension table remains a clean, singular "source of truth." This guarantees referential integrity at the architectural level, preventing the risk of join fan-outs and ensuring that all downstream analysis—including Q2 rental forecasts—is built on a platform of active, validated station identifiers.
+
+**SQL Clean Table:**
+-- Sanitizing the dimension catalog at the source
+CleanedStationProfiles AS (
+  SELECT *
+  FROM `bqproj-488319.zen_city.station_info`
+  WHERE station_id != 1007 -- Dropping legacy ghost station
+)
 
 
-While a status filter is a valid way to exclude closed stations from a final report, I adopted a source-level filtration strategy within my * dimension lookup catalog. This guarantees referential integrity at the table definition level, preventing the risk of join fan-outs and ensuring that no downstream analysis can accidentally reference legacy identifiers
+---
+### **03. the "Clean Data"?:** the data with no Nulls, the great loss of data as we filter and build CTE with no Nulls cells at all (to  work with full data only)
+* I tried simple Nulls cells "proof" , simply filtering all Nulls from any row with Nulls for CTE.
+* result: ended up with loss of 40% of data , a total of 10007 rows from the total 16585 I started with.
+* conclusion: its a big loss of data , and some of the cells Nulls are secondary to negligible Cells that I might not use in the end CTE like (alternate_name).
+* decision: I will move into specified and more focused cleaning, preserving the data integrity and our prediction honesty and accuricy.
+
+---
+
+### ** 04. Dealing with the Nulls in station_info table:**
+
+---
+
+### ** 05. Checking specific missing data**
+* ##**checking for missing start_station_id,start_station_name,end_station_id,end_station_name**
+* in previous **step 01** I already showed that in the data we are missing is the null_address (including end_station_id,start_station_id) and no Station_name missing .
+* we check this specific station id missing and get the statin name attached .
+* result: 1 trip with the end station named 'Springfest 2022'
+
+
+
+* ##**checking for ghoust customers**
+* Clean, as **01** spcified.
+
+---
+
+### ** 06. Logical Filtring and outliers**
+
+---
+### ** 07. Final Check**
+
+---
+### **Putting everyting togather ** 
+* While a status filter is a valid way to exclude closed stations from a final report, I adopted a source-level filtration strategy within my * dimension lookup catalog. This guarantees referential integrity at the table definition level, preventing the risk of join fan-outs and ensuring that no downstream analysis can accidentally reference legacy identifiers
 
 -- Final Complete CTE Data Cleaning & Imputation Script (Type Mismatch Fixed)
 WITH DeduplicatedRentals AS (
