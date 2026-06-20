@@ -47,6 +47,23 @@ FROM `bqproj-488319.zen_city.station_info`
 * **decision:** filtering these trips lowers our data percentage by less than 0.5% only, but giving us overall more accurate predictions accunting to the active stations , again keeping in mind that there are in total 81 rows filtered had little to no "effect" on our related stations.
 
 
+**relation between tables**
+* I have discovered that there are good sum of trips records with no id corelations to the statin_id table:
+
+-- primary keys matching
+--station IDs 
+SELECT 
+  COUNTIF(r.start_station_id IS NOT NULL AND s_start.station_id IS NULL) AS orphaned_start_stations,
+  COUNTIF(r.end_station_id IS NOT NULL AND s_end.station_id IS NULL) AS orphaned_end_stations
+FROM `bqproj-488319.zen_city.rentals` r
+LEFT JOIN `bqproj-488319.zen_city.station_info` s_start 
+  ON r.start_station_id = s_start.station_id
+LEFT JOIN `bqproj-488319.zen_city.station_info` s_end 
+  ON r.end_station_id = s_end.station_id
+--start station without end:4916  , end stations withot start:2164
+
+
+
 ---
 
 ### **02. Station ID 1007 (the ghost station)**
