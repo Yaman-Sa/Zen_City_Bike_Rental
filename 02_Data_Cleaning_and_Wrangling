@@ -22,7 +22,11 @@
 * in zen_city.customers      0 Nulls Cells.
 * in zen_city.station_info   there are Nulls Cells.
 
+
+* **Schemas of the tables:** 
+*
 ----------------------------------------------------------------------------(continue here!)
+
 **investigating and identifying the zen_city.station_info Nulls**
 
 -- station info nulls counter
@@ -44,11 +48,28 @@ SELECT
 FROM `bqproj-488319.zen_city.station_info`
 ;
 
+* **Nulls counts: station_id Table**
+* null_station_id            0
+* null_name                  0
+* null_status                0
+* null_address               1
+* null_alternate_name        100
+* null_city_asset_number     25
+* null_property_type         20
+* null_number_of_docks       20
+* null_power_type            20
+* null_footprint_length      23
+* null_footprint_width       23
+* null_notes                 70
+* null_council_district      0
+* null_modified_date         0
+
+--------------------------------------------------------------------(continue here)
 
 **checkig for consistancy, regarding names and id:**
 * in a check on customers table there was **no conflict** on the name and id.
 * in a check onstation_id table there was **one** name for two distinct stations id, 1007 and 3294.
-* checking the trips regarding the 1007 and 3294 IDs I found one trip regarding 1007 .
+* checking the trips regarding the 1007 and 3294 IDs I found one trip regarding 1007 and the rest are regarding 3294.
 * before I decided what to do I went into further investigating, despite the first imprision of fitering one row wont hur thoverall integrity of the data and honesty of the model nd predition (from totalof 16585 rows in total).
 
 
