@@ -24,7 +24,64 @@
 
 
 * **Schemas of the tables:** 
-*
+*### **1. `bqproj-488319.zen_city.station_info` (Dimension Catalog)**
+Acts as the master profile directory tracking the physical capacity, logistical constraints, and geographical footprints of all deployed bike stations.
+
+| Field Name | Data Type | Mode | Constraints / Core Field Notes |
+| :--- | :--- | :--- | :--- |
+| **`station_id`** | `INTEGER` | `REQUIRED` | **Primary Key**; absolute unique identifier for each physical station asset. |
+| `name` | `STRING` | `NULLABLE` | Text string name of the station hub; contains duplicate records for IDs 1007/3294. |
+| `status` | `STRING` | `NULLABLE` | Operational profile flag (e.g., `'Active'`, `'Closed'`). Used to isolate legacy assets. |
+| `address` | `STRING` | `NULLABLE` | Street location string (contains 1 raw null value). |
+| `alternate_name` | `STRING` | `NULLABLE` | Secondary or historical station name variant (heavily sparse: 100 null values). |
+| `city_asset_number` | `INTEGER` | `NULLABLE` | Municipal property tracking identifier code (contains 25 missing values). |
+| `property_type` | `STRING` | `NULLABLE` | Land-use classification category context (contains 20 missing values). |
+| `number_of_docks` | `INTEGER` | `NULLABLE` | Hardware capacity; physical docking slots available (contains 20 missing values). |
+| `power_type` | `STRING` | `NULLABLE` | Power source configuration format (contains 20 missing values). |
+| `footprint_length` | `FLOAT` | `NULLABLE` | Physical installation base length metric (contains 23 missing values). |
+| `footprint_width` | `FLOAT` | `NULLABLE` | Physical installation base width metric (contains 23 missing values). |
+| `notes` | `STRING` | `NULLABLE` | Qualitative operational remarks text (contains 70 missing values). |
+| `council_district` | `INTEGER` | `NULLABLE` | Municipal administrative district index number (0 raw nulls). |
+| `modified_date` | `TIMESTAMP` | `NULLABLE` | System audit timestamp indicating the last record change window. |
+
+---
+
+### **2. `bqproj-488319.zen_city.rentals` (Transactional Fact Table)**
+An atomic ledger logging every distinct journey transaction across the micro-mobility bike-sharing infrastructure during the Q1 operation period.
+
+| Field Name | Data Type | Mode | Constraints / Core Field Notes |
+| :--- | :--- | :--- | :--- |
+| **`trip_id`** | `INTEGER` | `REQUIRED` | **Primary Key**; unique transactional index identifier per ride instance. |
+| `subscriber_type` | `STRING` | `NULLABLE` | Membership tier category mapping (e.g., `'Student Membership'`, `'Local31'`). |
+| `bike_id` | `INTEGER` | `NULLABLE` | Hardware asset deployment tracking identifier number. |
+| `bike_type` | `STRING` | `NULLABLE` | Structural bicycle variant type (e.g., `'classic'`, `'electric'`). |
+| `start_time` | `TIMESTAMP` | `NULLABLE` | High-precision trip departure date/time stamp. Used for temporal partitioning. |
+| `customer_id` | `STRING` | `NULLABLE` | **Foreign Key**; maps directly to the unique identifiers in the `customers` table. |
+| `start_station_id` | `INTEGER` | `NULLABLE` | **Foreign Key**; references origin station; contains 4,916 structural orphaned IDs. |
+| `start_station_name`| `STRING` | `NULLABLE` | Raw origin location text literal; contains trail spaces requiring `TRIM()`. |
+| `end_station_id` | `INTEGER` | `NULLABLE` | **Foreign Key**; references destination station; contains 2,164 structural orphaned IDs. |
+| `end_station_name` | `STRING` | `NULLABLE` | Raw arrival location text literal; harbors festival anomalies (e.g., `'Springfest 2022'`). |
+| `duration_minutes` | `INTEGER` | `NULLABLE` | Logged operational trip duration. Target bounds filtered to between 1 and 1440 minutes. |
+
+---
+
+### 3. bqproj-488319.zen_city.customers (Dimension Table)
+
+This dimension table provides structural user profiles and demographic metadata for registered Zen City bike-sharing users, enabling cohort segmentation and targeted behavioral analysis.
+
+| Column Name | Data Type | Mode / Constraints | Initial Audit & Data Integrity Notes |
+| :--- | :--- | :--- | :--- |
+| **customer_id** | STRING | REQUIRED (PK) | Primary Key. Unique identifier for registered riders. Reconciled at exactly 586 unique rows with 0 duplicates and 0 null cells. |
+| **age** | INTEGER | NULLABLE | Registered user age. Crucial for calculating user age distributions and cohort tracking during subsequent analysis steps. |
+| **gender** | STRING | NULLABLE | Self-reported user gender metadata used for marketing segmentation and demographic metrics. |
+| **user_type** | STRING | NULLABLE | User classification or subscription status category used to analyze membership behavior vs. casual riders. |
+| **phone** | STRING | NULLABLE | Customer phone number. High-cardinality contact field; kept in the raw schema audit but flagged for downstream analytical omission. |
+| **Email** | STRING | NULLABLE | Customer email address. High-cardinality contact field; documented here to preserve raw structural fidelity. |
+| **home_region** | STRING | NULLABLE | Spatial metadata capturing the broad geographical region or sector where the user resides. |
+| **full_address** | STRING | NULLABLE | Granular physical address data of the user, providing a foundation for localized neighborhood-level demand mapping. |
+
+---
+
 ----------------------------------------------------------------------------(continue here!)
 
 **investigating and identifying the zen_city.station_info Nulls**
