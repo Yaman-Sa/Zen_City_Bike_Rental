@@ -235,7 +235,25 @@ CleanedStationProfiles AS (
 
 ### ** 04. Dealing with the Nulls in station_info table:**
 
-------------------------------------------------------------------------------------(continue here!)
+* During the data exploration and relational audit phase, a significant structural challenge was identified , many nulls cells in the station_info table.
+* A naive data engineering approach would rely on a strict relational INNER JOIN to connect these datasets. Doing so, however, would completely purge any rental record containing a start_station_id or end_station_id that is missing from the master station directory. Running such a join against our raw data would discard thousands of rows, shrinking our transactional volume from 16,585 raw rows down to an artificially truncated ~10,007 rows.
+* Dropping roughly 40% of the entire transaction history presents an unacceptable loss of critical business intelligence and analytical context. These records capture genuine customer rides, operational bike usage, and revenue generation. Purging them would drastically deflate our assessment of aggregate utilization rates during deep-dive trend analysis and starve the downstream linear regression models relied upon for our future predictions.
+* To protect the absolute integrity of Zen City's overall operational footprint while enforcing rigorous table schemas, a Data-Sparing and Imputation Strategy was deployed instead of standard row deletion:
+
+   * Categorical Metadata (alternate_name, notes): These attributes were classified as structurally optional string fields. Because they do not govern relational joins or downstream predictive metrics, missing values are safely preserved as standard database NULL markers or omitted during string aggregations to avoid data distortion.
+
+   * Operational Metadata (address, city_asset_number, property_type, power_type): To shield the core transactions from breaking during join evaluations, missing attributes are dynamically wrapped using a defensive COALESCE string override to explicitly cast them as 'Unknown' or 'Unregistered Station'. This cleanly maps the orphaned transactional legs into distinct tracking categories, keeping the core rental records perfectly intact for aggregate volume counting.
+
+   * Physical Station Dimensions (number_of_docks, footprint_length, footprint_width): To ensure these entries can still safely participate in spatial modeling, capacity auditing, or hardware density calculations without causing severe arithmetic runtime errors, a Median Imputation pipeline was designed. Missing continuous variables are dynamically backfilled using the Global Table Medians derived from an upstream Common Table Expression (CTE) targeting fully registered hardware profiles. This robustly preserves the structural distribution of the data without introducing outlier bias.
+
+
+**Final Operational Decision**
+
+* By substituting rigid data elimination with defensive `LEFT JOIN` logic and continuous variable imputation, the cleaning pipeline successfully protected our core business metrics.
+
+* The master analytical view preserves **16,504 records out of the 16,585 raw transactions**, representing an exceptional **99.5% data preservation rate**.
+
+* This balanced framework eliminates sampling bias, guaranteeing the maximum statistical accuracy for our upcoming time-series models and trend visualizations.
 
 
 ---
@@ -243,10 +261,14 @@ CleanedStationProfiles AS (
 ### ** 05. Checking specific missing data**
 * ##**checking for missing start_station_id,start_station_name,end_station_id,end_station_name**
 * in previous **step 01** I already showed that in the data we are missing is the null_address (including end_station_id,start_station_id) and no Station_name missing .
-* we check this specific station id missing and get the statin name attached .
+* we check this specific station id missing and get the station name attached .
 * result: 1 trip with the end station named **'Springfest 2022'**
 * discusion: it is a unique event, no station with this name in station_id table and no assigned station_id to it,and it one trip over all, and the trip is 12mins log, more than usual, still logically its hard to believe tha in an event there was only one rent when we would expect more, also 12mins trip when we would expect more time for the festival, leading me to invistigate more into this case.
-*
+* **Data Provenance:** This indicates a "pop-up" hardware deployment. Because the metadata was never formalized in the `station_info` table, this record was initially orphaned during the relational join.
+* Analyst Decision
+   * Rather than deleting this record as a "garbage entry," I have opted to **preserve it**. 
+
+   * This outlier serves as a critical real-world test case for our data pipeline. It confirms that the system is capable of logging ad-hoc, mobile, or event-based station usage, even when infrastructure metadata is missing.
 
 
 
@@ -256,6 +278,8 @@ CleanedStationProfiles AS (
 ---
 
 ### ** 06. Logical Filtring and outliers**
+
+----------------------------------------------------------(continue here!)
 
 ---
 ### ** 07. Final Check**
