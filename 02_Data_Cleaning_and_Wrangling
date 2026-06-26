@@ -309,13 +309,29 @@ CleanedStationProfiles AS (
 * Both the customers table and station_info table both came clean, However rentals table had outliners (as longer duration from 24 hours)
 * total of 6 time outliers.
 
-* 
+* there rental records outliers are way extreme considering the mean and median. suggesting that it could be stollen , broken or some other reason like an accident, in any case they do affect the data, and filtering extreme outliers is the way to go.
 
+
+SELECT
+  MIN(duration_minutes) AS min_duration,
+  MAX(duration_minutes) AS max_duration,
+  AVG(duration_minutes) AS avg_duration,
+  APPROX_QUANTILES(duration_minutes, 2)[OFFSET(1)] AS median_duration,
+  COUNTIF(duration_minutes <= 0) AS zero_or_negative_durations,
+  COUNTIF(duration_minutes > 1440) AS trips_over_24_hours
+FROM `bqproj-488319.zen_city.rentals`;
+
+
+-- median=6,mean=21.089, min=2, max= 4874,more than 24h=0, negative=0.
+
+
+---
+
+
+### ** 07. Final Check**
 
 ----------------------------------------------------------(continue here!)
 
----
-### ** 07. Final Check**
 
 ---
 ### **Putting everyting togather ** 
