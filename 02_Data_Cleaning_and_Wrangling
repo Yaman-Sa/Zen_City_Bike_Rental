@@ -124,17 +124,27 @@ FROM `bqproj-488319.zen_city.station_info`
 
 **checkig for consistancy, regarding names and id:**
 * in a check on customers table there was **no conflict** on the name and id.
-* in a check onstation_id table there was **one** name for two distinct stations id, 1007 and 3294.
+* in a check on station_id table there was **one** name for two distinct stations id, 1007 and 3294.
 * checking the trips regarding the 1007 and 3294 IDs I found one trip regarding 1007 and the rest are regarding 3294.
 * before I decided what to do I went into further investigating, despite the first imprision of fitering one row wont hur thoverall integrity of the data and honesty of the model nd predition (from totalof 16585 rows in total).
 
 
 **understanding the tables: deeper investigtion**
 * **Status in station_info table :** looking at the table I noticed that some stations are marked as *Closed* as its status, suggesting that there are no longer active.
-* checking percentage and number of such stations I got :-------------------------------- 
+* checking percentage and number of such stations I got : 24 closed stations out of 102 total stations registered (23.5% of total sttions registered).
 * investigating the dates of last update cncluded what we expect from closed station in the past.
-* in a quick filtering the stations , I got that there are less than 8 rows that inclded these closed sttions (all as end stations) from total of 18585 records .
+* checking coresponding stations id in the rental table for total rental count including these station: ---------------------------------------------
+* in a quick filtering the stations , I got that there are less than 8 rows that inclded these closed sttions (including filterig station id 1007) from total of 18585 records (including filterig station id 1007).
 * 
+
+--finding all rows with **closed** as status.
+SELECT * FROM `bqproj-488319.zen_city.station_info` 
+WHERE LOWER(status) = 'closed';
+--24 stations are closed, from toal of 102 registered stations in stations table. 
+
+
+---
+
 
 * **cleaning:** for better accuracy , with keeping in mind the posible "effect" of these stations to the ones wit trips records with them, however these trips are very tiny percntage!, total trips related are about 81 trips in total out of 16585 rows in total.
 * **decision:** filtering these trips lowers our data percentage by less than 0.5% only, but giving us overall more accurate predictions accunting to the active stations , again keeping in mind that there are in total 81 rows filtered had little to no "effect" on our related stations.
