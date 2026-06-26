@@ -82,8 +82,6 @@ This dimension table provides structural user profiles and demographic metadata 
 
 ---
 
-----------------------------------------------------------------------------(continue here!)
-
 **investigating and identifying the zen_city.station_info Nulls**
 
 -- station info nulls counter
@@ -121,7 +119,8 @@ FROM `bqproj-488319.zen_city.station_info`
 * null_council_district      0
 * null_modified_date         0
 
---------------------------------------------------------------------(continue here)
+
+* as we can see there is a null_address , we will check that among the other nulls , and decide how to deal with them acordingly. 
 
 **checkig for consistancy, regarding names and id:**
 * in a check on customers table there was **no conflict** on the name and id.
@@ -132,7 +131,10 @@ FROM `bqproj-488319.zen_city.station_info`
 
 **understanding the tables: deeper investigtion**
 * **Status in station_info table :** looking at the table I noticed that some stations are marked as *Closed* as its status, suggesting that there are no longer active.
-* checking percentage and number of such stations I got :--------------------------------
+* checking percentage and number of such stations I got :-------------------------------- 
+* investigating the dates of last update cncluded what we expect from closed station in the past.
+* in a quick filtering the stations , I got that there are less than 8 rows that inclded these closed sttions (all as end stations) from total of 18585 records .
+* 
 
 * **cleaning:** for better accuracy , with keeping in mind the posible "effect" of these stations to the ones wit trips records with them, however these trips are very tiny percntage!, total trips related are about 81 trips in total out of 16585 rows in total.
 * **decision:** filtering these trips lowers our data percentage by less than 0.5% only, but giving us overall more accurate predictions accunting to the active stations , again keeping in mind that there are in total 81 rows filtered had little to no "effect" on our related stations.
@@ -158,7 +160,7 @@ LEFT JOIN `bqproj-488319.zen_city.station_info` s_end
 ---
 
 ### **02. Station ID 1007 (the ghost station)**
-*During the initial audit of the station_info catalog, a significant risk to downstream data integrity was identified regarding station ID 1007.
+*During the initial audit of the station_info catalog, a significant risk to downstream data integrity was identified regarding station ID 1007, which shares the station name with the station id 3294.
 *The Discovery: A review of the status column revealed that station 1007 is marked as 'Closed'.
 *The Risk: Leaving legacy or inactive entities in a dimension table is a "data trap." If a analyst joins the rentals table to this "dirty" catalog, it can lead to join fan-outs or ambiguous results that skew volume metrics.
 *The Strategic Decision: Rather than filtering at the final reporting stage, I implemented an upstream, source-level filtration strategy within my CTE architecture.
