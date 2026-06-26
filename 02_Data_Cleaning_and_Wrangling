@@ -279,6 +279,17 @@ CleanedStationProfiles AS (
 
 ### ** 06. Logical Filtring and outliers**
 
+**Next we searched for logical errors : **
+* rentals table: Are there any trips where duration_minutes is 0 or negative? Are there trips that lasted an impossible amount of time (e.g., 40,000 minutes)?, for accuracy I'll take only durations less than a day (24h).
+* customers table: Check the MAX(age) and MIN(age). Are there customers listed as 150 years old or -5 years old?
+* station_info table: Are there stations with 0 or negative number_of_docks? foorprint_length? footprint_width?
+
+* Both the customers table and station_info table both came clean, However rentals table had outliners (as longer duration from 24 hours)
+* total of 6 time outliers.
+
+* 
+
+
 ----------------------------------------------------------(continue here!)
 
 ---
