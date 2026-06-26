@@ -13,8 +13,8 @@
 * rentals: The trip_id (INTEGER) is the unique identifier.
 
 **checking primary keys duplicates**
-* `bqproj-488319.zen_city.station_info`         16585         16585       0 duplicates(primary keys)
-* `bqproj-488319.zen_city.rentals`              102           102         0 duplicates(primary keys)
+* `bqproj-488319.zen_city.station_info`         102           102         0 duplicates(primary keys)
+* `bqproj-488319.zen_city.rentals`              16585         16585       0 duplicates(primary keys)
 * `bqproj-488319.zen_city.customers`            586           586         0 duplicates(primary keys)
 
 **cheking the Nulls Cells:**
@@ -190,7 +190,7 @@ OR end_station_id IN (
 
 
 **relation between tables**
-* I have discovered that there are good sum of trips records with no id corelations to the statin_id table:
+* I have discovered that there are good sum of trips records with no id corelations to the station_info table:
 
 -- primary keys matching
 --station IDs 
@@ -204,7 +204,29 @@ LEFT JOIN `bqproj-488319.zen_city.station_info` s_end
   ON r.end_station_id = s_end.station_id
 --start station without end:4916  , end stations withot start:2164
 
-* I will keep this in mind, in the final CTE I will be aware of inner joining raw tables, even add filtering for this.
+* it is expected that some trips would be with no start station in the early records of Q1 , and similar for end station in late records of Q1, however there is large number of records like this, and it requirs further study, also stations name do not corespond.
+* I started with the duration records for all records, From previous step 01, there are no Nulls for duration record (which I have decided to trust!,after checking the time median and mean, and compaired the majority user type which is Student Subcription, and main clusters of flow, all direct toward student majority usingthe bikes for short travel, which again makes sense).
+*The presence of ~7,000 orphaned records across the dataset initially suggests potential data quality issues. However, after investigating the temporal distribution and user patterns, I have categorized these into two distinct phenomena:
+
+    * Temporal Window Truncation: As the dataset is limited to a strict 3-month window (Q1), trips that initiated or terminated outside of these specific parameters may lose their relational link to the master infrastructure catalog.
+
+    * Ad-Hoc/Event-Based Deployment: Similar to the 'Springfest 2022' anomaly identified earlier, it is likely that several stations are temporary, mobile, or "pop-up" hubs that never officially registered with the permanent station_info catalog.
+
+ **Strategic Resolution: Duration Trust & Preservation**
+
+* Despite the lack of station-level metadata for these ~7,000 records, I have decided against purging them.
+
+    * Validation: I performed a cross-verification of the duration_minutes for these orphaned records against the global average and the 'Student Membership' behavioral cluster.
+
+    * Consistency: The orphaned records maintain a logical distribution consistent with the broader student commuter population (short-burst, high-frequency travel).
+
+    * Conclusion: The transactional duration metadata is reliable and internally consistent, even when the station infrastructure metadata is missing. These trips represent genuine business activity (real revenue and utilization) and are essential for accurate Q2 volume forecasting.
+
+* Consequently, these records are preserved in the master analytical view, with missing metadata dynamically backfilled to a placeholder label ('Unregistered Station') to ensure we do not under-report aggregate utilization.
+
+
+
+* I will keep this in mind, in the final CTE I will be aware of inner joining raw tables, maybe using left join or filter this.
 
 ---
 
