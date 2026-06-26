@@ -136,7 +136,8 @@ FROM `bqproj-488319.zen_city.station_info`
 * checking coresponding stations id in the rental table for total rental count including these station: 74 trips records , of total 16585 records .
 * as my objective is to study an analyze the data for future prediction and recommendations, this would include only the open stations , with having in mind the effect of closing  these stations and the dates there were closed and the connection to the remaining stations, still 0.45% of total rents are neglectble to the big picture.
 * final decision is to filter these stations in the final data cleaning.
----------------------------------------------------------------------
+
+
 --finding all rows with **closed** as status.
 SELECT * FROM `bqproj-488319.zen_city.station_info` 
 WHERE LOWER(status) = 'closed';
@@ -152,11 +153,40 @@ WHERE LOWER(status) = 'closed')
 -- 74 records of total of 16585 recods , counting for less than 0.45%.
 
 
+**clear SQL** 
+-- Phase 1: Audit total distribution of operational vs decommissioned stations
+SELECT 
+  status,
+  COUNT(*) AS station_count,
+  ROUND(COUNT(*) / SUM(COUNT(*)) OVER() * 100, 2) AS percentage_of_total
+FROM `bqproj-488319.zen_city.station_info`
+GROUP BY status;
+-- Result: 24 stations identified as 'Closed' (23.53% of the catalog)
+
+-- Phase 2: Identify and isolate transactional volume tied to inactive assets
+SELECT * FROM `bqproj-488319.zen_city.rentals`
+WHERE start_station_id IN (
+  SELECT station_id 
+  FROM `bqproj-488319.zen_city.station_info` 
+  WHERE LOWER(status) = 'closed'
+) 
+OR end_station_id IN (
+  SELECT station_id 
+  FROM `bqproj-488319.zen_city.station_info` 
+  WHERE LOWER(status) = 'closed'
+);
+-- Result: 74 records out of 16,585 total rows (< 0.45% of transaction volume)
+
 ---
 
 
 * **cleaning:** for better accuracy , with keeping in mind the posible "effect" of these stations to the ones wit trips records with them, however these trips are very tiny percntage!, total trips related are about 81 trips in total out of 16585 rows in total.
-* **decision:** filtering these trips lowers our data percentage by less than 0.5% only, but giving us overall more accurate predictions accunting to the active stations , again keeping in mind that there are in total 81 rows filtered had little to no "effect" on our related stations.
+* **decision:** filtering these trips lowers our data percentage by less than 0.45% only, but giving us overall more accurate predictions accunting to the active stations , again keeping in mind that there are in total 81 rows filtered had little to no "effect" on our related stations.
+
+
+
+----------------------------------------------------------------------------------
+
 
 
 **relation between tables**
