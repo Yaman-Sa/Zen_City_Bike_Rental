@@ -324,6 +324,55 @@ FROM `bqproj-488319.zen_city.rentals`;
 
 -- median=6,mean=21.089, min=2, max= 4874,more than 24h=0, negative=0.
 
+* as we can see (this is before filtering, however expected loss: less than 90 rental records , out of 16585 records, so the expected general representation could be very similar) there is concntration near the 6mins, but spread to 4874mins which is extreme outlier.
+* however, I decided to fiter for 24h as I would expect the company to have such policy (even less hours as maximum rental time allowed, unless they have special rental program that allows such extended time).
+
+
+** final check on orphane names for the stations, and comparing the stations id's:**
+
+
+* ### Lexical vs. Relational Coherence (Station ID vs. Name Mismatches)
+
+* To round out the pre-cleaning infrastructure audit, a cross-examination was performed comparing **relational keys** (`station_id`) against **lexical descriptors** (`station_name`) within the transactional ledger. The objective was to determine if records containing missing or orphaned IDs still retained valid textual location data that could be preserved for descriptive localized volume analysis, or if the name fields suffered from identical systemic corruption.
+
+-- Lexical vs. Relational Coherence Audit: Station IDs vs. Names
+SELECT
+  -- 1. Absolute Mismatches (ID populated but Name missing, or vice versa)
+  COUNTIF(start_station_id IS NULL AND start_station_name IS NOT NULL) AS start_id_null_name_populated,
+  COUNTIF(start_station_id IS NOT NULL AND start_station_name IS NULL) AS start_id_populated_name_null,
+  COUNTIF(end_station_id IS NULL AND end_station_name IS NOT NULL) AS end_id_null_name_populated,
+  COUNTIF(end_station_id IS NOT NULL AND end_station_name IS NULL) AS end_id_populated_name_null,
+
+  -- 2. Referential Orphan Gaps vs. Descriptive Name Coverage
+  COUNTIF(r.start_station_id IS NOT NULL AND s_start.station_id IS NULL) AS total_orphaned_start_ids,
+  COUNTIF(r.start_station_id IS NOT NULL AND s_start.station_id IS NULL AND r.start_station_name IS NOT NULL) AS orphaned_start_ids_with_names,
+  
+  COUNTIF(r.end_station_id IS NOT NULL AND s_end.station_id IS NULL) AS total_orphaned_end_ids,
+  COUNTIF(r.end_station_id IS NOT NULL AND s_end.station_id IS NULL AND r.end_station_name IS NOT NULL) AS orphaned_end_ids_with_names
+FROM
+  `bqproj-488319.zen_city.rentals` r
+LEFT JOIN
+  `bqproj-488319.zen_city.station_info` s_start ON r.start_station_id = s_start.station_id
+LEFT JOIN
+  `bqproj-488319.zen_city.station_info` s_end ON r.end_station_id = s_end.station_id;
+
+
+#### Audit Metrics Breakdown
+| Audit Vector | Metric Tracked | Record Count | % of Total Dataset (N=16,585) |
+| :--- | :--- | :---: | :---: |
+| **Start Station Structural Mismatch** | ID is NULL, but Name is Populated | 0 | 0.00% |
+| **Start Station Structural Mismatch** | ID is Populated, but Name is NULL | 0 | 0.00% |
+| **End Station Structural Mismatch** | ID is NULL, but Name is Populated | 1 | 0.01% |
+| **End Station Structural Mismatch** | ID is Populated, but Name is NULL | 0 | 0.00% |
+| **Start Station Orphan Metadata** | Relational ID is Orphaned, but Text Name is Retained | 4,916 | 29.64% (100% of orphans) |
+| **End Station Orphan Metadata** | Relational ID is Orphaned, but Text Name is Retained | 2,164 | 13.05% (100% of orphans) |
+
+#### Engineering & Strategic Insights
+1. **100% Lexical Recovery Capability:** The discovery that exactly 100% of orphaned station IDs (4,916 start / 2,164 end) possess valid string names confirms that a standard `INNER JOIN` would introduce an egregious sampling bias by discarding valid transit paths. By preserving these records, we protect our aggregate sample size for Q2 business forecasting.
+2. **Defensive Pipeline Justification:** This audit empirically justifies implementing a robust `COALESCE` string override layer within the downstream master cleaning pipeline. For any transaction where the station ID cannot resolve cleanly to the infrastructure dimension table, the pipeline will fall back safely to the native log string or assign a standardized 'Unregistered Station' profile, guaranteeing 100% transparency without violating referential constraints.
+
+
+
 
 ---
 
@@ -337,95 +386,13 @@ FROM `bqproj-488319.zen_city.rentals`;
 ### **Putting everyting togather ** 
 * While a status filter is a valid way to exclude closed stations from a final report, I adopted a source-level filtration strategy within my * dimension lookup catalog. This guarantees referential integrity at the table definition level, preventing the risk of join fan-outs and ensuring that no downstream analysis can accidentally reference legacy identifiers
 
--- Final Complete CTE Data Cleaning & Imputation Script (Type Mismatch Fixed)
-WITH DeduplicatedRentals AS (
-  SELECT *,
-    -- 1. Identify & treat row-level duplicates by keeping the most recent entry
-    ROW_NUMBER() OVER(PARTITION BY trip_id ORDER BY start_time DESC) as row_num
-  FROM `bqproj-488319.zen_city.rentals`
-  -- 2. Identify & treat nulls in the primary key
-  WHERE trip_id IS NOT NULL
-),
 
--- 3. Calculate Global Medians for continuous physical station attributes
-GlobalStationMedians AS (
-  SELECT
-    APPROX_QUANTILES(number_of_docks, 2)[OFFSET(1)] AS median_docks,
-    APPROX_QUANTILES(footprint_length, 2)[OFFSET(1)] AS median_length,
-    APPROX_QUANTILES(footprint_width, 2)[OFFSET(1)] AS median_width
-  FROM `bqproj-488319.zen_city.station_info`
-),
 
--- 4. Clean and Impute the master station profile catalog using the medians
-CleanedStationProfiles AS (
-  SELECT
-    s.station_id,
-    -- THE NEW FILTER COLUMN: Bring status in so we can filter out 'closed' later
-    s.status AS station_status,
-    -- Fill missing operational strings with 'Unknown'
-    COALESCE(s.property_type, 'Unknown') AS clean_property_type,
-    COALESCE(s.power_type, 'Unknown') AS clean_power_type,
-    COALESCE(s.address, 'Unknown') AS clean_address,
-    -- THE FIX: Cast the INT64 city_asset_number to a STRING before filling with 'Unknown'
-    COALESCE(CAST(s.city_asset_number AS STRING), 'Unknown') AS clean_city_asset_number,
-    -- Impute continuous physical dimensions using overall table medians
-    COALESCE(s.number_of_docks, m.median_docks) AS clean_number_of_docks,
-    COALESCE(s.footprint_length, m.median_length) AS clean_footprint_length,
-    COALESCE(s.footprint_width, m.median_width) AS clean_footprint_width
-  FROM `bqproj-488319.zen_city.station_info` s
-  CROSS JOIN GlobalStationMedians m
-  -- Optimized Dimension Filter: Drop the legacy 'closed' Lavaca record explicitly 
-  WHERE s.station_id != 1007
-),
 
--- 5. Primary Cleaning Stage for transactional rental records
-CleanedRentals AS (
-  SELECT
-    trip_id,
-    subscriber_type,
-    bike_id,
-    bike_type,
-    start_time,
-    customer_id,
-    start_station_id AS clean_start_station_id,
-    -- Standardization (Trimming trailing or hidden whitespaces)
-    TRIM(start_station_name) AS clean_start_station_name,
-    end_station_id AS clean_end_station_id,
-    TRIM(end_station_name) AS clean_end_station_name,
-    duration_minutes
-  FROM DeduplicatedRentals
-  WHERE row_num = 1 -- Retains only unique records
-    -- Preserve transactions by allowing unregistered station IDs to pass through
-    AND start_station_id IS NOT NULL 
-    AND end_station_id IS NOT NULL 
-    AND start_station_name IS NOT NULL 
-    AND end_station_name IS NOT NULL
-    -- Remove extreme operational outliers (Trips under 1 minute or over 24 hours)
-    AND duration_minutes > 1 
-    AND duration_minutes < 1440
-)
 
--- 6. Final Output Assembly: LEFT JOIN to prevent data loss
-SELECT 
-  cr.*,
-  -- Inject clean physical dimensions or explicitly flag unregistered stations
-  COALESCE(start_st.clean_property_type, 'Unregistered Station') AS start_station_property_type,
-  COALESCE(start_st.clean_power_type, 'Unknown') AS start_station_power_type,
-  COALESCE(start_st.clean_number_of_docks, (SELECT median_docks FROM GlobalStationMedians)) AS start_station_docks,
-  COALESCE(start_st.clean_footprint_length, (SELECT median_length FROM GlobalStationMedians)) AS start_station_footprint_length,
-  COALESCE(start_st.clean_footprint_width, (SELECT median_width FROM GlobalStationMedians)) AS start_station_footprint_width,
-  
-  COALESCE(end_st.clean_property_type, 'Unregistered Station') AS end_station_property_type,
-  COALESCE(end_st.clean_power_type, 'Unknown') AS end_station_power_type,
-  COALESCE(end_st.clean_number_of_docks, (SELECT median_docks FROM GlobalStationMedians)) AS end_station_docks,
-  COALESCE(end_st.clean_footprint_length, (SELECT median_length FROM GlobalStationMedians)) AS end_station_footprint_length,
-  COALESCE(end_st.clean_footprint_width, (SELECT median_width FROM GlobalStationMedians)) AS end_station_footprint_width
-FROM CleanedRentals cr
-LEFT JOIN CleanedStationProfiles start_st 
-  ON cr.clean_start_station_id = start_st.station_id
-LEFT JOIN CleanedStationProfiles end_st 
-  ON cr.clean_end_station_id = end_st.station_id
--- THE NEW FILTER: Drops trips linked to 'closed' stations.
--- The IS NULL condition ensures your 'Unregistered Stations' are still kept in the data.
+
+
+
+
 WHERE (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
   AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL);
