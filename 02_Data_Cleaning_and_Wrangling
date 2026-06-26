@@ -379,6 +379,13 @@ LEFT JOIN
 
 ### ** 07. Final Check**
 
+* The Final Master CTE Cleaning Pipeline ScriptNow that every gap has been audited, checked, and quantified, here is the complete, cohesive, end-to-end SQL statement.This single script implements the entire cleaning strategy:
+ * Removes Row-Level Duplicates & Null Keys (trip_id).
+ * Calculates and Imputes continuous features (docks, footprint) using table medians.
+ * Excludes Decommissioned Infrastructure (the 74 records from closed stations).
+ * Applies Logical Boundaries (trips 1<= min and <= 24 hours).
+ * Applies Lexical Recovery (COALESCE statements utilizing your 100% text-retention find).
+
 ----------------------------------------------------------(continue here!)
 
 
@@ -387,12 +394,3 @@ LEFT JOIN
 * While a status filter is a valid way to exclude closed stations from a final report, I adopted a source-level filtration strategy within my * dimension lookup catalog. This guarantees referential integrity at the table definition level, preventing the risk of join fan-outs and ensuring that no downstream analysis can accidentally reference legacy identifiers
 
 
-
-
-
-
-
-
-
-WHERE (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
-  AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL);
