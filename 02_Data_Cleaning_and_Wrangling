@@ -393,4 +393,135 @@ LEFT JOIN
 ### **Putting everyting togather ** 
 * While a status filter is a valid way to exclude closed stations from a final report, I adopted a source-level filtration strategy within my * dimension lookup catalog. This guarantees referential integrity at the table definition level, preventing the risk of join fan-outs and ensuring that no downstream analysis can accidentally reference legacy identifiers
 
+### The Final Master CTE Cleaning & Enrichment Pipeline Script
 
+Now that every relational gap, physical dimension null, and operational outlier has been fully audited and quantified, here is the final cohesive, end-to-end SQL statement. This single production script implements the entire cleaning, imputation, and feature-enrichment architecture:
+
+* [cite_start]**Duplicate & Null Remediation:** Filters row-level duplicate transactions using `ROW_NUMBER()`[cite: 1183].
+* [cite_start]**Continuous Dimension Imputation:** Utilizes table medians via `CROSS JOIN` to fill missing capacity metrics[cite: 1184, 1185].
+* [cite_start]**Strategic Infrastructure Preservation:** Safely filters out decommissioned stations (the 74 closed rows) while defaulting unmapped active hardware tracking entries to 'Unregistered Station' via defensive `LEFT JOIN` logic[cite: 1185, 1188, 1190, 1196].
+* [cite_start]**Demographic Enrichment:** Integrates customer profiles directly into the transactional stream to empower cohort tracking.
+* **Advanced Feature Engineering:** Computes date, hour, day-of-week, and weekend flags on the fly to accelerate subsequent transit analysis.
+
+```sql
+-- =========================================================================
+-- ZEN CITY BIKE RENTAL: END-TO-END DATA CLEANING & ENRICHMENT PIPELINE
+-- Target Output Yield: 16,504 Production Records
+-- =========================================================================
+
+WITH DeduplicatedRentals AS (
+  SELECT *,
+    -- 1. Identify & isolate row-level duplicates by tracking the latest entry
+    ROW_NUMBER() OVER(PARTITION BY trip_id ORDER BY start_time DESC) as row_num
+  FROM `bqproj-488319.zen_city.rentals`
+  -- 2. Enforce primary key integrity
+  WHERE trip_id IS NOT NULL
+),
+
+-- 3. Compute Global Medians for physical station features to serve as imputation baselines
+GlobalStationMedians AS (
+  SELECT    
+    APPROX_QUANTILES(number_of_docks, 2)[OFFSET(1)] AS median_docks,    
+    APPROX_QUANTILES(footprint_length, 2)[OFFSET(1)] AS median_length,    
+    APPROX_QUANTILES(footprint_width, 2)[OFFSET(1)] AS median_width
+  FROM `bqproj-488319.zen_city.station_info`
+), 
+
+-- 4. Clean, type-cast, and impute the Master Station dimension lookup table
+CleanedStationProfiles AS (
+  SELECT    
+    s.station_id,    
+    s.status AS station_status,    
+    -- Remediate missing structural text fields
+    COALESCE(s.property_type, 'Unknown') AS clean_property_type,    
+    COALESCE(s.power_type, 'Unknown') AS clean_power_type,    
+    COALESCE(s.address, 'Unknown') AS clean_address,    
+    -- Prevent type-mismatches by casting municipal identifiers safely to STRING
+    COALESCE(CAST(s.city_asset_number AS STRING), 'Unknown') AS clean_city_asset_number,    
+    -- Apply continuous physical feature median imputation
+    COALESCE(s.number_of_docks, m.median_docks) AS clean_number_of_docks,    
+    COALESCE(s.footprint_length, m.median_length) AS clean_footprint_length,    
+    COALESCE(s.footprint_width, m.median_width) AS clean_footprint_width
+  FROM `bqproj-488319.zen_city.station_info` s
+  CROSS JOIN GlobalStationMedians m
+  -- Explicitly filter out legacy, unutilized station configurations at the source
+  WHERE s.station_id != 1007
+),
+
+-- 5. Primary transactional cleaning layer and boundary filter execution
+CleanedRentals AS (
+  SELECT    
+    trip_id,    
+    subscriber_type,    
+    bike_id,    
+    bike_type,    
+    start_time,    
+    customer_id,    
+    start_station_id AS clean_start_station_id,    
+    TRIM(start_station_name) AS clean_start_station_name,    
+    end_station_id AS clean_end_station_id,    
+    TRIM(end_station_name) AS clean_end_station_name,    
+    duration_minutes
+  FROM DeduplicatedRentals
+  WHERE row_num = 1 -- Eliminate redundant mutations
+    AND start_station_id IS NOT NULL
+    AND end_station_id IS NOT NULL
+    AND start_station_name IS NOT NULL
+    AND end_station_name IS NOT NULL
+    -- Filter out structural anomalies (trips under 1 minute or lingering over 24 hours)
+    AND duration_minutes >= 1 
+    AND duration_minutes <= 1440
+)
+
+-- 6. Final Production Assembly: Left Join Dimension tables to avoid sampling bias
+SELECT 
+  cr.trip_id,
+  cr.subscriber_type,
+  cr.bike_id,
+  cr.bike_type,
+  cr.start_time,
+  cr.customer_id,
+  
+  -- Demographics Enrichment Layer (From Customers Dimension)
+  cust.age AS customer_age,
+  cust.gender AS customer_gender,
+  cust.user_type AS customer_user_type,
+  
+  -- Feature-Engineered Temporal Analytics Attributes
+  DATE(cr.start_time) AS trip_date,
+  EXTRACT(HOUR FROM cr.start_time) AS trip_hour,
+  EXTRACT(DAYOFWEEK FROM cr.start_time) AS trip_day_of_week, -- (1 = Sunday, 7 = Saturday)
+  CASE WHEN EXTRACT(DAYOFWEEK FROM cr.start_time) IN (1, 7) THEN 1 ELSE 0 END AS is_weekend,
+  
+  -- Origin Station Imputed Hardware Attributes
+  cr.clean_start_station_id,
+  cr.clean_start_station_name,
+  COALESCE(start_st.clean_property_type, 'Unregistered Station') AS start_station_property_type,
+  COALESCE(start_st.clean_power_type, 'Unknown') AS start_station_power_type,
+  COALESCE(start_st.clean_number_of_docks, (SELECT median_docks FROM GlobalStationMedians)) AS start_station_docks,
+  COALESCE(start_st.clean_footprint_length, (SELECT median_length FROM GlobalStationMedians)) AS start_station_footprint_length,
+  COALESCE(start_st.clean_footprint_width, (SELECT median_width FROM GlobalStationMedians)) AS start_station_footprint_width,
+  
+  -- Destination Station Imputed Hardware Attributes
+  cr.clean_end_station_id,
+  cr.clean_end_station_name,
+  COALESCE(end_st.clean_property_type, 'Unregistered Station') AS end_station_property_type,
+  COALESCE(end_st.clean_power_type, 'Unknown') AS end_station_power_type,
+  COALESCE(end_st.clean_number_of_docks, (SELECT median_docks FROM GlobalStationMedians)) AS end_station_docks,
+  COALESCE(end_st.clean_footprint_length, (SELECT median_length FROM GlobalStationMedians)) AS end_station_footprint_length,
+  COALESCE(end_st.clean_footprint_width, (SELECT median_width FROM GlobalStationMedians)) AS end_station_footprint_width,
+  
+  cr.duration_minutes
+
+FROM CleanedRentals cr
+LEFT JOIN CleanedStationProfiles start_st 
+  ON cr.clean_start_station_id = start_st.station_id
+LEFT JOIN CleanedStationProfiles end_st 
+  ON cr.clean_end_station_id = end_st.station_id
+LEFT JOIN `bqproj-488319.zen_city.customers` cust
+  ON cr.customer_id = cust.customer_id
+
+-- Enforce system-wide Decommissioned Infrastructure Exclusions
+-- The 'IS NULL' condition gracefully protects active, unregistered pop-up event records
+WHERE (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
+  AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL);
