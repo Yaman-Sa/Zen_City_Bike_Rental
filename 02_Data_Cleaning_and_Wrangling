@@ -185,7 +185,7 @@ OR end_station_id IN (
 
 
 
-----------------------------------------------------------------------------------
+---
 
 
 
@@ -204,7 +204,7 @@ LEFT JOIN `bqproj-488319.zen_city.station_info` s_end
   ON r.end_station_id = s_end.station_id
 --start station without end:4916  , end stations withot start:2164
 
-
+* I will keep this in mind, in the final CTE I will be aware of inner joining raw tables, even add filtering for this.
 
 ---
 
@@ -234,6 +234,9 @@ CleanedStationProfiles AS (
 ---
 
 ### ** 04. Dealing with the Nulls in station_info table:**
+
+------------------------------------------------------------------------------------(continue here!)
+
 
 ---
 
