@@ -131,7 +131,7 @@ FROM `bqproj-488319.zen_city.station_info`
 
 **understanding the tables: deeper investigtion**
 * **Status in station_info table :** looking at the table I noticed that some stations are marked as *Closed* as its status, suggesting that there are no longer active.
-* checking percentage and number of such stations I got : 24 closed stations out of 102 total stations registered (23.5% of total sttions registered).
+* checking percentage and number of such stations I got : 24 closed stations out of 102 total stations registered (23.5% of total stations registered).
 * investigating the dates of last update cncluded what we expect from closed station in the past.
 * checking coresponding stations id in the rental table for total rental count including these station: 74 trips records , of total 16585 records .
 * as my objective is to study an analyze the data for future prediction and recommendations, this would include only the open stations , with having in mind the effect of closing  these stations and the dates there were closed and the connection to the remaining stations, still 0.45% of total rents are neglectble to the big picture.
