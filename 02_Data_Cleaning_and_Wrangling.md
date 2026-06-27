@@ -23,8 +23,8 @@
 * in zen_city.station_info   there are Nulls Cells.
 
 
-* **Schemas of the tables:** 
-*### **1. `bqproj-488319.zen_city.station_info` (Dimension Catalog)**
+**Schemas of the tables:** 
+### **1. `bqproj-488319.zen_city.station_info` (Dimension Catalog)**
 Acts as the master profile directory tracking the physical capacity, logistical constraints, and geographical footprints of all deployed bike stations.
 
 | Field Name | Data Type | Mode | Constraints / Core Field Notes |
