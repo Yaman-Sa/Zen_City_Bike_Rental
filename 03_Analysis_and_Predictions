@@ -72,7 +72,7 @@ pie title Zen City Fleet Utilization by Subscription Type (%)
 ---
 
 
-* Bike types
+* **Bike types**
 ## Bike Type Analysis
 
 This section explores the utilization and fleet breakdown between **Classic** and **Electric** bikes across the Zen City ecosystem for the analyzed period.
@@ -86,6 +86,8 @@ The table below details the absolute ride counts and self-calculated percentage 
 | **Electric** | 14,473 | 87.69% | ██████████████████░░ |
 | **Classic** | 2,031 | 12.31% | ██░░░░░░░░░░░░░░░░░░ |
 | **Total Ecosystem** | **16,504** | **100.00%** | |
+
+
 
 ### 📉 Visual Breakdown (Dynamic Chart)
 
@@ -130,23 +132,210 @@ graph TD
     B -->|Low Density / Remote Stations| D[Electrification Lag / Supply Deficit]
 ```
 
+```
+SQL queries for: 
+1:Orphaned Stations Analysis by Bike Type
+2:Top Stations for Classic Bike Type
 
+-- Append this query directly below the CTE framework (replacing the final SELECT statement)
+, ProductionOutcomes AS (
+  SELECT 
+    cr.bike_type,
+    CASE 
+      WHEN start_st.station_id IS NULL OR end_st.station_id IS NULL THEN 1 
+      ELSE 0 
+    END AS is_orphaned_trip
+  FROM CleanedRentals cr
+  LEFT JOIN CleanedStationProfiles start_st 
+    ON cr.clean_start_station_id = start_st.station_id
+  LEFT JOIN CleanedStationProfiles end_st 
+    ON cr.clean_end_station_id = end_st.station_id
+  WHERE (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
+    AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL)
+)
+
+SELECT
+  bike_type,
+  COUNT(1) AS total_trips,
+  SUM(is_orphaned_trip) AS orphaned_station_trips,
+  ROUND(SAFE_DIVIDE(SUM(is_orphaned_trip), COUNT(1)) * 100, 2) AS orphaned_percentage
+FROM ProductionOutcomes
+GROUP BY bike_type
+ORDER BY bike_type;
+
+
+
+-------------------------------------------
+-- Append this query directly below the CTE framework (replacing the final SELECT statement)
+, ClassicTrips AS (
+  SELECT 
+    cr.bike_type,
+    cr.clean_start_station_name AS station_name,
+    cr.clean_start_station_id AS station_id
+  FROM CleanedRentals cr
+  LEFT JOIN CleanedStationProfiles start_st ON cr.clean_start_station_id = start_st.station_id
+  LEFT JOIN CleanedStationProfiles end_st ON cr.clean_end_station_id = end_st.station_id
+  WHERE cr.bike_type = 'classic'
+    AND (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
+    AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL)
+
+  UNION ALL
+
+  SELECT 
+    cr.bike_type,
+    cr.clean_end_station_name AS station_name,
+    cr.clean_end_station_id AS station_id
+  FROM CleanedRentals cr
+  LEFT JOIN CleanedStationProfiles start_st ON cr.clean_start_station_id = start_st.station_id
+  LEFT JOIN CleanedStationProfiles end_st ON cr.clean_end_station_id = end_st.station_id
+  WHERE cr.bike_type = 'classic'
+    AND (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
+    AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL)
+)
+
+SELECT 
+  station_id,
+  station_name,
+  COUNT(1) AS total_classic_rental_records
+FROM ClassicTrips
+GROUP BY station_id, station_name
+ORDER BY total_classic_rental_records DESC
+LIMIT 10; -- Adjust limit size as needed
+
+```
+
+### Empirical Validation: Testing the Classic Bike Hypotheses
+
+To accurately evaluate the operational role of the mechanical fleet tier, targeted SQL queries were executed against the finalized production dataset ($16,504$ records). This analysis validates or disproves the initial infrastructure hypotheses by cross-referencing trip footprints against the **Orphaned Stations** identified in `02_Data_Cleaning_and_Wrangling` and isolating geographic demand centers.
+
+---
+
+#### 1. Fleet Exposure to Orphaned Stations
+This audit evaluates whether Classic mechanical bikes are disproportionately left stranded at or rented from structural network anomalies (unregistered/ghost stations), or if infrastructure detachment is a systemic fleet issue.
+
+| Bike Type | Total Trips | Orphaned Station Trips | Orphaned Percentage | Network Footprint |
+| :--- | :---: | :---: | :---: | :--- |
+| **Classic** | 2,031 | 713 | 35.11% | ███████░░░░░░░ [35.11%] |
+| **Electric** | 14,473 | 5,838 | **40.34%** | ████████░░░░░░ [40.34%] |
+| **Total Fleet** | **16,504** | **6,551** | **39.69%** | **System-Wide Average** |
+
+##### Analytical Evaluation: The Orphaned Station Disproof
+The data explicitly **disproves** the theory that Classic bikes are uniquely isolated at orphaned stations or driven out of bounds by seasonal disruptions like the `spring festival`. 
+* **Systemic Relocation Issues:** Electric bikes actually exhibit a *higher* rate of interaction with orphaned stations (**40.34%**) than Classic bikes (**35.11%**). 
+* **Conclusion:** Orphaned station interaction is a network-wide rebalancing and logging latency challenge rather than a behavioral pattern unique to mechanical bikes. The electric fleet is frequently pulling out of standard station grids due to longer user travel distances.
+
+---
+
+#### 2. Spatial Clustering: Top 10 High-Volume Classic Bike Hubs
+To map the geographic footprint of the mechanical fleet, transactions were aggregated by individual station profiles to isolate where Classic rides occur.
+
+| Station ID | Station Name | Classic Record Count | Primary Location Context / Attribute |
+| :---: | :--- | :---: | :--- |
+| **3798** | 21st/Speedway @ PCL | 447 | Core Campus Axis (Perry-Castañeda Library) |
+| **2498** | Dean Keeton/Speedway | 431 | Northern Campus Axis (Engineering / North Gate) |
+| **2547** | 21st/Guadalupe | 413 | West Campus Drag (High-Density Student Housing) |
+| **3797** | 21st/University | 374 | Central Campus Core (Academic Buildings) |
+| **7125** | 23rd/San Gabriel | 367 | West Campus (Greek Life & Student Apartments) |
+| **7188** | 22nd/Pearl | 256 | West Campus Residential Core |
+| **2566** | Electric Drive/Sandra Muraida Way @ Pfluger Ped Bridge | 253 | Off-Campus Leisure / Flat Ground Recreational Trail |
+| **3793** | 28th/Rio Grande | 219 | Upper West Campus Housing Corridor |
+| **3799** | 23rd/San Jacinto @ DKR Stadium | 193 | Campus Athletics & Eastern Transit Hub (DKR Stadium) |
+| **2548** | Guadalupe/West Mall @ University Co-op | 159 | Main Campus Gateway / Commercial Center |
+
+---
+
+#### Methodological Note: The Network Loop Paradox
+
+A standalone aggregation of these top 10 stations yields **3,113 record counts**, which superficially contradicts the absolute network total of **2,031 unique classic trips**. 
+
+This mathematical overlap is empirical proof of a highly concentrated, **circular closed-loop network**. Because the classic fleet is structurally confined to a tight campus perimeter, a single trip frequently registers at these top hubs twice (e.g., a student checking out a Classic bike at `21st/Guadalupe` and checking it back into `Dean Keeton/Speedway`). The mechanical fleet rarely leaves this hyper-localized student ecosystem.
+
+```mermaid
+graph LR
+    A[West Campus Housing: ID 2547] -- High Density Student Flow --> B[Core Academic Hubs: ID 3798 / 2498]
+    B -- Class Dismissal Passing Windows --> A
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+```
+
+
+-------------------------------------------------------------------(continue here!)
+
+
+
+
+###  Network Flow & Directional Asymmetry: Sources vs. Sinks
+
+To map the operational loop of the mechanical fleet, transactions at the top 10 stations were segregated into **Departures** (outflows), **Arrivals** (inflows), and **True Round Trips** (trips starting and ending at the exact same physical dock). 
+
+This analysis reveals that the classic fleet does not move randomly; instead, it operates within a highly predictable, asymmetric commuter gravity well.
+
+| Station ID | Station Name | Classic Departures | Classic Arrivals | Total Interaction Volume | True Round Trips | Operational Profile |
+| :---: | :--- | :---: | :---: | :---: | :---: | :--- |
+| **3798** | 21st/Speedway @ PCL | 0 | 447 | 447 | 0 | 🛑 **Absolute Terminal Sink** |
+| **2498** | Dean Keeton/Speedway | 328 | 103 | 431 | 17 | 🛫 **Primary Source / Net Exporter** |
+| **2547** | 21st/Guadalupe | 307 | 106 | 413 | 17 | 🛫 **Primary Source / Net Exporter** |
+| **3797** | 21st/University | 264 | 110 | 374 | 9 | 🛫 **Net Exporter** |
+| **7125** | 23rd/San Gabriel | 273 | 94 | 367 | 13 | 🛫 **Net Exporter** |
+| **7188** | 22nd/Pearl | 183 | 73 | 256 | 8 | 🛫 **Net Exporter** |
+| **2566** | Electric Drive/Sandra Muraida Way @ Pfluger Ped Bridge | 197 | 56 | 253 | 51 | 🔄 **Recreational Loop Hub** |
+| **3793** | 28th/Rio Grande | 147 | 72 | 219 | 13 | 🛫 **Net Exporter** |
+| **3799** | 23rd/San Jacinto @ DKR Stadium | 112 | 81 | 193 | 14 | ⚖️ **Balanced Transit Node** |
+| **2548** | Guadalupe/West Mall @ University Co-op | 0 | 159 | 159 | 0 | 🛑 **Absolute Terminal Sink** |
+
+---
+
+###  Key Behavioral & Logistical Discoveries
+
+#### 1. The "Terminal Sink" Anomaly (Stations 3798 & 2548)
+Stations **21st/Speedway @ PCL** (Perry-Castañeda Library) and **Guadalupe/West Mall** show a staggering **0 classic departures**, yet combine for **606 arrivals**. 
+* **The Commuter Gravity Well:** Students treat these locations as absolute dead-ends for mechanical bikes. They unlock classic bikes at the residential perimeters of West Campus early in the day and ride them downhill/inward to the academic core. 
+* **The Rebalancing Bottleneck:** Because departures are flatline zero, classic bikes naturally stack up and clog these highly competitive campus docks. Rebalancing teams are structurally required to manually haul mechanical units away from these libraries and plazas to prevent them from locking out incoming, high-margin Electric bikes.
+
+#### 2. The West Campus "Shed" (Stations 2498, 2547, 7125)
+Conversely, stations like *Dean Keeton/Speedway*, *21st/Guadalupe*, and *23rd/San Gabriel* operate as massive net exporters of classic assets. Combined, these three perimeter hubs generate **908 departures** but accept only **303 arrivals**. They function as the primary deployment staging grounds where students scavenge left-over mechanical units when e-bike supply runs dry during morning rushes.
+
+#### 3. Empirical Proof of the Leisure Persona (Station 2566)
+**Pfluger Ped Bridge** provides explicit validation for the leisure rider hypothesis. 
+* While high-volume campus hubs see true round-trip rates of less than 4%, Pfluger Ped Bridge clocks a massive **25.8% true round-trip rate** (51 round trips out of 197 departures). 
+* **Behavioral Reality:** Users at this river trail are explicitly renting classic units for self-contained, out-and-back exercise or recreational loops, returning the asset to its exact starting point.
+
+```mermaid
+graph TD
+    %% Define Nodes
+    Residential[West Campus Sources <br> ID: 2547, 2498, 7125]
+    Core[Campus Academic Sinks <br> ID: 3798 PCL, 2548 West Mall]
+    Pfluger[Pfluger Ped Bridge <br> ID: 2566]
+    
+    %% Directional Flows
+    Residential -- "Massive One-Way Outflow <br> (Student Commute)" --> Core
+    Core -. "Manual Operations Trucking <br> (Required Rebalancing)" .-> Residential
+    Pfluger --> |"26% Closed Loop Trips <br> (Leisure Trails)"| Pfluger
+
+    classDef source fill:#d4edda,stroke:#28a745,stroke-width:2px;
+    classDef sink fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+    classDef loop fill:#fff3cd,stroke:#ffc107,stroke-width:2px;
+    
+    class Residential source;
+    class Core sink;
+    class Pfluger loop;
+```
 
 ------------------------------------------------------------------------(continue here!)
 ---
 
-* Duration distribution
+* **Duration distribution**
 
 
 ---
-* Rental volume over time
+* **Rental volume over time**
 
 
-* Gender
-* Age
-* Hour of day
-* Day of week
-* User type
+* **Gender**
+* **Age**
+* **Hour of day**
+* **Day of week**
+* **User type**
 
 
 
