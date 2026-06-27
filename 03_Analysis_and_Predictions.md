@@ -343,32 +343,32 @@ Data-Driven Operational Directives for Q2 2022
 
 ---
 
-## * **Duration distribution**
+## **Duration distribution**
 
 
 ------------------------------------------------------------------------(continue here!)
 
 ---
-## * **Rental volume over time**
+## **Rental volume over time**
 
 ---
 
-## * **Gender**
+## **Gender**
 
 ---
-## * **Age**
+## **Age**
 
-
----
-
-## * **Hour of day**
 
 ---
 
-## * **Day of week**
+## **Hour of day**
 
 ---
-## * **User type**
+
+## **Day of week**
+
+---
+## **User type**
 
 ---
 
