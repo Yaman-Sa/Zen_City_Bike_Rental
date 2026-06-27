@@ -64,11 +64,44 @@ pie title Zen City Fleet Utilization by Subscription Type (%)
     "Pay-as-you-ride" : 2.68
     "Explorer" : 2.44
     "Others (Combined Tiers)" : 4.48
+```
+
+*The Student Core Engine: Combined student tiers (Student Membership + U.T. Student Membership) generate a staggering 77.53% of all rental volume ($12,796$ trips). This confirms that university-related commuting dictates the primary operational baseline for bike rebalancing schedules.
+*Local Commuter Sticky Share: Local31 and Local365 provide a highly stable recurring user base representing 14.21% of rentals. These users present high baseline value due to standard work-week trip consistency.
+*Casual Single-Trip Opportunities: Pay-as-you-ride and short pass tiers account for a lower volume share ($~8.2\%$), but represent crucial high-margin revenue touchpoints during weekends and leisure hours.
 ---
 
 
 * Bike types
+## Bike Type Analysis
 
+This section explores the utilization and fleet breakdown between **Classic** and **Electric** bikes across the Zen City ecosystem for the analyzed period.
+
+### 1. Fleet Composition & Usage Split
+
+The table below details the absolute ride counts and self-calculated percentage shares for each bike type based on a total pool of **16,504** rides.
+
+| Bike Type | Ride Count | Percentage Share | Visual Distribution |
+| :--- | :---: | :---: | :--- |
+| **Electric** | 14,473 | 87.69% | ██████████████████░░ |
+| **Classic** | 2,031 | 12.31% | ██░░░░░░░░░░░░░░░░░░ |
+| **Total Ecosystem** | **16,504** | **100.00%** | |
+
+### 📉 Visual Breakdown (Dynamic Chart)
+
+*GitHub will automatically render this block into an interactive vector chart in your repository:*
+
+```mermaid
+pie title Zen City Ride Volume by Bike Type (%)
+    "Electric Bike" : 87.69
+    "Classic Bike" : 12.31
+```
+* Overwhelming Electric Dominance: Electric bikes represent the vast majority of the volume at 87.69%. This massive preference suggests that users heavily prioritize speed, ease of travel, and reduced physical effort for their trips, which aligns with a commuter-heavy user base.
+* Classic Bikes Relegated to Niche: Classic mechanical bikes account for just 12.31% of total rides. This indicates they are likely utilized either as a budget-conscious alternative, for shorter leisure trips, or as a backup option when electric bike availability is low at specific stations, or special events like the `spring fistival` I encountered and other Orphaned stations , further check is required.
+  ** analysis: 1: classis Bikes in orphaned stations (events that count towards using classic bikes, these events count towards the Oprphaned stations we mentioned in file `02_Data_Cleaning_and_Wrangling` ) 
+               2: stations where it was used: could it be that the stations are moving toward full electric support? , if the bikes are distributed such as  that the majority in less crowded stations? , if not could it be truely as alternative cheapr option? .
+
+* Operational Implication: Given that nearly 9 out of 10 rides rely on electric models, logistics teams must focus heavily on battery charging infrastructure, efficient station rotation, and proactive maintenance of motorized components to prevent fleet downtime.
 
 
 ---
