@@ -6,17 +6,153 @@ Now that the dataset has been cleaned and validated, the objective shifts from d
 
 
 
-# **02 -  **
+# **02 - Univariate Analysis **
 
 I have already noticed the rental records and the majorty was for student subcription (77% of rentals)
 
 
-# **03 -  **
+* Rental volume over time
+* Duration distribution
+* Subscriber types
+* Bike types
+* Gender
+* Age
+* User type
+* Hour of day
+* Day of week
 
-# **04 -  **
 
-# **05 -  **
+# **03 - Bivariate Analysis **
 
+
+* Does duration depend on user type?
+yes
+
+* Does bike type affect duration?
+in check
+
+* Does weekday affect demand?
+partially, deeper check required
+
+* Does gender affect ride length?
+not much
+
+* Does age affect ride duration?
+not much
+
+* Does station affect ride volume?
+yes! clusters detected
+
+
+
+
+# **04 -  Multivariate Analysis **
+
+* Student users during rush hour
+* Electric bikes during weekends
+* Station popularity by hour
+* User type × weekday × duration
+* Peak-hour congestion by station
+
+Those analyses tell actual business stories.
+
+
+
+# **05 - Station Performance **
+
+I'd compute metrics like
+
+* Total trips
+* Trips started
+* Trips ended
+* Net flow
+* Average duration
+* Peak hour
+* Weekend ratio
+
+Then rank stations.
+
+Not just
+
+Top 10
+
+but
+
+Why are they top?
+
+
+# **06 - Demand Bottlenecks **
+For example:
+
+Trips per dock.
+
+
+# **07 - Temporal Analysis **
+
+**** very important***
+after all there are 16585 rentals in 3 months recod! obiously the time is most important .
+Questions like
+
+Morning rush?
+
+Evening rush?
+
+Weekends?
+
+Friday afternoons?
+
+Hourly heatmaps.
+
+These are extremely valuable for bike sharing.
+
+
+
+# **08 - Customer Segmentation **
+relationship between subcription types and stations and Bike type and hours .
+I'd focus on the main majority customers which are the Students subcriptions counting for 77% .
+
+This is another area where you can go beyond the assignment.
+
+Examples
+
+Students
+
+Faculty
+
+Visitors
+
+Long rides
+
+Short rides
+
+Frequent stations
+
+Preferred bikes
+
+
+
+# **09 - Business Recommendations **
+
+****Very important ****
+
+I'll make into sections , with findings and suggestions
+
+for example:
+
+Finding:
+
+Students account for 77% of trips.
+
+Recommendation:
+
+Expand student pricing.
+Special offers: like "New-Comer" discounts 
+
+
+
+
+
+# **10 - Prediction ** (I am thinking of making dedicated section for 09 and 10) .
 
 
 
