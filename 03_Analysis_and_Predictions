@@ -3,21 +3,36 @@
 # **01- Executive Overview**
 Now that the dataset has been cleaned and validated, the objective shifts from data quality assessment to understanding rider behavior, station performance, and demand patterns that can help Zen City increase Q2 rentals.
 
+I already have basic understandng of the structure of my CTE, however, instead of going into random analysing and charts I'll try to seperate into sections, each searching and analysing specific matter of interest, the rest of my charts that might help later will be in "Extra" .
 
+*Note* : I know that BI or Tabelu are indutry standards ,and my next project ill be after I have finished the study for these tools, for now I feel most comfortable with the tools I am using, and they are sufcient and provide the needed objectives .
+
+
+### **Tools**
+* the final Clean CTE , I downloaded it locally and also already have it on `Google Sheets` and `BigQuery Studio` , size: 3.4mb.
+* Charts and Graphs: `Google Sheets` , `BigQuery Studio` , `Python` (locally Via jetbrains) ,  SQL.
+* tables: SQL (BigQuery), Google Sheets.
+* Devices : Desktop PC (windows 10-11)  , Laptop Lenovo Legion 5i (windows 11) .
+* 
+
+----------------------------------------------------------------------(continue here!!)
 
 
 # **02 - Univariate Analysis **
 
-I have already noticed the rental records and the majorty was for student subcription (77% of rentals)
+I have already noticed the rental records and the majorty was for student subcription (76.3% of rentals), ofcourse it is the extreme majoriy and would be no brainer to study this group.
 
+* User type
+
+* Subscriber types
+
+* Duration distribution
 
 * Rental volume over time
-* Duration distribution
-* Subscriber types
+
 * Bike types
 * Gender
 * Age
-* User type
 * Hour of day
 * Day of week
 
