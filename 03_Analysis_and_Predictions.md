@@ -28,7 +28,7 @@ Let's start with basic analysis , I'll focus on what could be used later , I cal
 
 
 ---
-## * **Subscriber types**
+##  **Subscriber types**
 Subscription Type Analysis
 
 This section breaks down the Zen City rental distribution across all active subscription and membership types for Q1 2022, evaluated by both absolute rental counts and overall volume percentage.
@@ -72,7 +72,7 @@ pie title Zen City Fleet Utilization by Subscription Type (%)
 ---
 
 
-## * **Bike types**
+##  **Bike types**
 ## Bike Type Analysis
 
 This section explores the utilization and fleet breakdown between **Classic** and **Electric** bikes across the Zen City ecosystem for the analyzed period.
