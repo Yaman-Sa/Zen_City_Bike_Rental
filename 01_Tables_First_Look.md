@@ -31,6 +31,40 @@ SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT customer_id) AS unique_keys FROM `bq
 ```
 ---
 
+# 2. Data Completeness & Missingness (Null Analysis)
+Before proceeding to granular attribute validation, a comprehensive null-value scan was executed across all columns in the three core datasets. Identifying fields with missing data early prevents unexpected runtime failures, biased aggregations, and distortion during Q2 business predictions.
+
+### **Completeness Profiles**
+* **`zen_city.rentals` & `zen_city.customers`**: Both datasets are 100% complete. Every transactional log and customer profile contains fully populated dimensions with zero operational logging gaps or missing structural IDs.
+* **`zen_city.station_info`**: The master dimension table is highly reliable but contains isolated `NULL` cells in non-critical attributes (such as specific address fields or metadata tracking dates). These sparse gaps will require minor imputation downstream but do not compromise primary key integrity.
+
+### **Data Completeness & Null-Audit SQL Snippet**
+```sql
+-- nulls in tables counter 
+-- station info nulls counter
+SELECT
+  COUNTIF(station_id IS NULL) AS null_station_id,
+  COUNTIF(name IS NULL) AS null_name,
+  COUNTIF(status IS NULL) AS null_status,
+  COUNTIF(address IS NULL) AS null_address,
+  COUNTIF(alternate_name IS NULL) AS null_alternate_name,
+  COUNTIF(city_asset_number IS NULL) AS null_city_asset_number,
+  COUNTIF(property_type IS NULL) AS null_property_type,
+  COUNTIF(number_of_docks IS NULL) AS null_number_of_docks,
+  COUNTIF(power_type IS NULL) AS null_power_type,
+  COUNTIF(footprint_length IS NULL) AS null_footprint_length,
+  COUNTIF(footprint_width IS NULL) AS null_footprint_width,
+  COUNTIF(notes IS NULL) AS null_notes,
+  COUNTIF(council_district IS NULL) AS null_council_district,
+  COUNTIF(modified_date IS NULL) AS null_modified_date
+FROM `bqproj-488319.zen_city.station_info`
+;
+-- Nulls Exist
+
+```
+
+
+
 # **3. Attribute-Level Duplicate & Name Consistency Check**
 Moving beyond primary keys, a secondary audit was conducted on descriptive fields (`name` attributes) to find hidden data redundancies:
 * **`customers.name` Check**: Evaluated for name redundancy. The result showed 0 duplicate customer names, meaning each registered user is associated with a singular, distinct account.
