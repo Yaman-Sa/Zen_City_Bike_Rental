@@ -57,9 +57,9 @@ Phase: 01 - Exploratory Data Analysis & Raw Table Audit
 Objective: Isolate the "Lavaca & 6th" anomaly by matching by name or explicit 
            IDs to confirm the operational status conflict (Closed vs. Active).
 =============================================================================
-```
-*/
 
+*/
+```
 SELECT 
   station_id,
   name AS station_name,
