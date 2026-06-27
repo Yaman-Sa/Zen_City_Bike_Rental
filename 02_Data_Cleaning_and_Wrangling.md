@@ -83,7 +83,7 @@ This dimension table provides structural user profiles and demographic metadata 
 ---
 
 **investigating and identifying the zen_city.station_info Nulls**
-
+```
 -- station info nulls counter
 SELECT
   COUNTIF(station_id IS NULL) AS null_station_id,
@@ -102,7 +102,7 @@ SELECT
   COUNTIF(modified_date IS NULL) AS null_modified_date
 FROM `bqproj-488319.zen_city.station_info`
 ;
-
+```
 * **Nulls counts: station_id Table**
 * null_station_id            0
 * null_name                  0
