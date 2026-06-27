@@ -1,7 +1,7 @@
 # 01. Raw Tables: First Look & Initial Data Audit
 
 ## 📋 Overview & Objective
-[cite_start]Before implementing any data cleaning models or structural modifications, a comprehensive raw audit was performed across Zen City's database[cite: 2125]. [cite_start]The objective of this "first look" phase is to inspect the foundational schema, confirm data types, validate primary key integrity, map out missing or corrupted information, and surface initial behavioral anomalies directly within the raw datasets[cite: 2125, 2126]. 
+Before implementing any data cleaning models or structural modifications, a comprehensive raw audit was performed across Zen City's database[cite: 2125]. [cite_start]The objective of this "first look" phase is to inspect the foundational schema, confirm data types, validate primary key integrity, map out missing or corrupted information, and surface initial behavioral anomalies directly within the raw datasets[cite: 2125, 2126]. 
 
 [cite_start]By establishing a clear understanding of the uncleaned baseline data, we ensure our downstream data-cleaning filters do not inadvertently distort our Q2 business predictions[cite: 2114, 2118].
 
