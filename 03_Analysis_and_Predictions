@@ -103,7 +103,36 @@ pie title Zen City Ride Volume by Bike Type (%)
 
 * Operational Implication: Given that nearly 9 out of 10 rides rely on electric models, logistics teams must focus heavily on battery charging infrastructure, efficient station rotation, and proactive maintenance of motorized components to prevent fleet downtime.
 
+### 🔍 Deep-Dive: Investigating the Classic Bike Anomalies
 
+While Electric bikes dominate the overall volume, the remaining **12.31%** attributed to Classic mechanical bikes requires a deeper operational audit. Rather than a uniform user preference, preliminary patterns suggest this baseline is driven by infrastructure limitations and isolated seasonal anomalies. 
+
+To validate this, the analysis is divided into two target investigations:
+
+---
+
+#### 🗺️ Investigation 1: Event-Driven Spikes & Orphaned Stations
+We hypothesize that classic bike usage is heavily inflated by specific, isolated events and temporary infrastructure disruptions rather than consistent organic demand.
+
+* **Special Event Anomalies:** Initial observations indicate significant utilization spikes during specific windows, such as the `spring festival`. These transient events distort regular fleet usage baselines.
+* **Orphaned Station Correlation:** There is an active correlation to be checked between classic bike check-outs and the **Orphaned Stations** identified during our initial preprocessing phase in `02_Data_Cleaning_and_Wrangling`. 
+* **Analytical Action Item:** Cross-reference ride timestamps during the `spring festival` window against station IDs to determine if classic bike usage was driven by artificial supply constraints (e.g., electric rebalancing teams being unable to access high-congestion zones).
+
+---
+
+#### 🌐 Investigation 2: Spatial Distribution & Infrastructure Transition
+We need to determine if the retention of classic bikes is a strategic cost-alternative for users, or simply a byproduct of an ongoing grid migration toward full electrification.
+
+```mermaid
+graph TD
+    A[Classic Bike Rides] --> B{Spatial Density Pattern?}
+    B -->|High Density / Core Stations| C[True Budget Alternative]
+    B -->|Low Density / Remote Stations| D[Electrification Lag / Supply Deficit]
+```
+
+
+
+------------------------------------------------------------------------(continue here!)
 ---
 
 * Duration distribution
