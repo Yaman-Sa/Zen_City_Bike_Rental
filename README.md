@@ -38,7 +38,7 @@ To defend data volume without compromising mathematical integrity, a **Data Spar
 ## 📈 Key Business Insights & Analytical Discoveries
 
 ### 1. The Student Commuter Engine
-* **The Data:** Student Memberships constitute an overwhelming **75.2% majority** of total rental records.
+* **The Data:** Student Memberships constitute an overwhelming **76.3% majority** of total rental records.
 * **The Insight:** There is a stark inverse relationship between rental count and ride duration. Students execute high volumes of incredibly brief trips clustering tightly around the **6-minute mark**. 
 * **Business Translation:** Zen City operates primarily as a **"last-mile" point-to-point micro-mobility engine** for students rather than a leisure or long-term rental service.
 
