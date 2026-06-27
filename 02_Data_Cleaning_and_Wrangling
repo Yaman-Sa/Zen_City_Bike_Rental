@@ -1,6 +1,6 @@
 **everything we do to check and clean data will be here**
 
-###**01.starting with the data Raw tables**
+#**01.starting with the data Raw tables**
 *lets recall the given tables and structure:*
 *Data tables: we have 3 sources that we could and will use,Table names:
 * ● `bqproj-488319.zen_city.station_info`   
@@ -230,7 +230,7 @@ LEFT JOIN `bqproj-488319.zen_city.station_info` s_end
 
 ---
 
-### **02. Station ID 1007 (the ghost station)**
+# **02. Station ID 1007 (the ghost station)**
 *During the initial audit of the station_info catalog, a significant risk to downstream data integrity was identified regarding station ID 1007, which shares the station name with the station id 3294.
 *The Discovery: A review of the status column revealed that station 1007 is marked as 'Closed'.
 *The Risk: Leaving legacy or inactive entities in a dimension table is a "data trap." If a analyst joins the rentals table to this "dirty" catalog, it can lead to join fan-outs or ambiguous results that skew volume metrics.
@@ -247,7 +247,7 @@ CleanedStationProfiles AS (
 
 
 ---
-### **03. the "Clean Data"?:** the data with no Nulls, the great loss of data as we filter and build CTE with no Nulls cells at all (to  work with full data only)
+# **03. the "Clean Data"?:** the data with no Nulls, the great loss of data as we filter and build CTE with no Nulls cells at all (to  work with full data only)
 * I tried simple Nulls cells "proof" , simply filtering all Nulls from any row with Nulls for CTE.
 * result: ended up with loss of 40% of data , a total of 10007 rows from the total 16585 I started with.
 * conclusion: its a big loss of data , and some of the cells Nulls are secondary to negligible Cells that I might not use in the end CTE like (alternate_name).
@@ -280,7 +280,7 @@ CleanedStationProfiles AS (
 
 ---
 
-### ** 05. Checking specific missing data**
+# ** 05. Checking specific missing data**
 * ##**checking for missing start_station_id,start_station_name,end_station_id,end_station_name**
 * in previous **step 01** I already showed that in the data we are missing is the null_address (including end_station_id,start_station_id) and no Station_name missing .
 * we check this specific station id missing and get the station name attached .
@@ -299,7 +299,7 @@ CleanedStationProfiles AS (
 
 ---
 
-### ** 06. Logical Filtring and outliers**
+# ** 06. Logical Filtring and outliers**
 
 **Next we searched for logical errors : **
 * rentals table: Are there any trips where duration_minutes is 0 or negative? Are there trips that lasted an impossible amount of time (e.g., 40,000 minutes)?, for accuracy I'll take only durations less than a day (24h).
@@ -377,7 +377,7 @@ LEFT JOIN
 ---
 
 
-### ** 07. Final Check**
+# ** 07. Final Check**
 
 * The Final Master CTE Cleaning Pipeline ScriptNow that every gap has been audited, checked, and quantified, here is the complete, cohesive, end-to-end SQL statement.This single script implements the entire cleaning strategy:
  * Removes Row-Level Duplicates & Null Keys (trip_id).
