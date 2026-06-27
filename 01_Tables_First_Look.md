@@ -31,7 +31,7 @@ SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT customer_id) AS unique_keys FROM `bq
 ```
 ---
 
-### **3. Attribute-Level Duplicate & Name Consistency Check**
+# **3. Attribute-Level Duplicate & Name Consistency Check**
 Moving beyond primary keys, a secondary audit was conducted on descriptive fields (`name` attributes) to find hidden data redundancies:
 * **`customers.name` Check**: Evaluated for name redundancy. The result showed 0 duplicate customer names, meaning each registered user is associated with a singular, distinct account.
 * **`station_info.name` Check**: Uncovered critical logical duplicate vulnerabilities. Multiple rows share the exact same station name but are assigned completely different `station_id` markers (e.g., "Lavaca & 6th" split between ID `1007` and `3294`). 
@@ -44,7 +44,7 @@ GROUP BY name
 HAVING COUNT(*) > 1;
 ```
 
-### 4. Deep-Dive Anomaly: "Lavaca & 6th" Station Identifier Split
+# 4. Deep-Dive Anomaly: "Lavaca & 6th" Station Identifier Split
 * **The Mismatch:** The station name **"Lavaca & 6th"** is mapped to two completely distinct identification codes: `1007` and `3294`.
 * **The Operational Cause:** An audit of the operational `status` column revealed that station `1007` is explicitly marked as **Closed**, while station `3294` is marked as **Active**. This confirms that they represent the exact same physical location over different operational windows (likely due to a hardware swap, kiosk upgrade, or system re-indexing).
 * **The Analytical Impact:** If left uncorrected, any historical rental logs tied to the older ID `1007` would be isolated from the current station's metrics, resulting in an artificial underreporting of long-term traffic patterns at this high-density intersection.
@@ -102,7 +102,7 @@ WHERE
 
 
 
-### 4. Summary of Initial Observations & Data Integrity
+# 4. Summary of Initial Observations & Data Integrity
 
 Following an exhaustive first look at the schema and contents of the core tables, here are the foundational baselines and anomalies discovered:
 
