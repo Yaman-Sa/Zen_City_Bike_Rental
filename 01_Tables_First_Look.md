@@ -1,26 +1,26 @@
 # 01. Raw Tables: First Look & Initial Data Audit
 
 ## 📋 Overview & Objective
-Before implementing any data cleaning models or structural modifications, a comprehensive raw audit was performed across Zen City's database[cite: 2125]. [cite_start]The objective of this "first look" phase is to inspect the foundational schema, confirm data types, validate primary key integrity, map out missing or corrupted information, and surface initial behavioral anomalies directly within the raw datasets[cite: 2125, 2126]. 
+Before implementing any data cleaning models or structural modifications, a comprehensive raw audit was performed across Zen City's database. The objective of this "first look" phase is to inspect the foundational schema, confirm data types, validate primary key integrity, map out missing or corrupted information, and surface initial behavioral anomalies directly within the raw datasets. 
 
-[cite_start]By establishing a clear understanding of the uncleaned baseline data, we ensure our downstream data-cleaning filters do not inadvertently distort our Q2 business predictions[cite: 2114, 2118].
+By establishing a clear understanding of the uncleaned baseline data, we ensure our downstream data-cleaning filters do not inadvertently distort our Q2 business predictions.
 
 ---
 
 ## 🗂️ Table Inventory & Profiles
-[cite_start]The analysis relies on three core relational tables hosted within BigQuery[cite: 2127]:
-1. [cite_start]`bqproj-488319.zen_city.station_info`: Hardware and logistical metadata for all bike stations[cite: 2127, 2128].
-2. [cite_start]`bqproj-488319.zen_city.rentals`: Granular transactional log of individual bike trips[cite: 2127].
-3. [cite_start]`bqproj-488319.zen_city.customers`: Demographic breakdown of registered bike-sharing users[cite: 2127].
+[cite_start]The analysis relies on three core relational tables hosted within BigQuery:
+1. `bqproj-488319.zen_city.station_info`: Hardware and logistical metadata for all bike stations.
+2. `bqproj-488319.zen_city.rentals`: Granular transactional log of individual bike trips.
+3. `bqproj-488319.zen_city.customers`: Demographic breakdown of registered bike-sharing users.
 
 ### **Raw Row Counts & Unique Identifiers**
-[cite_start]To evaluate table scale and structural dimensions, the total volume of entries was cross-referenced against unique business keys[cite: 2127, 2129]:
+To evaluate table scale and structural dimensions, the total volume of entries was cross-referenced against unique business keys:
 
 | Table Name | Assigned Unique Key | Raw Row Count | Non-Duplicate Row Count | Duplicate Count |
 | :--- | :--- | :--- | :--- | :--- |
-| `zen_city.station_info` | `station_id` (INTEGER) | [cite_start]16,585  | [cite_start]16,585  | [cite_start]0  |
-| `zen_city.rentals` | `trip_id` (INTEGER) | [cite_start]102  | [cite_start]102  | [cite_start]0  |
-| `zen_city.customers` | `customer_id` (STRING) | [cite_start]586  | [cite_start]586  | [cite_start]0  |
+| `zen_city.station_info` | `station_id` (INTEGER) | 16,585  | 16,585  | 0  |
+| `zen_city.rentals` | `trip_id` (INTEGER) | 102  | 102  | 0  |
+| `zen_city.customers` | `customer_id` (STRING) | 586  | 586  | 0  |
 
 ### **Baseline SQL Verification Snippet**
 ```sql
@@ -28,10 +28,10 @@ Before implementing any data cleaning models or structural modifications, a comp
 SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT station_id) AS unique_keys FROM `bqproj-488319.zen_city.station_info`;
 SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT trip_id) AS unique_keys FROM `bqproj-488319.zen_city.rentals`;
 SELECT COUNT(1) AS raw_rows, COUNT(DISTINCT customer_id) AS unique_keys FROM `bqproj-488319.zen_city.customers`;
-
+```
 ---
 
-### 3. Attribute-Level Duplicate & Name Consistency Check
+### **3. Attribute-Level Duplicate & Name Consistency Check**
 Moving beyond primary keys, a secondary audit was conducted on descriptive fields (`name` attributes) to find hidden data redundancies:
 * **`customers.name` Check**: Evaluated for name redundancy. The result showed 0 duplicate customer names, meaning each registered user is associated with a singular, distinct account.
 * **`station_info.name` Check**: Uncovered critical logical duplicate vulnerabilities. Multiple rows share the exact same station name but are assigned completely different `station_id` markers (e.g., "Lavaca & 6th" split between ID `1007` and `3294`). 
@@ -42,6 +42,7 @@ SELECT name, COUNT(*) as occurrence_count
 FROM `bqproj-488319.zen_city.station_info` 
 GROUP BY name 
 HAVING COUNT(*) > 1;
+```
 
 ### 4. Deep-Dive Anomaly: "Lavaca & 6th" Station Identifier Split
 * **The Mismatch:** The station name **"Lavaca & 6th"** is mapped to two completely distinct identification codes: `1007` and `3294`.
@@ -56,6 +57,7 @@ Phase: 01 - Exploratory Data Analysis & Raw Table Audit
 Objective: Isolate the "Lavaca & 6th" anomaly by matching by name or explicit 
            IDs to confirm the operational status conflict (Closed vs. Active).
 =============================================================================
+```
 */
 
 SELECT 
@@ -82,6 +84,8 @@ FROM
 WHERE 
 
   station_id IN (1007, 3294)
+
+```  
 ---
 ** Same Table!** 
 * in both queries I got the exact same table, suggesting that the count of trips for each distinct ID is **1** .
