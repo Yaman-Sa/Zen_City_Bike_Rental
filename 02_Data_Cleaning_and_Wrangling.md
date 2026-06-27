@@ -386,7 +386,6 @@ LEFT JOIN
  * Applies Logical Boundaries (trips 1<= min and <= 24 hours).
  * Applies Lexical Recovery (COALESCE statements utilizing your 100% text-retention find).
 
-----------------------------------------------------------(continue here!)
 
 
 ---
