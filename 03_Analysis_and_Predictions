@@ -27,15 +27,59 @@ I have already noticed the rental records and the majorty was for student subcri
 Let's start with basic analysis , I'll focus on what could be used later , I call them "determining Keys" .
 
 
-
+---
 * Subscriber types
+Subscription Type Analysis
 
+This section breaks down the Zen City rental distribution across all active subscription and membership types for Q1 2022, evaluated by both absolute rental counts and overall volume percentage.
+
+### 1. Rental Count & Volume Distribution
+
+The table below merges rental counts and percentage shares to highlight user segment behavior. 
+
+| Subscription Type | Rental Count | Volume Percentage | Visual Distribution |
+| :--- | :---: | :---: | :--- |
+| **Student Membership** | 12,575 | 76.19% | ████████████████████▒ |
+| **Local31** | 1,286 | 7.79% | ██░░░░░░░░░░░░░░░░░░░ |
+| **Local365** | 1,059 | 6.42% | █░░░░░░░░░░░░░░░░░░░░ |
+| **Pay-as-you-ride** | 443 | 2.68% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **Explorer** | 402 | 2.44% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **3-Day Weekender** | 232 | 1.41% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **U.T. Student Membership** | 221 | 1.34% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **24 Hour Walk Up Pass** | 143 | 0.87% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **Single Trip (Pay-as-you-ride)** | 137 | 0.83% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **HT Ram Membership** | 4 | 0.02% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **Annual Membership** | 2 | 0.01% | ░░░░░░░░░░░░░░░░░░░░░ |
+| **Total Ecosystem** | **16,504** | **100.00%** | |
+
+### 📉 Visual Breakdown (Dynamic Chart)
+
+*GitHub will render the text block below as an interactive vector pie chart tracking the dominant subscription tiers:*
+
+```mermaid
+pie title Zen City Fleet Utilization by Subscription Type (%)
+    "Student Membership" : 76.19
+    "Local31" : 7.79
+    "Local365" : 6.42
+    "Pay-as-you-ride" : 2.68
+    "Explorer" : 2.44
+    "Others (Combined Tiers)" : 4.48
+---
+
+
+* Bike types
+
+
+
+---
 
 * Duration distribution
 
+
+---
 * Rental volume over time
 
-* Bike types
+
 * Gender
 * Age
 * Hour of day
