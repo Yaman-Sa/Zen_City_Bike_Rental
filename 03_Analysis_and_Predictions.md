@@ -544,22 +544,24 @@ graph TD
 3. Strategic Operational Framework for Integrated Rebalancing
 
 The alignment of these datasets transitions Zen City logistics away from localized adjustments toward an Integrated Network Balancing Policy:
-                  ┌──────────────────────────────────────────────┐
-                  │          CORE CAMPUS TERMINAL SINKS          │
-                  │  Station 3798 (PCL) & Station 3838 (Nueces)  │
-                  └──────────────────────┬───────────────────────┘
-                                         │
-                         [ HIGH-FREQUENCY VAN CLEARING ]
-                    Evacuate slots to maintain incoming capacity
-                                         │
-                                         ▼
-                  ┌──────────────────────────────────────────────┐
-                  │       PERIMETER COMMUTER SOURCE SHEDS        │
-                  │  Station 2498 (Dean Keeton) & 2547 (Guad)    │
-                  └──────────────────────┬───────────────────────┘
-                                         │
-                        [ BI-FURCATED ASSET INJECTION ]
-             Inject E-Bikes for primary range & Classics for overspill
+```mermaid
+graph TD
+    %% Define Core Nodes
+    Sink[🏢 CORE CAMPUS TERMINAL SINKS <br> Station 3798 (PCL) & Station 3838 (Nueces)]
+    Source[🚴 PERIMETER COMMUTER SOURCE SHEDS <br> Station 2498 (Dean Keeton) & 2547 (Guad)]
+    
+    %% Intermediary Operational Steps as Text on Edges
+    Sink --> |"🚚 [ HIGH-FREQUENCY VAN CLEARING ] <br> Evacuate slots to maintain incoming capacity"| Source
+    Source --> |"⚡ [ BI-FURCATED ASSET INJECTION ] <br> Inject E-Bikes for primary range & Classics for overspill"| EndNode([Optimized Fleet Balance])
+
+    %% Styling Elements for Professional Polish
+    classDef sinkStyle fill:#fff5f5,stroke:#ff8080,stroke-width:2px,color:#990000;
+    classDef sourceStyle fill:#f0fff4,stroke:#81e6d9,stroke-width:2px,color:#234e52;
+    classDef stepStyle fill:#edf2f7,stroke:#cbd5e0,stroke-width:1px;
+    
+    class Sink sinkStyle;
+    class Source sourceStyle;
+```
 ---
 
 * 1:Prioritize Symmetrical Extraction Over Blind Distribution: Because Stations 3798 and 3838 generate an aggregate total of 4,960 arrivals but 0 organic departures, letting these nodes sit unmanaged will cascade a lock-out failure across the entire campus network. Clearing crews must prioritize continuous extraction loops from these locations.
