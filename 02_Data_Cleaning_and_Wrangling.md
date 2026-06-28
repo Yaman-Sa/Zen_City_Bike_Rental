@@ -137,7 +137,7 @@ FROM `bqproj-488319.zen_city.station_info`
 * as my objective is to study an analyze the data for future prediction and recommendations, this would include only the open stations , with having in mind the effect of closing  these stations and the dates there were closed and the connection to the remaining stations, still 0.45% of total rents are neglectble to the big picture.
 * final decision is to filter these stations in the final data cleaning.
 
-
+```
 --finding all rows with **closed** as status.
 SELECT * FROM `bqproj-488319.zen_city.station_info` 
 WHERE LOWER(status) = 'closed';
@@ -176,7 +176,7 @@ OR end_station_id IN (
   WHERE LOWER(status) = 'closed'
 );
 -- Result: 74 records out of 16,585 total rows (< 0.45% of transaction volume)
-
+```
 ---
 
 
@@ -191,7 +191,7 @@ OR end_station_id IN (
 
 **relation between tables**
 * I have discovered that there are good sum of trips records with no id corelations to the station_info table:
-
+```
 -- primary keys matching
 --station IDs 
 SELECT 
@@ -203,7 +203,7 @@ LEFT JOIN `bqproj-488319.zen_city.station_info` s_start
 LEFT JOIN `bqproj-488319.zen_city.station_info` s_end 
   ON r.end_station_id = s_end.station_id
 --start station without end:4916  , end stations withot start:2164
-
+```
 * it is expected that some trips would be with no start station in the early records of Q1 , and similar for end station in late records of Q1, however there is large number of records like this, and it requirs further study, also stations name do not corespond.
 * I started with the duration records for all records, From previous step 01, there are no Nulls for duration record (which I have decided to trust!,after checking the time median and mean, and compaired the majority user type which is Student Subcription, and main clusters of flow, all direct toward student majority usingthe bikes for short travel, which again makes sense).
 *The presence of ~7,000 orphaned records across the dataset initially suggests potential data quality issues. However, after investigating the temporal distribution and user patterns, I have categorized these into two distinct phenomena:
@@ -236,7 +236,7 @@ LEFT JOIN `bqproj-488319.zen_city.station_info` s_end
 *The Risk: Leaving legacy or inactive entities in a dimension table is a "data trap." If a analyst joins the rentals table to this "dirty" catalog, it can lead to join fan-outs or ambiguous results that skew volume metrics.
 *The Strategic Decision: Rather than filtering at the final reporting stage, I implemented an upstream, source-level filtration strategy within my CTE architecture.
 * **Note:** By explicitly filtering WHERE station_id != 1007 during the creation of my final `CleanedStationProfiles` catalog, I ensured that the dimension table remains a clean, singular "source of truth." This guarantees referential integrity at the architectural level, preventing the risk of join fan-outs and ensuring that all downstream analysis—including Q2 rental forecasts—is built on a platform of active, validated station identifiers.
-
+``
 **SQL Clean Table:**
 -- Sanitizing the dimension catalog at the source
 CleanedStationProfiles AS (
@@ -244,7 +244,7 @@ CleanedStationProfiles AS (
   FROM `bqproj-488319.zen_city.station_info`
   WHERE station_id != 1007 -- Dropping legacy ghost station
 )
-
+``
 
 ---
 # **03. the "Clean Data"?:** the data with no Nulls, the great loss of data as we filter and build CTE with no Nulls cells at all (to  work with full data only)
@@ -311,7 +311,7 @@ CleanedStationProfiles AS (
 
 * there rental records outliers are way extreme considering the mean and median. suggesting that it could be stollen , broken or some other reason like an accident, in any case they do affect the data, and filtering extreme outliers is the way to go.
 
-
+```
 SELECT
   MIN(duration_minutes) AS min_duration,
   MAX(duration_minutes) AS max_duration,
@@ -323,7 +323,7 @@ FROM `bqproj-488319.zen_city.rentals`;
 
 
 -- median=6,mean=21.089, min=2, max= 4874,more than 24h=0, negative=0.
-
+```
 * as we can see (this is before filtering, however expected loss: less than 90 rental records , out of 16585 records, so the expected general representation could be very similar) there is concntration near the 6mins, but spread to 4874mins which is extreme outlier.
 * however, I decided to fiter for 24h as I would expect the company to have such policy (even less hours as maximum rental time allowed, unless they have special rental program that allows such extended time).
 
@@ -334,7 +334,7 @@ FROM `bqproj-488319.zen_city.rentals`;
 * ### Lexical vs. Relational Coherence (Station ID vs. Name Mismatches)
 
 * To round out the pre-cleaning infrastructure audit, a cross-examination was performed comparing **relational keys** (`station_id`) against **lexical descriptors** (`station_name`) within the transactional ledger. The objective was to determine if records containing missing or orphaned IDs still retained valid textual location data that could be preserved for descriptive localized volume analysis, or if the name fields suffered from identical systemic corruption.
-
+```
 -- Lexical vs. Relational Coherence Audit: Station IDs vs. Names
 SELECT
   -- 1. Absolute Mismatches (ID populated but Name missing, or vice versa)
@@ -355,7 +355,7 @@ LEFT JOIN
   `bqproj-488319.zen_city.station_info` s_start ON r.start_station_id = s_start.station_id
 LEFT JOIN
   `bqproj-488319.zen_city.station_info` s_end ON r.end_station_id = s_end.station_id;
-
+```
 
 #### Audit Metrics Breakdown
 | Audit Vector | Metric Tracked | Record Count | % of Total Dataset (N=16,585) |
@@ -396,10 +396,10 @@ LEFT JOIN
 
 Now that every relational gap, physical dimension null, and operational outlier has been fully audited and quantified, here is the final cohesive, end-to-end SQL statement. This single production script implements the entire cleaning, imputation, and feature-enrichment architecture:
 
-* [cite_start]**Duplicate & Null Remediation:** Filters row-level duplicate transactions using `ROW_NUMBER()`[cite: 1183].
-* [cite_start]**Continuous Dimension Imputation:** Utilizes table medians via `CROSS JOIN` to fill missing capacity metrics[cite: 1184, 1185].
-* [cite_start]**Strategic Infrastructure Preservation:** Safely filters out decommissioned stations (the 74 closed rows) while defaulting unmapped active hardware tracking entries to 'Unregistered Station' via defensive `LEFT JOIN` logic[cite: 1185, 1188, 1190, 1196].
-* [cite_start]**Demographic Enrichment:** Integrates customer profiles directly into the transactional stream to empower cohort tracking.
+* **Duplicate & Null Remediation:** Filters row-level duplicate transactions using `ROW_NUMBER()`.
+* **Continuous Dimension Imputation:** Utilizes table medians via `CROSS JOIN` to fill missing capacity metrics.
+* **Strategic Infrastructure Preservation:** Safely filters out decommissioned stations (the 74 closed rows) while defaulting unmapped active hardware tracking entries to 'Unregistered Station' via defensive `LEFT JOIN` logic.
+* **Demographic Enrichment:** Integrates customer profiles directly into the transactional stream to empower cohort tracking.
 * **Advanced Feature Engineering:** Computes date, hour, day-of-week, and weekend flags on the fly to accelerate subsequent transit analysis.
 
 ```sql
