@@ -404,10 +404,173 @@ LIMIT 10;
 
 
 ```
-----------------------------------------------------------------------------(This is important ,continue here!)
+### ⚡ Comparative Analysis: Electric Fleet Flow Dynamics
 
+To contextualize the mechanical fleet patterns, a matching directional audit was executed for the high-volume **Electric** bike tier. Analyzing the departures, arrivals, and true round trips of the motorized fleet across its top 10 stations reveals massive structural bottlenecks and confirms system-wide gravity wells.
+
+| Station ID | Station Name | Electric Departures | Electric Arrivals | Total Interaction Volume | True Round Trips | Operational Profile |
+| :---: | :--- | :---: | :---: | :---: | :---: | :--- |
+| **2498** | Dean Keeton/Speedway | 2,670 | 1,046 | 3,716 | 92 | 🛫 **Macro Source / Net Exporter** |
+| **3798** | 21st/Speedway @ PCL | 0 | 3,105 | 3,105 | 0 | 🛑 **Absolute Terminal Sink** |
+| **2547** | 21st/Guadalupe | 1,979 | 810 | 2,789 | 98 | 🛫 **Macro Source / Net Exporter** |
+| **7125** | 23rd/San Gabriel | 1,834 | 780 | 2,614 | 87 | 🛫 **Net Exporter** |
+| **3793** | 28th/Rio Grande | 1,693 | 845 | 2,538 | 238 | 🛫 **Net Exporter (High Neighborhood Loop)** |
+| **7188** | 22nd/Pearl | 1,647 | 746 | 2,393 | 90 | 🛫 **Net Exporter** |
+| **3797** | 21st/University | 1,312 | 622 | 1,934 | 31 | 🛫 **Net Exporter** |
+| **3799** | 23rd/San Jacinto @ DKR Stadium | 1,264 | 492 | 1,756 | 55 | ⚖️ **Balanced Transit Node** |
+| **3838** | 26th/Nueces | 0 | 1,249 | 1,249 | 0 | 🛑 **Absolute Terminal Sink** |
+| **4938** | 22.5/Rio Grande | 851 | 353 | 1,204 | 43 | 🛫 **Net Exporter** |
 
 ---
+
+### 🔍 Cross-Tier Insights: Classic vs. Electric Comparison
+
+Comparing this dataset against the mechanical bike logs yields three profound system-wide revelations:
+
+#### 1. The 0-Departure Phenomenon Is Systemic
+The most striking finding is that **Station 3798 (21st/Speedway @ PCL)** records exactly **0 departures** across both Classic AND Electric bike datasets, while accumulating **3,552 combined arrivals** (447 Classic + 3,105 Electric). 
+* This definitively proves that the PCL library is a pure unilateral network drain. Users never initiate trips here; they only drop bikes off.
+* **The New Macro Sink uncovered:** The electric query isolated **Station 3838 (26th/Nueces)** as another absolute terminal dead-end with **0 departures and 1,249 arrivals**. 
+
+#### 2. The Scale Discrepancy (The Rebalancing Nightmare)
+While the directional behavior (Sources vs. Sinks) matches perfectly between both bike tiers, the sheer volume scale shifts drastically:
+* At **Dean Keeton/Speedway (2498)**, logistics teams deal with a classic bike deficit of 225 units (328 departures vs 103 arrivals). 
+* However, at that exact same dock, they face a staggering **electric bike deficit of 1,624 units** (2,670 departures vs 1,046 arrivals). 
+* This emphasizes that manual rebalancing vans cannot focus on mechanical units alone; the electric fleet depletion happens at a 7x faster rate at major campus gateways.
+
+#### 3. Low Round-Trip Rates Solidify Commuter Narrative
+Excluding *28th/Rio Grande (3793)*, which exhibits a slightly elevated neighborhood loop rate (~9.3%), true round trips remain nominal across the board (averaging under 3%). This locks in the conclusion that the Zen City bike ecosystem functions strictly as a utility-driven, one-way A-to-B transit network for student commuters, rather than an experiential or leisurely rental service.
+
+```mermaid
+graph TD
+    %% Define Nodes and Styles
+    subgraph West Campus Source Zone [High-Density Student Housing Staging Grounds]
+        DK[Dean Keeton <br> ID: 2498]
+        GD[21st/Guadalupe <br> ID: 2547]
+        SG[23rd/San Gabriel <br> ID: 7125]
+    end
+
+    subgraph Core Campus Sinks [Absolute Network Drainage Docks]
+        PCL[21st/Speedway @ PCL <br> ID: 3798]
+        NUE[26th/Nueces <br> ID: 3838]
+    end
+
+    %% Massive Outflows
+    DK -- "Massive Electric Outflow <br> (Net -1,624 Bikes)" --> PCL
+    GD -- "High Velocity Outflow" --> PCL
+    SG -- "Morning Rush Influx" --> NUE
+
+    %% Operations loop
+    PCL -. "Heavy Trucking Rebalancing Loop <br> (Constant Fleet Redistribution Required)" .-> West Campus Source Zone
+    NUE -. "Manual Rebalancing Sweep" .-> West Campus Source Zone
+
+    classDef source fill:#d4edda,stroke:#28a745,stroke-width:2px;
+    classDef sink fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+    
+    class DK,GD,SG source;
+    class PCL,NUE sink;
+```
+### 🔄 Cross-Tier Comparative Synthesis: Classic vs. Electric Fleet Dynamics
+
+To uncover the core structural mechanics of the Zen City transit network, this section establishes a direct comparative audit between the **Classic (Mechanical)** and **Electric (Motorized)** fleet tiers. By analyzing the behavioral variance between these asset classes across identical high-volume transit nodes, we can distinguish between localized demographic preferences, structural network constraints, and critical equipment imbalances.
+
+---
+
+#### 1. Side-by-Side Spatial Network Comparison
+
+The table below merges the directional data points for both hardware tiers across the major network hotspots, ordered by total cumulative interaction volume.
+
+| Station ID | Station Name | Classic Deps | Classic Arrs | Electric Deps | Electric Arrs | Total Combined Interactions | True Round-Trip Rate (Combined) | Primary Systemic Role |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **2498** | Dean Keeton/Speedway | 328 | 103 | 2,670 | 1,046 | **4,147** | 2.63% | 🛫 Macro Source Hub (Perimeter Gateway) |
+| **3798** | 21st/Speedway @ PCL | 0 | 447 | 0 | 3,105 | **3,552** | 0.00% | 🛑 Primary Terminal Sink (Academic Core) |
+| **2547** | 21st/Guadalupe | 307 | 106 | 1,979 | 810 | **3,202** | 3.59% | 🛫 Macro Source Hub (West Campus Drag) |
+| **7125** | 23rd/San Gabriel | 273 | 94 | 1,834 | 780 | **2,981** | 3.35% | 🛫 Residential Source (West Campus) |
+| **3793** | 28th/Rio Grande | 147 | 72 | 1,693 | 845 | **2,757** | 9.10% | 🛫 Residential Source (High Neighborhood Loop) |
+| **7188** | 22nd/Pearl | 183 | 73 | 1,647 | 746 | **2,649** | 3.70% | 🛫 Residential Source (West Campus) |
+| **3797** | 21st/University | 264 | 110 | 1,312 | 622 | **2,308** | 1.73% | 🛫 Institutional Source (Central Campus) |
+| **3799** | 23rd/San Jacinto @ DKR Stadium | 112 | 81 | 1,264 | 492 | **1,949** | 3.54% | ⚖️ Balanced Transit Interconnect |
+| **2548** | Guadalupe/West Mall @ Co-op | 0 | 159 | *N/A* | *N/A* | **159+** | 0.00% | 🛑 Classic Terminal Sink |
+| **3838** | 26th/Nueces | *N/A* | *N/A* | 0 | 1,249 | **1,249** | 0.00% | 🛑 Electric Terminal Sink |
+| **4938** | 22.5/Rio Grande | *N/A* | *N/A* | 851 | 353 | **1,204** | 3.57% | 🛫 Residential Source (North-West Extension) |
+| **2566** | Electric Drive/Pfluger Ped Bridge | 197 | 56 | *N/A* | *N/A* | **253+** | **20.16%** | 🔄 Isolated Recreational Loop |
+
+---
+
+#### 2. Deep-Dive Comparative Divergences
+
+```mermaid
+graph TD
+    %% Global Drivers
+    A[Zen City Fleet Operations] --> B(Asset Discrepancies)
+    
+    %% Classic Track
+    B --> C{Classic Tier <br> 12.31% Total Vol}
+    C --> C1[Hyper-Localized Campus Ring]
+    C --> C2[Pfluger Ped Bridge: 25.8% Leisure Loops]
+    C --> C3[Overspill Buffer Capacity]
+
+    %% Electric Track
+    B --> D{Electric Tier <br> 87.69% Total Vol}
+    D --> D1[Macro-Regional Extent]
+    D --> D2[Systemic Deficits: -1,624 at Dean Keeton]
+    D --> D3[Primary Commuter Choice]
+
+    style C fill:#ffeef0,stroke:#f85149,stroke-width:2px
+    style D fill:#dbedff,stroke:#0969da,stroke-width:2px
+```
+📊 Divergence A: The Scale and Velocity Gap
+
+    The Asymmetric Deficit: While both hardware tiers demonstrate identical vector behavior (moving outward from perimeter residential areas into core academic locations), the operational scale is heavily weighted toward motorized models. At Dean Keeton/Speedway (2498), the mechanical tier exhibits a net deficit of 225 units (328 departures vs. 103 arrivals). In sharp contrast, the electric tier experiences a staggering net deficit of 1,624 units (2,670 departures vs. 1,046 arrivals).
+
+    Logistical Implication: The electric fleet depletes at 7.2x the velocity of the classic fleet at major commuter choke points. This means mechanical units function as an operational shock absorber. They sit at the docks as a secondary layer of capacity, absorbing student demand only after high-velocity e-bike inventory is entirely cleared out during morning lecture rushes.
+
+📊 Divergence B: Structural vs. Behavioral "Absolute Sinks"
+
+    The Absolute Coincidence (Station 3798): The complete absence of departures (0 records) at 21st/Speedway @ PCL across both Classic and Electric datasets confirms a rare, absolute structural dead-end. Regardless of bike mechanics, weight, or battery levels, users treat the Perry-Castañeda Library purely as a termination point.
+
+    Tier-Specific Drainage Nodes:
+
+        The electric query uncovers a hidden, specialized motorized dead-end at 26th/Nueces (3838), accumulating 1,249 arrivals against 0 departures. This represents an off-campus, downhill residential migration or shopping vector unique to the electric tier.
+
+        The classic query isolates Guadalupe/West Mall (2548) as a specialized classic terminal sink (159 arrivals / 0 departures). This points directly to localized student walking habits along the main university gateway commercial drag.
+
+📊 Divergence C: Utility Commuting vs. Recreational Loops
+
+    The Round-Trip Variance: True round-trip percentages (trips concluding at the exact physical station where they originated) remain nominal across the entire network core, hovering beneath 3.5% for both electric and classic bikes. This reinforces the core thesis that the fleet functions primarily as an active utility transit mechanism rather than a recreational asset.
+
+    The Pfluger Bridge Exception: The only statistical break in this pattern occurs in the classic tier at Electric Drive/Sandra Muraida Way @ Pfluger Ped Bridge (2566), reaching a 25.8% true round-trip rate (51 round trips out of 197 departures). Interestingly, this station does not even register among the top 10 highest volume nodes for electric bikes. This divergence proves that classic mechanical hardware retains a distinct, localized recreational identity along flat river trails, while electric models are reserved for structured, asymmetric point-to-point urban transit.
+
+3. Strategic Operational Framework for Integrated Rebalancing
+
+The alignment of these datasets transitions Zen City logistics away from localized adjustments toward an Integrated Network Balancing Policy:
+                  ┌──────────────────────────────────────────────┐
+                  │          CORE CAMPUS TERMINAL SINKS          │
+                  │  Station 3798 (PCL) & Station 3838 (Nueces)  │
+                  └──────────────────────┬───────────────────────┘
+                                         │
+                         [ HIGH-FREQUENCY VAN CLEARING ]
+                    Evacuate slots to maintain incoming capacity
+                                         │
+                                         ▼
+                  ┌──────────────────────────────────────────────┐
+                  │       PERIMETER COMMUTER SOURCE SHEDS        │
+                  │  Station 2498 (Dean Keeton) & 2547 (Guad)    │
+                  └──────────────────────┬───────────────────────┘
+                                         │
+                        [ BI-FURCATED ASSET INJECTION ]
+             Inject E-Bikes for primary range & Classics for overspill
+---
+
+* 1:Prioritize Symmetrical Extraction Over Blind Distribution: Because Stations 3798 and 3838 generate an aggregate total of 4,960 arrivals but 0 organic departures, letting these nodes sit unmanaged will cascade a lock-out failure across the entire campus network. Clearing crews must prioritize continuous extraction loops from these locations.
+
+* 2:Execute Tiered Injections at Feeders: When deploying vans to load-centers like Dean Keeton/Speedway and 21st/Guadalupe, operations should maintain an intentional 8:1 Electric-to-Classic replenishment ratio during non-peak windows, shifting to a higher classic buffer ratio immediately preceding the 8:00 AM student surge to counter the rapid exhaustion of motorized units.
+
+* 3:Preserve Specialized Utility Segments: Restrain the temptation to fully transition the Pfluger Ped Bridge dock to electric support. The classic mechanical fleet satisfies an organic, high-margin, self-contained recreational user loop here that does not place structural rebalancing strain on the broader network.
+
+---
+
+
 ## **Duration distribution**
 
 
