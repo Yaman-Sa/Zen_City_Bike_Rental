@@ -99,28 +99,22 @@ pie title Zen City Ride Volume by Bike Type (%)
     "Classic Bike" : 12.31
 ```
 * Overwhelming Electric Dominance: Electric bikes represent the vast majority of the volume at 87.69%. This massive preference suggests that users heavily prioritize speed, ease of travel, and reduced physical effort for their trips, which aligns with a commuter-heavy user base.
-* Classic Bikes Relegated to Niche: Classic mechanical bikes account for just 12.31% of total rides. This indicates they are likely utilized either as a budget-conscious alternative, for shorter leisure trips, or as a backup option when electric bike availability is low at specific stations, or special events like the `spring fistival` I encountered and other Orphaned stations , further check is required.
-  ** analysis: 1: classis Bikes in orphaned stations (events that count towards using classic bikes, these events count towards the Oprphaned stations we mentioned in file `02_Data_Cleaning_and_Wrangling` ) 
-               2: stations where it was used: could it be that the stations are moving toward full electric support? , if the bikes are distributed such as  that the majority in less crowded stations? , if not could it be truely as alternative cheapr option? .
+* Classic Bikes Relegated to Niche: Classic mechanical bikes account for just 12.31% of total rides. Initial hypotheses pointed to event pop-ups (e.g., a single raw `'Springfest 2022'` record — see [`02_Data_Cleaning_and_Wrangling.md`](02_Data_Cleaning_and_Wrangling.md) Step 05) and orphaned-station legs; the empirical validation below tests whether those factors actually drive classic usage in the **production dataset**.
 
 * Operational Implication: Given that nearly 9 out of 10 rides rely on electric models, logistics teams must focus heavily on battery charging infrastructure, efficient station rotation, and proactive maintenance of motorized components to prevent fleet downtime.
 
 ### 🔍 Deep-Dive: Investigating the Classic Bike Anomalies
 
-While Electric bikes dominate the overall volume, the remaining **12.31%** attributed to Classic mechanical bikes requires a deeper operational audit. Rather than a uniform user preference, preliminary patterns suggest this baseline is driven by infrastructure limitations and isolated seasonal anomalies. 
-
-To validate this, the analysis is divided into two target investigations:
+While Electric bikes dominate the overall volume, the remaining **12.31%** attributed to Classic mechanical bikes requires a deeper operational audit. Two hypotheses were tested against the **16,504-row production CTE** (trips with complete start/end station IDs):
 
 ---
 
-#### 🗺️ Investigation 1: Event-Driven Spikes & Orphaned Stations
-We hypothesize that classic bike usage is heavily inflated by specific, isolated events and temporary infrastructure disruptions rather than consistent organic demand.
+#### 🗺️ Investigation 1: Orphaned Stations & Event Pop-Ups
+**Initial hypothesis:** Classic bike usage might be inflated by temporary event docks or disproportionate interaction with unregistered station legs.
 
-* **Special Event Anomalies:** Initial observations indicate significant utilization spikes during specific windows, such as the `spring festival`. These transient events distort regular fleet usage baselines.
-* **Orphaned Station Correlation:** There is an active correlation to be checked between classic bike check-outs and the **Orphaned Stations** identified during our initial preprocessing phase in `02_Data_Cleaning_and_Wrangling`. 
-* **Analytical Action Item:** Cross-reference ride timestamps during the `spring festival` window against station IDs to determine if classic bike usage was driven by artificial supply constraints (e.g., electric rebalancing teams being unable to access high-congestion zones).
+**Raw-data note (pipeline context):** The raw rentals table contains exactly **one** `'Springfest 2022'` trip (`rental_id` 26160487, March 14, 2022, Classic, 12 min, NULL `end_station_id`). It is **not present** in the production dataset because the CTE requires non-null `end_station_id` — so no Springfest-labeled volume appears in the analysis below. See [`02_Data_Cleaning_and_Wrangling.md`](02_Data_Cleaning_and_Wrangling.md) Step 05 for the full pipeline decision.
 
----
+**Production-dataset test:** Do classic bikes interact with orphaned (catalog-unverified) station legs more than electric bikes?
 
 #### 🌐 Investigation 2: Spatial Distribution & Infrastructure Transition
 We need to determine if the retention of classic bikes is a strategic cost-alternative for users, or simply a byproduct of an ongoing grid migration toward full electrification.
@@ -220,9 +214,9 @@ This audit evaluates whether Classic mechanical bikes are disproportionately lef
 | **Total Fleet** | **16,504** | **6,551** | **39.69%** | **System-Wide Average** |
 
 ##### Analytical Evaluation: The Orphaned Station Disproof
-The data explicitly **disproves** the theory that Classic bikes are uniquely isolated at orphaned stations or driven out of bounds by seasonal disruptions like the `spring festival`. 
+The data **disproves** the theory that Classic bikes are uniquely isolated at orphaned stations. Event pop-ups like Springfest are not measurable in the production dataset (single raw record excluded by the station-ID filter).
 * **Systemic Relocation Issues:** Electric bikes actually exhibit a *higher* rate of interaction with orphaned stations (**40.34%**) than Classic bikes (**35.11%**). 
-* **Conclusion:** Orphaned station interaction is a network-wide rebalancing and logging latency challenge rather than a behavioral pattern unique to mechanical bikes. The electric fleet is frequently pulling out of standard station grids due to longer user travel distances.
+* **Conclusion:** Orphaned station interaction is a network-wide rebalancing and logging latency challenge rather than a behavioral pattern unique to mechanical bikes. Classic usage is driven by the campus closed-loop geography validated in Investigation 2, not by seasonal events.
 
 ---
 
@@ -2106,8 +2100,10 @@ The `customer_user_type` field adds a retention lens across tiers:
 | Classic bike persona | Pay-as-you-ride (26.2%) + Explorer (17.4%) | Leisure stocking, not campus |
 | CRM conversion pool | 4,561 student Customer-status trips | Subscription upsell target |
 
-*Section 08 complete. Business recommendations and predictive modeling I will continue in **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** *
+*Section 08 complete. Business recommendations and predictive modeling continue in **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** (Sections 09–10).*
 
 ---
+
+<!-- Sections 09 (Business Recommendations) and 10 (Prediction) have moved to 04_Predictive_Modeling.md -->
 
 
