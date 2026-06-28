@@ -547,9 +547,9 @@ graph TD
 The alignment of these datasets transitions Zen City logistics away from localized adjustments toward an Integrated Network Balancing Policy:
 ```mermaid
 graph TD
-    %% Define Core Nodes
-    Sink[🏢 CORE CAMPUS TERMINAL SINKS <br> Station 3798 (PCL) & Station 3838 (Nueces)]
-    Source[🚴 PERIMETER COMMUTER SOURCE SHEDS <br> Station 2498 (Dean Keeton) & 2547 (Guad)]
+    %% Define Core Nodes with Quoted Text Strings
+    Sink["🏢 CORE CAMPUS TERMINAL SINKS <br> Station 3798 (PCL) & Station 3838 (Nueces)"]
+    Source["🚴 PERIMETER COMMUTER SOURCE SHEDS <br> Station 2498 (Dean Keeton) & 2547 (Guad)"]
     
     %% Intermediary Operational Steps as Text on Edges
     Sink --> |"🚚 [ HIGH-FREQUENCY VAN CLEARING ] <br> Evacuate slots to maintain incoming capacity"| Source
