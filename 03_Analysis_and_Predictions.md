@@ -1868,54 +1868,248 @@ The demand wave moves **north to west to south** between 4 PM and 6 PM — Dean 
 *Section 07 complete. Proceed to **Section 08 — Customer Segmentation**.*
 
 ---
-# **08 - Customer Segmentation **
-relationship between subcription types and stations and Bike type and hours .
-I'd focus on the main majority customers which are the Students subcriptions counting for 77% .
+# **08 — Customer Segmentation**
 
-This is another area where you can go beyond the assignment.
+## Overview & Segmentation Framework
 
-Examples
+Previous sections established *what* the network does (volume, bottlenecks, timing). Customer segmentation defines *who* drives each behavior — enabling tier-specific pricing, targeted marketing, and fleet allocation for Q2 growth.
 
-Students
+Because Zen City has no explicit "Faculty" or "Visitor" field, this analysis constructs **five data-driven personas** from observable fields: `subscriber_type`, trip duration, station affinity, bike preference, time-of-day behavior, and ride frequency.
 
-Faculty
+| Persona | Proxy Definition | Q1 Trips | Share |
+| :--- | :--- | :---: | :---: |
+| **P1 — Campus Commuter** | Student Membership + U.T. Student Membership | 12,796 | **77.5%** |
+| **P2 — Local Recurring** | Local31 + Local365 | 2,345 | 14.2% |
+| **P3 — Leisure & Visitor** | Explorer + 3-Day Weekender + 24-Hr Walk-Up + Pay-as-you-ride | 1,220 | 7.4% |
+| **P4 — Casual Single-Trip** | Single Trip (Pay-as-you-ride) + HT Ram + Annual | 143 | 0.9% |
+| **P5 — Power User** | Any customer with ≥ 10 Q1 trips (cross-tier) | 16,353 | **99.1%** |
 
-Visitors
+*Note: Personas P1–P4 are tier-based and overlap at the customer level. P5 is a frequency overlay — 568 individual customers account for 99.1% of all trips regardless of tier.*
 
-Long rides
+---
 
-Short rides
+## 8.1 Persona Profiles
 
-Frequent stations
+### P1 — Campus Commuter (Student Tiers)
 
-Preferred bikes
+The operational core of Zen City. Every registered customer (`N = 586`) used a student tier at least once in Q1 — there are **zero customers who exclusively use non-student tiers**.
 
+| Attribute | Value | Interpretation |
+| :--- | :---: | :--- |
+| Trips | 12,796 | 77.5% of all Q1 volume |
+| Unique customers | 586 (all registered users) | 21.5 avg trips/customer on student tier |
+| Median duration | **5 min** | Ultra-short campus hops |
+| Mean duration | 15.5 min | Right-skewed; thin long-ride tail |
+| Electric share | 88.6% | Strong e-bike preference |
+| Peak hour | **3 PM** (1,171 trips) | Class dismissal |
+| Weekend share | 17.7% | Weekday-dominant |
+| Top origin | Dean Keeton/Speedway (2,719) | Northern campus gateway |
+| Top destination | **PCL (3,376)** | Academic sink |
 
+**Behavioral signature:** High frequency, ultra-short, weekday afternoon, campus corridor, electric-preferred. Treat as a **throughput problem**, not a revenue-per-trip problem.
 
-# **09 - Business Recommendations **
+### P2 — Local Recurring (Local31 + Local365)
 
-****Very important ****
+The closest proxy for faculty, staff, and non-student residents. Combined **2,345 trips (14.2%)** with meaningfully different behavior from students.
 
-I'll make into sections , with findings and suggestions
+| Attribute | Local31 | Local365 | Combined |
+| :--- | :---: | :---: | :---: |
+| Trips | 1,286 | 1,059 | 2,345 |
+| Median duration | 23 min | 9 min | ~15 min blended |
+| Mean duration | 34.4 min | 21.3 min | — |
+| Electric share | 94.3% | 86.6% | ~90% |
+| Peak hour | 5 PM | 3 PM | **5 PM** (291 trips) |
+| Weekend share | 28.5% | 25.1% | ~27% |
+| Top origin | 28th/Rio Grande | — | West campus / Rio Grande corridor |
+| Trips per customer | 3.2 | 3.0 | Low frequency, high loyalty |
 
-for example:
+**Behavioral signature:** Longer rides than students, later peak (5 PM vs 3 PM), higher weekend share (+10 pp vs students), and spread across Rio Grande / Pfluger / East 6th corridors rather than the PCL sink. Local31 users in particular take **4–5× longer trips** than students (23 vs 5 min median).
 
-Finding:
+### P3 — Leisure & Visitor (Explorer + Pass Holders + Pay-as-you-ride)
 
-Students account for 77% of trips.
+Combined **1,220 trips (7.4%)** — low volume but highest per-trip duration and weekend concentration.
 
-Recommendation:
+| Tier | Trips | Median Duration | Weekend Share | Top Origin |
+| :--- | :---: | :---: | :---: | :--- |
+| Explorer | 402 | 30 min | **41.8%** | Pfluger Ped Bridge |
+| 3-Day Weekender | 232 | 21 min | **45.3%** | Pfluger / East 6th |
+| 24-Hr Walk Up Pass | 143 | **42 min** | **53.8%** | Pfluger / DKR Stadium |
+| Pay-as-you-ride | 443 | 18 min | 40.4% | Pfluger / East 6th |
 
-Expand student pricing.
-Special offers: like "New-Comer" discounts 
+**Combined leisure segment top origins:**
+1. Pfluger Ped Bridge — 242 trips
+2. East 6th/Medina — 132 trips
+3. DKR Stadium — 101 trips
 
+**Behavioral signature:** Long rides (18–42 min median), majority weekend usage (40–54%), classic-bike share 2–3× the network average (17–26% vs 12.3%), concentrated at leisure hubs — not campus corridors. These users generate **higher per-minute revenue** but do not drive bottleneck stress.
 
+### P4 — Casual Single-Trip (Marginal Tier)
 
+Single Trip Pay-as-you-ride (137), HT Ram (4), and Annual (2) combined = **143 trips (0.9%)**. Too small for standalone operational strategy; fold into P3 marketing campaigns.
 
+---
 
-# **10 - Prediction ** (I am thinking of making dedicated section for 09 and 10) .
+## 8.2 Ride-Length Segmentation
 
+Duration-based segments cut across tiers and reveal the network's **micro-mobility vs. leisure** split:
 
+| Segment | Duration | All Users | Share | Student Share | Non-Student Share |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **Micro** | 1–6 min | 9,204 | 55.8% | 8,426 (65.8% of students) | 778 (21.0%) |
+| **Short** | 7–15 min | 4,056 | 24.6% | 3,154 (24.6%) | 902 (24.3%) |
+| **Medium** | 16–30 min | 1,466 | 8.9% | 624 (4.9%) | 842 (22.7%) |
+| **Long** | 31+ min | 1,778 | 10.8% | 592 (4.6%) | 1,186 (32.0%) |
 
+```mermaid
+pie title Q1 Ride-Length Distribution (All Users)
+    "Micro 1-6 min" : 55.8
+    "Short 7-15 min" : 24.6
+    "Medium 16-30 min" : 8.9
+    "Long 31+ min" : 10.8
+```
+
+* **90.4% of student trips** fall in the Micro + Short bands (≤ 15 min). Students essentially never take medium or long rides (9.5% combined).
+* **Non-student users dominate medium and long segments** — 54.7% of all 31+ minute trips come from just 22.5% of total volume. A small non-student base generates disproportionate ride time, affecting bike availability and battery depletion.
+
+---
+
+## 8.3 Station Affinity by Persona
+
+### Campus Commuter Corridors (Student Top Routes)
+
+| Rank | Route (Origin → Destination) | Student Trips | Share of Student Volume |
+| :---: | :--- | :---: | :---: |
+| 1 | Dean Keeton/Speedway → **PCL** | 789 | 6.2% |
+| 2 | 23rd/San Gabriel → **PCL** | 661 | 5.2% |
+| 3 | 22nd/Pearl → **PCL** | 583 | 4.6% |
+| 4 | Dean Keeton/Speedway → 26th/Nueces | 411 | 3.2% |
+| 5 | 21st/Guadalupe → **PCL** | 401 | 3.1% |
+| 6 | 28th/Rio Grande → **PCL** | 364 | 2.8% |
+
+**Six student routes to PCL account for 2,599 trips — 20.3% of all student volume** on just six origin-destination pairs. This extreme corridor concentration is the segmentation finding with the highest operational leverage.
+
+### Leisure & Local Station Preferences (Contrasted)
+
+| Persona | Top Origin Station | Trips | Campus Hub Share |
+| :--- | :--- | :---: | :---: |
+| **Student** | Dean Keeton/Speedway | 2,719 | 90.7% student share at hub |
+| **Local31** | 28th/Rio Grande | 259 | 77.1% |
+| **Explorer** | Pfluger Ped Bridge | 120 | **9.6%** |
+| **Pay-as-you-ride** | Pfluger Ped Bridge | 101 | **9.6%** |
+
+Students and leisure users **do not share origin stations**. Pfluger Ped Bridge — the #1 leisure origin — carries only 9.6% student share vs 90.7% at Dean Keeton.
+
+---
+
+## 8.4 Bike Preference by Persona
+
+| Persona | Electric Share | Classic Share | Classic Use Case |
+| :--- | :---: | :---: | :--- |
+| Campus Commuter (Student) | 88.6% | 11.4% | Overflow when e-bikes depleted |
+| Local Recurring (Local31) | 94.3% | 5.7% | Rare — strong e-bike loyalty |
+| Local Recurring (Local365) | 86.6% | 13.4% | Occasional fallback |
+| Leisure (Explorer) | 82.6% | **17.4%** | Recreational trail preference |
+| Casual (Pay-as-you-ride) | 73.8% | **26.2%** | Highest classic share — budget/leisure |
+| 3-Day Weekender | 81.5% | 18.5% | Weekend classic loops |
+
+Classic bikes are **persona-specific**, not station-specific: Pay-as-you-ride and Explorer users choose classics at **2× the student rate**, primarily at Pfluger and East 6th leisure corridors.
+
+---
+
+## 8.5 Temporal Preferences by Persona
+
+| Persona | Peak Hour | Weekend Share | Afternoon Block Share (est.) | Temporal Profile |
+| :--- | :---: | :---: | :---: | :--- |
+| Campus Commuter | **3 PM** | 17.7% | ~35% | Weekday afternoon dismissal |
+| Local31 | **5 PM** | 28.5% | ~30% | End-of-workday departure |
+| Local365 | 3 PM | 25.1% | ~28% | Hybrid commuter |
+| Explorer | 3 PM | **41.8%** | ~32% | Afternoon weekend leisure |
+| Pay-as-you-ride | 5 PM | **40.4%** | ~30% | Visitor exploration |
+| 3-Day Weekender | — | **45.3%** | — | Weekend-only pattern |
+| 24-Hr Walk Up Pass | — | **53.8%** | — | Tourism / event-driven |
+
+**Segment-specific timing confirms Section 07:** A single rebalancing schedule cannot serve all personas. Students need 3 PM campus corridor service; Local31 needs 5 PM extended-route coverage; leisure tiers need weekend 2–6 PM at Pfluger.
+
+---
+
+## 8.6 Customer Frequency & Loyalty — The Power User Layer
+
+Beyond tier-based personas, **ride frequency** reveals who actually drives network volume:
+
+| Frequency Band | Customers | Trips | Share of All Trips | Avg Trips/Customer |
+| :--- | :---: | :---: | :---: | :---: |
+| 1–5 trips | 1 | 1 | 0.0% | 1.0 |
+| 6–20 trips | 415 | 4,130 | 25.0% | 10.0 |
+| 21–50 trips | 150 | 5,769 | 34.9% | 38.5 |
+| **51+ trips** | **20** | **6,604** | **40.0%** | **330.2** |
+| **≥ 10 trips (combined)** | **568** | **16,353** | **99.1%** | **28.8** |
+
+```mermaid
+graph TD
+    subgraph Power_Users["568 Power Users (≥10 trips)"]
+        PU[99.1% of ALL Q1 trips]
+    end
+    subgraph Top20["Top 20 Users (51+ trips)"]
+        T20[40.0% of ALL Q1 trips<br>330 avg trips each]
+    end
+    subgraph Long_Tail["Remaining 18 users"]
+        LT[Negligible volume]
+    end
+    T20 --> PU
+    LT --> PU
+    style T20 fill:#f96,stroke:#333,stroke-width:2px
+    style PU fill:#bbf,stroke:#333,stroke-width:2px
+```
+
+**Critical finding:** Just **20 customers** (3.4% of registered users) generated **6,604 trips — 40.0% of the entire Q1 network**. The top customer (C-0011, Student Membership) logged **332 trips** in 89 days — 3.7 trips per day.
+
+This is not a broad user base driving growth — it is an **extremely concentrated power-user cohort** of heavy student commuters. Q2 growth strategies must prioritize **retaining and enabling these 568 high-frequency users** rather than broad acquisition campaigns.
+
+---
+
+## 8.7 CRM Cross-Reference — Subscriber vs. Customer Status
+
+The `customer_user_type` field adds a retention lens across tiers:
+
+| CRM Status | Primary Tier Association | Trips | Insight |
+| :--- | :--- | :---: | :--- |
+| Subscriber | Student Membership | 8,014 | Recurring student relationship |
+| Customer | Student Membership | 4,561 | Transactional student accounts |
+| Subscriber | Local31 / Local365 | 1,454 | Loyal local base |
+| Customer | Local31 / Local365 | 891 | Trial / casual local users |
+
+**4,561 student trips (35.6% of student volume)** come from CRM-classified `Customer` accounts — riders who use Student Membership but are not formal subscribers. This is a **conversion pool**: moving Customer → Subscriber could improve retention and enable semester-pass pricing for the highest-frequency cohort.
+
+---
+
+## 8.8 Q2 Segment-Targeted Strategy Matrix
+
+| Persona | Q2 Growth Lever | Target Metric | Specific Action |
+| :--- | :--- | :--- | :--- |
+| **P1 Campus Commuter** | Throughput at PCL corridor | Trips/day near 412 ceiling | PCL dock expansion; 3 PM rebalancing wave |
+| **P2 Local Recurring** | Extend peak coverage to 5 PM | +Local31 trip duration retention | Dedicated 5 PM bike staging at Rio Grande |
+| **P3 Leisure & Visitor** | Weekend revenue capture | +40% weekend share tiers | Classic fleet at Pfluger; Fri–Sun marketing |
+| **P5 Power Users (568)** | Retention of top 20 (40% of trips) | ≥ 330 trips/Q2 per power user | Loyalty rewards; priority dock access |
+| **CRM Conversion** | Customer → Subscriber | 4,561 transactional student trips | Semester pass upsell campaign |
+
+---
+
+### Section 08 Summary — Segmentation Determining Keys
+
+| Key | Finding | Strategic Weight |
+| :--- | :--- | :--- |
+| Dominant persona | Campus Commuter — 77.5% | Fleet & dock priority |
+| Corridor concentration | 6 routes to PCL = 20.3% of student trips | Infrastructure ROI focus |
+| Non-student value | 22.5% of trips, 54.7% of long rides | Pricing tier differentiation |
+| Leisure geography | Pfluger + East 6th — separate from campus | Split ops playbook |
+| Power user concentration | 20 users = 40% of all trips | Retention > acquisition |
+| Classic bike persona | Pay-as-you-ride (26.2%) + Explorer (17.4%) | Leisure stocking, not campus |
+| CRM conversion pool | 4,561 student Customer-status trips | Subscription upsell target |
+
+*Section 08 complete. Business recommendations and predictive modeling continue in **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** (Sections 09–10).*
+
+---
+
+<!-- Sections 09 (Business Recommendations) and 10 (Prediction) have moved to 04_Predictive_Modeling.md -->
 
 
