@@ -444,13 +444,13 @@ Excluding *28th/Rio Grande (3793)*, which exhibits a slightly elevated neighborh
 ```mermaid
 graph TD
     %% Define Nodes and Styles
-    subgraph West Campus Source Zone [High-Density Student Housing Staging Grounds]
+    subgraph zone1 [West Campus Source Zone: High-Density Student Housing]
         DK[Dean Keeton <br> ID: 2498]
         GD[21st/Guadalupe <br> ID: 2547]
         SG[23rd/San Gabriel <br> ID: 7125]
     end
 
-    subgraph Core Campus Sinks [Absolute Network Drainage Docks]
+    subgraph zone2 [Core Campus Sinks: Absolute Network Drainage Docks]
         PCL[21st/Speedway @ PCL <br> ID: 3798]
         NUE[26th/Nueces <br> ID: 3838]
     end
@@ -460,9 +460,9 @@ graph TD
     GD -- "High Velocity Outflow" --> PCL
     SG -- "Morning Rush Influx" --> NUE
 
-    %% Operations loop
-    PCL -. "Heavy Trucking Rebalancing Loop <br> (Constant Fleet Redistribution Required)" .-> West Campus Source Zone
-    NUE -. "Manual Rebalancing Sweep" .-> West Campus Source Zone
+    %% Operations loop (Pointing directly to the Subgraph IDs)
+    PCL -. "Heavy Trucking Rebalancing Loop <br> (Constant Fleet Redistribution Required)" .-> zone1
+    NUE -. "Manual Rebalancing Sweep" .-> zone1
 
     classDef source fill:#d4edda,stroke:#28a745,stroke-width:2px;
     classDef sink fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
@@ -470,6 +470,7 @@ graph TD
     class DK,GD,SG source;
     class PCL,NUE sink;
 ```
+
 ### 🔄 Cross-Tier Comparative Synthesis: Classic vs. Electric Fleet Dynamics
 
 To uncover the core structural mechanics of the Zen City transit network, this section establishes a direct comparative audit between the **Classic (Mechanical)** and **Electric (Motorized)** fleet tiers. By analyzing the behavioral variance between these asset classes across identical high-volume transit nodes, we can distinguish between localized demographic preferences, structural network constraints, and critical equipment imbalances.
