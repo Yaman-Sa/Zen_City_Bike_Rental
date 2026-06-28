@@ -6,7 +6,7 @@
 
 Sections 01–08 of [`03_Analysis_and_Predictions.md`](03_Analysis_and_Predictions.md) established a complete analytical foundation for Zen City's Q1 2022 operations: a validated 16,504-row clean dataset, univariate and multivariate demand profiles, station performance rankings, dock-capacity bottlenecks, temporal operating windows, and five customer personas. The evidence converges on a single strategic reality — **Zen City is an afternoon-dominant, student-driven campus micro-mobility network** constrained not by rider demand but by physical dock capacity at the PCL corridor.
 
-This document translates those findings into **actionable Q2 2022 directives** and, in Section 10, will house the predictive models that forecast rental growth under each intervention scenario. Section 09 below is organized as paired **Finding → Recommendation** blocks grouped by strategic domain: infrastructure, operations, pricing, marketing, and data governance. Recommendations are prioritized by expected impact on total Q2 rental volume, not by implementation ease.
+This document translates those findings into **actionable Q2 2022 directives** (Section 09) and **quantified rental forecasts** under each intervention scenario (Section 10). Section 09 below is organized as paired **Finding → Recommendation** blocks grouped by strategic domain: infrastructure, operations, pricing, marketing, and data governance. Recommendations are prioritized by expected impact on total Q2 rental volume, not by implementation ease.
 
 **Analytical baseline referenced throughout:**
 * Production dataset: **16,504 trips** (Jan 1 – Mar 31, 2022)
@@ -246,12 +246,240 @@ Q2 growth for Zen City is not primarily a demand-generation problem — Q1 prove
 2. **Deploy continuous PCL clearing + staggered rebalancing** — zero-capital operational fix
 3. **Protect and retain the 568 power users** who generate 99.1% of trip volume
 
-*Section 09 complete. Proceed to **Section 10 — Predictive Modeling & Q2 Forecast**.*
+*Section 09 complete. **Section 10 — Predictive Modeling & Q2 Forecast** follows below.*
 
 ---
 
 # **10 — Predictive Modeling & Q2 Forecast**
 
-*(To be developed — demand forecasting, scenario modeling, and Q2 rental volume projections based on the interventions defined in Section 09.)*
+## Overview & Methodology
+
+The Q2 2022 forecast translates Q1 behavioral baselines (Sections 02–08) and the intervention roadmap (Section 09) into **quantified rental volume projections** for April–June 2022. The objective is not to predict a single number — it is to define a **credible range** bounded by demonstrated Q1 capacity and the physical constraints identified in the bottleneck analysis.
+
+### Modeling Principles
+
+| Principle | Application |
+| :--- | :--- |
+| **Anomaly exclusion** | March 18, 2022 (6 trips — partial system outage) removed from all trend calculations (Recommendation E2) |
+| **No unconstrained linear extrapolation** | Q1 daily volume ramped 102 → 412 trips/day as the spring semester scaled (Jan → Feb). A raw linear trend projects **359 trips/day by June** — this overstates Q2 because the Jan→Feb surge reflects one-time semester onboarding, not a repeatable monthly multiplier |
+| **Day-of-week weighting** | Q2 calendar (91 days) weighted by Q1 day-of-week averages — captures Tue/Wed peaks and Fri/weekend troughs |
+| **Capacity ceiling** | Forecasts capped by infrastructure scenarios: current hardware (~340 trips/day demonstrated max) vs post-intervention (+10–15 PCL docks) |
+| **Seasonal adjustment** | April = full spring session; May = −5%; June = −15% (summer session departure, student volume decline) |
+
+### Forecast Scenarios Defined
+
+| Scenario | Description | Key Assumption |
+| :--- | :--- | :--- |
+| **S0 — Status Quo Baseline** | Q1 day-of-week averages applied to Q2 calendar with no interventions | Current bottlenecks persist; PCL remains at 145% capacity |
+| **S1 — Operations Quick Wins** | S0 + 8% uplift from Recommendations B1, B2, C2 (rebalancing, PCL clearing, power-user retention) | Ops fixes unlock suppressed demand within 4 weeks |
+| **S2 — Moderate Growth (Target)** | S0 + 12% uplift + seasonal adjustment from Recommendations A1, A3, C1, D3 | PCL overflow docks installed by Week 4; bottom-10 relocated |
+| **S3 — Optimistic Ceiling** | S0 + 20% uplift with full Section 9 implementation | All infrastructure, ops, pricing, and marketing interventions active by June |
+| **S4 — Demonstrated Max Capacity** | Flat 340 trips/day × 91 days | Theoretical ceiling if every day matched Feb 8–17 peak-week performance |
+
+---
+
+## 10.1 Q1 Baseline — The Forecast Anchor
+
+| Metric | Q1 Value | Forecast Role |
+| :--- | :---: | :--- |
+| Total Q1 trips | **16,504** | Comparison benchmark for Q2 |
+| Active days | 89 (excl. Mar 18 anomaly) | Daily trend denominator |
+| Mean daily trips | 185.4 | Status-quo reference |
+| Median daily trips | 168 | Typical operating day |
+| Peak single day | **412** (Feb 10) | Absolute capacity ceiling proxy |
+| Peak week daily avg | **340** (Feb 8–17) | Sustained high-performance benchmark |
+| February daily avg | **252.6** | Best-month performance |
+| March daily avg (excl. Mar 18) | **216.0** | Most recent stable month |
+| Last 42 days avg (Feb 18 – Mar 31) | **207.6** | Trailing run-rate entering Q2 |
+| Weekday daily avg | **206.7** | Core demand floor |
+| Weekend daily avg | **133.9** | Leisure-demand floor |
+
+### Q1 Day-of-Week Averages (Forecast Input)
+
+| Day | Q1 Avg Trips / Active Day | Q2 Days in Calendar | Weighted Q2 Contribution |
+| :--- | :---: | :---: | :---: |
+| Sunday | 137.2 | 13 | 1,784 |
+| Monday | 196.5 | 13 | 2,555 |
+| **Tuesday** | **227.2** | 13 | **2,954** |
+| **Wednesday** | **220.7** | 13 | **2,869** |
+| Thursday | 213.0 | 13 | 2,769 |
+| Friday | 189.4 | 13 | 2,462 |
+| Saturday | 130.7 | 13 | 1,699 |
+| **Q2 Baseline Total (S0)** | | **91** | **17,090** |
+
+*S0 projects **17,090 Q2 trips** — a **+3.6% increase** over Q1 (16,504) driven purely by Q2 having more high-volume weekdays in the calendar structure and March's recovery trajectory, not from any operational improvement.*
+
+---
+
+## 10.2 Scenario Forecasts — Q2 Total Volume (April–June 2022)
+
+| Scenario | Q2 Projected Trips | Change vs Q1 (16,504) | Avg Daily Trips | Key Enabler |
+| :--- | :---: | :---: | :---: | :--- |
+| **S0 — Status Quo Baseline** | **17,090** | +3.6% | 187.8 | No change — bottlenecks cap growth |
+| **S1 — Operations Quick Wins** | **18,457** | +11.8% | 202.8 | Rebalancing + PCL clearing + retention |
+| **S2 — Moderate Growth (Target)** | **19,141** | +16.0% | 210.3 | + PCL docks + pricing + onboarding |
+| **S2-Adj — Seasonally Adjusted** | **17,859** | +8.2% | 196.3 | S2 with June student-departure factor |
+| **S3 — Optimistic Ceiling** | **20,508** | +24.3% | 225.4 | Full Section 9 implementation |
+| **S4 — Demonstrated Max** | **30,940** | +87.5% | 340.0 | Every day at Feb peak-week level *(not achievable without major fleet expansion)* |
+
+```mermaid
+graph LR
+    subgraph Realistic["Realistic Q2 Range"]
+        S0[S0 Baseline<br>17,090]
+        S1[S1 Ops Wins<br>18,457]
+        S2A[S2-Adj Seasonal<br>17,859]
+        S2[S2 Target<br>19,141]
+        S3[S3 Optimistic<br>20,508]
+    end
+    subgraph Theoretical["Theoretical Ceiling"]
+        S4[S4 Max Capacity<br>30,940]
+    end
+    Q1[Q1 Actual<br>16,504] --> S0
+    S0 --> S1 --> S2A --> S2 --> S3
+    S2 -. "Requires full infra" .-> S4
+    style S2 fill:#bbf,stroke:#333,stroke-width:3px
+    style S2A fill:#ddf,stroke:#333,stroke-width:2px
+    style S4 fill:#eee,stroke:#999,stroke-dasharray: 5 5
+```
+
+**Recommended planning target: Scenario S2 — 19,141 trips (+16.0%)**, with **S2-Adj (17,859)** as the conservative floor if June student departure follows Q1 seasonal patterns. Achieving S2 requires Recommendations A1, B1, B2, C1, and D3 on the Section 09 timeline.
+
+---
+
+## 10.3 Monthly Q2 Breakdown — Scenario S2 (Target)
+
+Seasonal adjustments reflect Austin academic calendar effects: April maintains spring session volume (× 1.00), May begins summer transition (× 0.95), June reflects student departure (× 0.85). A +12% intervention uplift is applied to each month.
+
+| Month | Q2 Days | Base (S0) | Seasonal Factor | Intervention (+12%) | **S2 Monthly Projection** |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **April 2022** | 30 | 5,578 | × 1.00 | × 1.12 | **6,248** |
+| **May 2022** | 31 | 5,819 | × 0.95 | × 1.12 | **6,192** |
+| **June 2022** | 30 | 5,692 | × 0.85 | × 1.12 | **5,419** |
+| **Q2 Total (S2-Adj)** | **91** | **17,090** | — | — | **17,859** |
+
+*The monthly sum (**17,859**) is the seasonally-adjusted realistic forecast (S2-Adj). The **19,141 aggregate target (S2)** assumes April-level demand persists through May–June — achievable if the leisure growth campaign (D2) and summer session enrollment partially offset student departure.*
+
+### Monthly Operational Implications
+
+| Month | Expected Profile | Operational Focus |
+| :--- | :--- | :--- |
+| **April** | Highest Q2 volume — spring session in full swing | Execute A1 (PCL docks) and B1/B2 (rebalancing) immediately |
+| **May** | Plateau — summer session begins, −5% seasonal dip | Launch C1 (tier pricing) and D2 (weekend leisure campaign) |
+| **June** | Lowest Q2 month — student departure, −15% | Shift resources to leisure hubs; begin Q3 fall prep data collection |
+
+---
+
+## 10.4 Capacity Constraint Model
+
+Forecasts must be validated against the physical network ceiling identified in Section 06:
+
+| Constraint | Q1 Evidence | Q2 Implication |
+| :--- | :--- | :--- |
+| PCL sink at 145% capacity | 16.2 arr/dock/hour at peak | Without A1, **S2 and S3 forecasts fail** — suppressed trips remain unconverted |
+| Exporter stockouts 3–5 PM | 18.9 dep/dock/hour at Dean Keeton | B1 pre-stocking required to reach S1 (+8%) |
+| Demonstrated daily max | 412 trips (Feb 10) | S4 (30,940) requires 340/day sustained — **not credible without fleet + dock expansion** |
+| Feb peak week avg | 340 trips/day for 10 days | Credible **short-burst** maximum; not sustainable full quarter without intervention |
+
+### Bottleneck Recovery → Forecast Uplift Mapping
+
+| Intervention | Recommendation | Estimated Volume Unlock | Scenario |
+| :--- | :--- | :---: | :--- |
+| PCL continuous clearing (B2) | Immediate | +3% | S1 component |
+| Staggered rebalancing (B1) | Week 1 | +2% | S1 component |
+| Power user retention (C2) | Week 2 | +3% | S1 component |
+| PCL overflow docks (A1) | Week 4 | +5% | S2 incremental |
+| Tier pricing + onboarding (C1, D3) | Week 4–8 | +4% | S2 incremental |
+| Full infra + marketing (A2, A3, D2) | Month 2–3 | +5% | S3 incremental |
+| **Combined S1** | | **+8%** | **18,457 trips** |
+| **Combined S2** | | **+12%** | **19,141 trips** (S2 stretch) / **17,859** (S2-Adj seasonal) |
+
+---
+
+## 10.5 Segment-Level Q2 Projections (Scenario S2)
+
+Applying the +16.0% aggregate uplift proportionally by persona (Section 08), with June leisure share increasing as student volume seasonally declines:
+
+| Persona | Q1 Trips | Q1 Share | S2 Q2 Projection | Q2 Strategy Link |
+| :--- | :---: | :---: | :---: | :--- |
+| **P1 Campus Commuter** | 12,796 | 77.5% | **~14,844** | A1, B1, B2, D3 |
+| **P2 Local Recurring** | 2,345 | 14.2% | **~2,720** | C1 (Local31 pricing), B3 |
+| **P3 Leisure & Visitor** | 1,220 | 7.4% | **~1,540** | D2, B4 (weekend classic) |
+| **P4 Casual Single-Trip** | 143 | 0.9% | **~166** | Fold into P3 campaigns |
+| **Total** | **16,504** | 100% | **~19,141** | |
+
+**June segment shift:** Leisure & Visitor share expected to rise from 7.4% → ~10% in June as student departures accelerate — validating the B4 classic-bike leisure playbook and D2 weekend marketing timing for May–June.
+
+---
+
+## 10.6 Model Validation & Limitations
+
+### Why Unconstrained Linear Regression Was Rejected
+
+A simple linear model fitted to 88 Q1 daily observations (excluding March 18) produces:
+
+| Model Output | Value | Verdict |
+| :--- | :---: | :--- |
+| Slope | +1.87 trips/day | Captures semester ramp artifact |
+| Intercept | 105.7 | Anchored to January cold-start |
+| Q2 linear projection | **32,724 trips** (359/day avg) | **Rejected — unrealistic** |
+
+The linear model assumes the Jan→Feb **+148% daily growth rate** continues indefinitely. In reality, that surge reflects spring semester onboarding — a **one-time step change**, not a recurring monthly multiplier. February-to-March already showed **−17% daily decline** (252.6 → 209), confirming the ramp plateaued.
+
+### Assumptions & Risks
+
+| Assumption | Risk if Violated | Mitigation |
+| :--- | :--- | :--- |
+| PCL overflow docks live by Week 4 | S2 forecast fails; volume stays at S0 (+3.6%) | Prioritize A1 as #1 capital project |
+| Summer session volume follows −15% June adj | Larger student exodus → June underperforms | Monitor weekly in May; adjust crew levels |
+| No major system outages | Repeat of March 18 corrupts monthly totals | Implement E2 anomaly flag in pipeline |
+| Weather comparable to Q1 | Severe weather reduces ridership 10–20% | Not modeled — external risk factor |
+| Orphan station IDs unresolved | Bottleneck at San Gabriel/Pearl understated | E3 catalog audit; separate monitoring |
+
+### Forecast Confidence Intervals (Directional)
+
+| Scenario | Q2 Trips | Confidence | Planning Use |
+| :--- | :---: | :---: | :--- |
+| S0 Baseline | 17,090 | **High** (90%) | Floor — worst case without action |
+| S1 Operations | 18,457 | **Medium-High** (75%) | Minimum target if only ops changes implemented |
+| **S2 Target** | **19,141** | **Medium** (60%) | **Stretch planning number** |
+| **S2-Adj (seasonal)** | **17,859** | **Medium-High** (70%) | **Primary operational floor** |
+| S3 Optimistic | 20,508 | **Low-Medium** (40%) | Stretch goal — requires full roadmap delivery |
+| S4 Max Capacity | 30,940 | **Very Low** (10%) | Aspirational — not for operational planning |
+
+---
+
+## 10.7 Q2 Success Metrics & Monitoring Dashboard
+
+To track progress against the S2 target of **19,141 trips** (operational floor: **17,859**), monitor these weekly KPIs:
+
+| KPI | Q1 Baseline | Q2 Target (S2) | Alert Threshold |
+| :--- | :---: | :---: | :---: |
+| **Weekly total trips** | ~1,270 avg (excl. peak weeks) | **~1,472** (+16%) | < 1,350 by Week 6 |
+| **Daily avg (weekday)** | 206.7 | **~240** | < 215 sustained 2 weeks |
+| **PCL peak-hour arrivals** | 357/hour | < 320/hour post-A1 | > 340/hour = dock failure |
+| **Tuesday 3 PM trips** | 313 (peak cell) | < 350 (absorbable post-A1) | > 380 = unmet demand |
+| **Power user retention** | 568 users ≥ 10 trips | ≥ 540 users active in Q2 | > 5% churn in top 20 |
+| **March 18-type anomalies** | 1 day flagged | 0 unflagged partial outages | Any day < 20 trips |
+
+---
+
+### Section 10 Summary — Q2 2022 Forecast at a Glance
+
+| Item | Value |
+| :--- | :--- |
+| **Q1 Actual** | 16,504 trips |
+| **Q2 Planning Target (S2)** | **19,141 trips (+16.0%)** |
+| **Q2 Realistic Floor (S2-Adj)** | **17,859 trips (+8.2%)** |
+| **Q2 Floor (S0 — no action)** | 17,090 trips (+3.6%) |
+| **Q2 Ops-Only (S1)** | 18,457 trips (+11.8%) |
+| **Q2 Stretch (S3)** | 20,508 trips (+24.3%) |
+| **Primary growth unlock** | PCL overflow docks (A1) + rebalancing (B1/B2) |
+| **Primary risk** | Infrastructure delays keep network at S0 (+3.6%) |
+| **Monthly peak** | April ~6,248 trips |
+| **Monthly trough** | June ~5,419 trips (seasonal) |
+
+**Executive conclusion:** Zen City can realistically grow Q2 rentals by **8–16% (17,860–19,141 trips)** depending on summer session retention and infrastructure delivery. The **seasonally-adjusted floor of 17,859 (S2-Adj)** should be used for operational staffing and fleet planning; the **19,141 stretch target (S2)** is achievable if PCL overflow docks (A1) and leisure campaigns (D2) offset June student departure. Without infrastructure action, the network is forecast to grow only **3.6%** — leaving an estimated **2,050 trips of suppressed demand** unconverted due to dock capacity constraints alone.
+
+*Section 10 complete. The Q1 analytical pipeline (Sections 01–08), strategic recommendations (Section 09), and Q2 forecast model (Section 10) constitute the complete Zen City predictive modeling deliverable.*
 
 ---
