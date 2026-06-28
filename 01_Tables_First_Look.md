@@ -18,8 +18,8 @@ To evaluate table scale and structural dimensions, the total volume of entries w
 
 | Table Name | Assigned Unique Key | Raw Row Count | Non-Duplicate Row Count | Duplicate Count |
 | :--- | :--- | :--- | :--- | :--- |
-| `zen_city.station_info` | `station_id` (INTEGER) | 16,585  | 16,585  | 0  |
-| `zen_city.rentals` | `trip_id` (INTEGER) | 102  | 102  | 0  |
+| `zen_city.station_info` | `station_id` (INTEGER) | 102  | 102  | 0  |
+| `zen_city.rentals` | `trip_id` (INTEGER) | 16,585  | 16,585  | 0  |
 | `zen_city.customers` | `customer_id` (STRING) | 586  | 586  | 0  |
 
 ### **Baseline SQL Verification Snippet**
@@ -78,7 +78,7 @@ GROUP BY name
 HAVING COUNT(*) > 1;
 ```
 
-# 4. Deep-Dive Anomaly: "Lavaca & 6th" Station Identifier Split
+# 4. Deep-Dive Anomaly: "Lavaca & 6th" Station Identifier Split ( in rental table name: "6th/Lavaca")
 * **The Mismatch:** The station name **"Lavaca & 6th"** is mapped to two completely distinct identification codes: `1007` and `3294`.
 * **The Operational Cause:** An audit of the operational `status` column revealed that station `1007` is explicitly marked as **Closed**, while station `3294` is marked as **Active**. This confirms that they represent the exact same physical location over different operational windows (likely due to a hardware swap, kiosk upgrade, or system re-indexing).
 * **The Analytical Impact:** If left uncorrected, any historical rental logs tied to the older ID `1007` would be isolated from the current station's metrics, resulting in an artificial underreporting of long-term traffic patterns at this high-density intersection.
@@ -88,7 +88,7 @@ HAVING COUNT(*) > 1;
 =============================================================================
 Script: eda_isolate_lavaca_station.sql
 Phase: 01 - Exploratory Data Analysis & Raw Table Audit
-Objective: Isolate the "Lavaca & 6th" anomaly by matching by name or explicit 
+Objective: Isolate the "6th/Lavaca" anomaly by matching by name or explicit 
            IDs to confirm the operational status conflict (Closed vs. Active).
 =============================================================================
 
@@ -105,7 +105,7 @@ FROM
   `bqproj-488319.zen_city.station_info`
 WHERE 
   -- Search explicitly for the duplicate text name or suspected IDs
-  TRIM(name) = 'Lavaca & 6th' 
+  TRIM(name) = '6th/Lavaca' 
   OR station_id IN (1007, 3294)
 ORDER BY 
   operational_status DESC;
@@ -119,12 +119,23 @@ WHERE
 
   station_id IN (1007, 3294)
 
+SELECT*
+FROM 
+  `bqproj-488319.zen_city.rentals`
+WHERE 
+
+ end_station_id IN (1007)
+ or start_station_id IN (1007)
+ ;
+
+-- empty record
+
 ```  
 ---
 ** Same Table!** 
-* in both queries I got the exact same table, suggesting that the count of trips for each distinct ID is **1** .
-* filtiring the 1007 ID would be removng one trip from the record with 16585 trips in total, which could be the right move.
-* however , for future projects with same situation but bigger data percentage Ill keep this row.
+* in both queries I got the exact same table, suggesting that the count of trips for each distinct ID is **1** in the station_info tale.
+* filtiring the 1007 ID would be filtering 0 trips from the record with 16585 trips in total, which doesnt affect the total trips count.
+* however , for join operation for our final CTE I decided to filter and use left join to prevent data loss.
 
 
 --- 
@@ -141,8 +152,8 @@ WHERE
 Following an exhaustive first look at the schema and contents of the core tables, here are the foundational baselines and anomalies discovered:
 
 * **Primary Key Integrity:** Verified that the primary keys across all relational tables contain zero duplicate records, establishing a reliable baseline for entity resolution.
-* **Data Missingness (Null Analysis):** The transactional `rentals` table and the `customers` profile table are completely populated with no `NULL` values. The dimension table `station_info` contains a few isolated `NULL` cells that will require minor imputation downstream.
-* **Structural Anomaly ("Lavaca & 6th"):** Identified a critical data redundancy where a single physical location name, *"Lavaca & 6th"*, maps to two distinct identification codes: `1007` and `3294`.
+* **Data Missingness (Null Analysis):** The transactional `rentals` table and the `customers` profile table are completely clean with no `NULL` values. The dimension table `station_info` contains a few isolated `NULL` cells that will require minor imputation downstream.
+* **Structural Anomaly ("Lavaca & 6th"):** Identified a critical data redundancy where a single physical location name, *"Lavaca & 6th"* or *"6th/Lavaca"*, maps to two distinct identification codes: `1007` and `3294`.
 * **Deep-Dive Verification:** Cross-referencing these two keys against the transactional `rentals` logs revealed that station ID `1007` is officially categorized as **Closed** and has exactly **0 historical trip records** associated with it (neither as a source nor a destination).
 * **Strategic Engineering Action:** Because ID `1007` has zero transactional footprint, it functions purely as a legacy "Ghost Station" row. Rather than over-engineering a complex lookup remap, we can safely drop/filter out ID `1007` from our master dimension catalog during data staging with zero data loss or metric distortion.
 
