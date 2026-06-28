@@ -100,7 +100,7 @@ pie title Zen City Ride Volume by Bike Type (%)
 * Overwhelming Electric Dominance: Electric bikes represent the vast majority of the volume at 87.69%. This massive preference suggests that users heavily prioritize speed, ease of travel, and reduced physical effort for their trips, which aligns with a commuter-heavy user base.
 * Classic Bikes Relegated to Niche: Classic mechanical bikes account for just 12.31% of total rides. This indicates they are likely utilized either as a budget-conscious alternative, for shorter leisure trips, or as a backup option when electric bike availability is low at specific stations, or special events like the `spring fistival` I encountered and other Orphaned stations , further check is required.
   ** analysis: 1: classis Bikes in orphaned stations (events that count towards using classic bikes, these events count towards the Oprphaned stations we mentioned in file `02_Data_Cleaning_and_Wrangling` ) 
-               2: stations where it was used: could it be that the stations are moving toward full electric support? , if the bikes are distributed such as  that the majority in less crowded stations? , if not could it be truely as alternative cheapr option? .
+               2: stations where it was used: could it be that the stations are moving toward full electric support? , if the bikes are distributed such as  that the majority in less crowded stations? , if not could it be truely as alternative cheaper option? .
 
 * Operational Implication: Given that nearly 9 out of 10 rides rely on electric models, logistics teams must focus heavily on battery charging infrastructure, efficient station rotation, and proactive maintenance of motorized components to prevent fleet downtime.
 
@@ -332,7 +332,7 @@ graph TD
 ```
 Data-Driven Operational Directives for Q2 2022
 
-* Implement Hard Dock Caps for Classics at Sinks: Programmatically or operationally limit the number of classic bikes allowed to occupy slots at 21st/Speedway @ PCL and Guadalupe/West Mall. If classic bikes fill more than 20% of these premium docks, field technicians must immediately trigger a clearing sweep.
+* Implement Hard Dock Caps for Classics at Sinks: Programmatically or operationally limit the number of classic bikes allowed to occupy slots at 21st/Speedway @ PCL and Guadalupe/West Mall. If classic bikes fill more than certain percent of these premium docks, field technicians must immediately trigger a clearing sweep.
 
 * Targeted Fleet Injections: Prioritize rebalancing drop-offs of classic bikes exclusively to the high-departure West Campus zones (Dean Keeton, 21st/Guadalupe, 23rd/San Gabriel) between 7:30 AM and 9:00 AM on weekdays to feed the incoming student migration wave.
 
@@ -340,8 +340,74 @@ Data-Driven Operational Directives for Q2 2022
 
 
 
+
 ---
 
+### **electric  top stations and comparison:** 
+
+``` --SQL query:
+-- [KEEP YOUR EXISTING CTE STEPS 1 THROUGH 5 EXACTLY AS THEY ARE ABOVE]
+
+-- 6. Enriched Production Dataset (Converted to CTE for downstream aggregation)
+EnrichedRentals AS (
+  SELECT 
+    cr.bike_type,
+    cr.clean_start_station_id,
+    cr.clean_start_station_name,
+    cr.clean_end_station_id,
+    cr.clean_end_station_name
+  FROM CleanedRentals cr
+  LEFT JOIN CleanedStationProfiles start_st 
+    ON cr.clean_start_station_id = start_st.station_id
+  LEFT JOIN CleanedStationProfiles end_st 
+    ON cr.clean_end_station_id = end_st.station_id
+  WHERE (LOWER(start_st.station_status) != 'closed' OR start_st.station_status IS NULL)
+    AND (LOWER(end_st.station_status) != 'closed' OR end_st.station_status IS NULL)
+)
+
+-- 7. Loop Analysis: Total Electric Bike Station Participation & Flow Mechanics
+SELECT 
+    station_id,
+    station_name,
+    SUM(is_departure) AS electric_departures,
+    SUM(is_arrival) AS electric_arrivals,
+    -- Total interactions hitting this station infrastructure
+    SUM(is_departure + is_arrival) AS total_electric_participation,
+    -- True Self-Loops (Trips starting and ending at this exact station)
+    SUM(is_self_loop) AS true_round_trips
+FROM (
+  -- Pass 1: Gather Origin Activity
+  SELECT 
+    clean_start_station_id AS station_id,
+    clean_start_station_name AS station_name,
+    1 AS is_departure,
+    0 AS is_arrival,
+    CASE WHEN clean_start_station_id = clean_end_station_id THEN 1 ELSE 0 END AS is_self_loop
+  FROM EnrichedRentals
+  WHERE bike_type = 'electric'
+  
+  UNION ALL
+  
+  -- Pass 2: Gather Destination Activity
+  SELECT 
+    clean_end_station_id AS station_id,
+    clean_end_station_name AS station_name,
+    0 AS is_departure,
+    1 AS is_arrival,
+    0 AS is_self_loop -- Set to 0 to avoid double counting the loop flag
+  FROM EnrichedRentals
+  WHERE bike_type = 'electric'
+)
+GROUP BY 1, 2
+ORDER BY total_electric_participation DESC
+LIMIT 10;
+
+
+```
+----------------------------------------------------------------------------(This is important ,continue here!)
+
+
+---
 ## **Duration distribution**
 
 
