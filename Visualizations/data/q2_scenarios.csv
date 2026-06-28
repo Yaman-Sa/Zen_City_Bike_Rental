@@ -1,0 +1,7 @@
+scenario,trips,change_vs_q1_pct
+Q1 Actual,16504,0
+S0 Status Quo,17090,3.6
+S1 Ops Quick Wins,18457,11.8
+S2-Adj Seasonal,17859,8.2
+S2 Target,19141,16.0
+S3 Optimistic,20508,24.3

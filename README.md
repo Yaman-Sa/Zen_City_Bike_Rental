@@ -63,10 +63,12 @@ Based on the exploratory data analysis, four high-impact directives were propose
 
 * 📂 **`Raw_Tables/`** — Original datasets (`station_info`, `rentals`, `customers`).
 * 📂 **`SQL/`** — Complete, raw `.sql` scripts (e.g., Master Data Cleaning CTE).
-* 📂 **`Visualizations/`** — Charts and graphs generated via BQ Studio and Python.
+* 📂 **`Visualizations/`** — Interactive dashboard ([`index.html`](Visualizations/index.html)), chart data CSVs, and Mermaid sources for presentation export.
 * 📄 **[`README.md`](README.md)** — Executive summary, project goals, and navigation map.
 * 📄 **[`01_Tables_First_Look.md`](01_Tables_First_Look.md)** — Initial data exploration, primary key validation, and anomaly checks.
 * 📄 **[`02_Data_Cleaning_and_Wrangling.md`](02_Data_Cleaning_and_Wrangling.md)** — Data imputation strategy, outlier handling, and the unified pipeline.
 * 📄 **[`03_Analysis_and_Predictions.md`](03_Analysis_and_Predictions.md)** — Demographic analysis, infrastructure bottlenecks, and modeling.
-* 📄 **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** — Final Presentation ready recomendations and predictive moduling.
+* 📄 **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** — Q2 business recommendations, predictive modeling, and forecast scenarios.
+* 📄 **[`05_Final_Presentation.md`](05_Final_Presentation.md)** — Marp slide deck for portfolio presentation (export to PDF/PPTX).
+* 📄 **[`05_Executive_One_Pager.md`](05_Executive_One_Pager.md)** — Single-page executive summary for stakeholders.
 * 📄 **[`Final_Clean_Table_CTE.csv`](Final_Clean_Table_CTE.csv)** — Final CTE, Clean Data ready to analyze .

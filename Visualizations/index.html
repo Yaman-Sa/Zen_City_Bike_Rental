@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zen City — Q1 Analytics Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --card: #1a2332;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --accent: #3b82f6;
+      --green: #22c55e;
+      --orange: #f97316;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2rem;
+    }
+    header {
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+      border-bottom: 1px solid #2a3548;
+      padding-bottom: 1.5rem;
+    }
+    header h1 { font-size: 1.75rem; font-weight: 600; }
+    header p { color: var(--muted); margin-top: 0.5rem; font-size: 0.95rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.25rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.25rem 1.25rem 1rem;
+      border: 1px solid #2a3548;
+    }
+    .card.wide { grid-column: 1 / -1; }
+    .card h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .chart-wrap { position: relative; height: 280px; }
+    .chart-wrap.tall { height: 320px; }
+    footer {
+      max-width: 1200px;
+      margin: 2rem auto 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    @media print {
+      body { background: #fff; color: #111; padding: 1rem; }
+      .card { break-inside: avoid; border: 1px solid #ccc; background: #fff; }
+      .card h2 { color: #444; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Zen City — Q1 2022 Analytics Dashboard</h1>
+    <p>16,504 production trips · Jan–Mar 2022 · Supporting Sections 01–10 · Open this file in a browser to export charts for presentation</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Subscription Tier Mix</h2>
+      <div class="chart-wrap"><canvas id="chartSubs"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>Bike Type Split</h2>
+      <div class="chart-wrap"><canvas id="chartBike"></canvas></div>
+    </div>
+    <div class="card wide">
+      <h2>Trips by Day of Week</h2>
+      <div class="chart-wrap tall"><canvas id="chartDow"></canvas></div>
+    </div>
+    <div class="card wide">
+      <h2>Hourly Volume (7 AM – 10 PM) — Afternoon-Dominant Network</h2>
+      <div class="chart-wrap tall"><canvas id="chartHourly"></canvas></div>
+    </div>
+    <div class="card wide">
+      <h2>Top Station Departures — Campus vs Leisure</h2>
+      <div class="chart-wrap tall"><canvas id="chartStations"></canvas></div>
+    </div>
+    <div class="card wide">
+      <h2>Q2 2022 Forecast Scenarios</h2>
+      <div class="chart-wrap tall"><canvas id="chartQ2"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>Q2 Monthly Split (S2-Adj Seasonal)</h2>
+      <div class="chart-wrap"><canvas id="chartMonthly"></canvas></div>
+    </div>
+  </div>
+
+  <footer>
+    Data: Final_Clean_Table_CTE.csv · Chart source files in Visualizations/data/
+  </footer>
+
+  <script>
+    Chart.defaults.color = "#8b9cb3";
+    Chart.defaults.borderColor = "#2a3548";
+    Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+
+    const palette = ["#3b82f6", "#22c55e", "#a855f7", "#f97316", "#06b6d4", "#64748b"];
+
+    new Chart(document.getElementById("chartSubs"), {
+      type: "doughnut",
+      data: {
+        labels: ["Student Membership", "Local31", "Local365", "Pay-as-you-ride", "Explorer", "Other"],
+        datasets: [{
+          data: [76.19, 7.79, 6.42, 2.68, 2.44, 4.48],
+          backgroundColor: palette,
+          borderWidth: 0
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { position: "right", labels: { boxWidth: 12, padding: 10 } },
+          tooltip: { callbacks: { label: (c) => ` ${c.label}: ${c.raw}%` } }
+        },
+        cutout: "55%"
+      }
+    });
+
+    new Chart(document.getElementById("chartBike"), {
+      type: "doughnut",
+      data: {
+        labels: ["Electric", "Classic"],
+        datasets: [{
+          data: [87.69, 12.31],
+          backgroundColor: ["#3b82f6", "#f97316"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { position: "bottom" },
+          tooltip: { callbacks: { label: (c) => ` ${c.label}: ${c.raw}%` } }
+        },
+        cutout: "55%"
+      }
+    });
+
+    new Chart(document.getElementById("chartDow"), {
+      type: "bar",
+      data: {
+        labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        datasets: [{
+          label: "Trips",
+          data: [1783, 2555, 2953, 2869, 2556, 2089, 1699],
+          backgroundColor: (ctx) => ctx.dataIndex === 2 || ctx.dataIndex === 3 ? "#3b82f6" : "#334155",
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, max: 3200, grid: { color: "#2a3548" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartHourly"), {
+      type: "bar",
+      data: {
+        labels: ["7a","8a","9a","10a","11a","12p","1p","2p","3p","4p","5p","6p","7p","8p","9p","10p"],
+        datasets: [{
+          label: "Trips",
+          data: [340,390,734,861,932,1274,1297,1109,1511,1429,1503,1353,1038,833,590,433],
+          backgroundColor: (ctx) => ctx.dataIndex >= 8 && ctx.dataIndex <= 11 ? "#f97316" : "#3b82f6",
+          borderRadius: 4
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#2a3548" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    const stations = [
+      "Dean Keeton", "21st/Guad", "23rd/SGab", "28th/Rio", "22nd/Pearl",
+      "21st/Univ", "DKR Stadium", "Pfluger Br.", "East 6th"
+    ];
+    new Chart(document.getElementById("chartStations"), {
+      type: "bar",
+      data: {
+        labels: stations,
+        datasets: [
+          {
+            label: "Departures",
+            data: [2998,2286,2107,1840,1830,1576,1376,813,721],
+            backgroundColor: "#3b82f6",
+            borderRadius: 4,
+            yAxisID: "y"
+          },
+          {
+            label: "Student Share %",
+            data: [90.7,81.9,86.6,77.1,88.3,85.5,75.9,9.6,6.7],
+            type: "line",
+            borderColor: "#22c55e",
+            backgroundColor: "#22c55e",
+            pointRadius: 4,
+            yAxisID: "y1"
+          }
+        ]
+      },
+      options: {
+        plugins: { legend: { position: "top" } },
+        scales: {
+          y: { beginAtZero: true, position: "left", grid: { color: "#2a3548" } },
+          y1: { beginAtZero: true, max: 100, position: "right", grid: { drawOnChartArea: false } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartQ2"), {
+      type: "bar",
+      data: {
+        labels: ["Q1 Actual","S0 Baseline","S1 Ops","S2-Adj","S2 Target","S3 Optimistic"],
+        datasets: [{
+          label: "Q2 Trips",
+          data: [16504,17090,18457,17859,19141,20508],
+          backgroundColor: ["#64748b","#334155","#3b82f6","#6366f1","#22c55e","#a855f7"],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: false, min: 15000, grid: { color: "#2a3548" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("chartMonthly"), {
+      type: "bar",
+      data: {
+        labels: ["April","May","June"],
+        datasets: [{
+          label: "S2-Adj Trips",
+          data: [6248,6192,5419],
+          backgroundColor: ["#3b82f6","#6366f1","#64748b"],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: false, min: 4500, grid: { color: "#2a3548" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
