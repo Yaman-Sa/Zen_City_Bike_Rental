@@ -54,7 +54,6 @@ The table below merges rental counts and percentage shares to highlight user seg
 
 ### 📉 Visual Breakdown (Dynamic Chart)
 
-*GitHub will render the text block below as an interactive vector pie chart tracking the dominant subscription tiers:*
 
 ```mermaid
 pie title Zen City Fleet Utilization by Subscription Type (%)
@@ -91,7 +90,7 @@ The table below details the absolute ride counts and self-calculated percentage 
 
 ### 📉 Visual Breakdown (Dynamic Chart)
 
-*GitHub will automatically render this block into an interactive vector chart in your repository:*
+
 
 ```mermaid
 pie title Zen City Ride Volume by Bike Type (%)
