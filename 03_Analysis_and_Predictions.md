@@ -13,11 +13,7 @@ I already have basic understandng of the structure of my CTE, however, instead o
 * Charts and Graphs: `Google Sheets` , `BigQuery Studio` , `Python` (locally Via jetbrains Pycharm) ,  SQL.
 * tables: SQL (BigQuery), Google Sheets.
 * Devices : Desktop PC (windows 10-11)  , Laptop Lenovo Legion 5i (windows 11) .
-* 
 
-
-
-----------------------------------------------------------------------(continue here!!)
 
 
 # **02 - Univariate Analysis**
@@ -264,7 +260,6 @@ The verified data modifies our asset distribution strategy away from broad fleet
     Leisure Tier Stabilization: The prominent presence of Electric Drive/Sandra Muraida Way @ Pfluger Ped Bridge (253 records) represents the only major non-student classic cluster. This highlights a distinct sub-persona: casual/leisure users utilizing mechanical units for flat-ground, recreational trail loops. This specific hub must maintain steady classic inventory ahead of weekend afternoon demand spikes.
 
 
--------------------------------------------------------------------(continue here!)
 
 
 
@@ -2100,10 +2095,9 @@ The `customer_user_type` field adds a retention lens across tiers:
 | Classic bike persona | Pay-as-you-ride (26.2%) + Explorer (17.4%) | Leisure stocking, not campus |
 | CRM conversion pool | 4,561 student Customer-status trips | Subscription upsell target |
 
-*Section 08 complete. Business recommendations and predictive modeling continue in **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** (Sections 09–10).*
+*Section 08 complete. Business recommendations and predictive modeling I will continue in **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** (Sections 09–10).*
 
 ---
 
-<!-- Sections 09 (Business Recommendations) and 10 (Prediction) have moved to 04_Predictive_Modeling.md -->
 
 
