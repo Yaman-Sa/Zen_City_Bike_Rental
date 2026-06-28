@@ -2106,10 +2106,8 @@ The `customer_user_type` field adds a retention lens across tiers:
 | Classic bike persona | Pay-as-you-ride (26.2%) + Explorer (17.4%) | Leisure stocking, not campus |
 | CRM conversion pool | 4,561 student Customer-status trips | Subscription upsell target |
 
-*Section 08 complete. Business recommendations and predictive modeling continue in **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** (Sections 09–10).*
+*Section 08 complete. Business recommendations and predictive modeling I will continue in **[`04_Predictive_Modeling.md`](04_Predictive_Modeling.md)** *
 
 ---
-
-<!-- Sections 09 (Business Recommendations) and 10 (Prediction) have moved to 04_Predictive_Modeling.md -->
 
 
