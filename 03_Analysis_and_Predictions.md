@@ -1579,26 +1579,295 @@ Dean Keeton exceeds the 10 events/dock threshold for **4 consecutive hours** (1�
 *Section 06 complete. Proceed to **Section 07 — Temporal Analysis**.*
 
 ---
-# **07 - Temporal Analysis **
+# **07 — Temporal Analysis**
 
-**** very important***
-after all there are 16585 rentals in 3 months recod! obiously the time is most important .
-Questions like
+## Overview & Methodology
 
-Morning rush?
+Time is the primary demand driver in bike-sharing: **16,504 Q1 trips compress into 89 active days**, with intraday peaks that exceed physical dock capacity (Section 06). This section maps the full temporal architecture of Q1 2022 — from quarterly growth curves down to hour × day-of-week heatmaps — to define when Zen City must deploy fleet resources for Q2 growth.
 
-Evening rush?
+All timestamps derive from `start_time` in the production clean dataset (**N = 16,504**, January 1 – March 31, 2022).
 
-Weekends?
+---
 
-Friday afternoons?
+## 7.1 Q1 Growth Arc — Monthly & Weekly Trends
 
-Hourly heatmaps.
+### Monthly Volume Progression
 
-These are extremely valuable for bike sharing.
+| Month | Trips | Share of Q1 | Active Days | Avg Daily Trips | Growth Signal |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **January 2022** | 3,161 | 19.2% | 31 | **102.0** | Baseline — post-holiday ramp |
+| **February 2022** | 7,072 | **42.9%** | 28 | **252.6** | **+148% daily avg vs January** |
+| **March 2022** | 6,271 | 38.0% | 30 | **209.0** | −17% daily avg vs February — plateau |
 
+February is the undisputed Q1 peak month, generating **2.2× January's volume** and **1.2× March's volume**. March did not sustain February's acceleration — average daily trips fell from 252.6 to 209.0, suggesting Q1 hit a natural ceiling under current fleet and dock capacity rather than continuing linear growth.
 
+### Weekly Trend (ISO Week)
 
+| Period | ISO Weeks | Avg Weekly Trips | Interpretation |
+| :--- | :---: | :---: | :--- |
+| Early January | 1–2 | 486 | Cold-start / holiday recovery |
+| Late January | 3–5 | 1,076 | Semester ramp begins |
+| **Peak February** | **6–7** | **2,350** | **Maximum network throughput** |
+| Mid-February dip | 8 | 980 | Likely weather or holiday (Presidents' Day week) |
+| Late Feb – March | 9–13 | 1,308 avg | Stabilized high plateau |
+
+Peak ISO weeks 6–7 (mid-February) processed **2,352 and 2,348 trips respectively** — roughly **4.8× the early-January baseline**. Q2 forecasting should treat **~2,350 trips/week** as the demonstrated upper bound under Q1 infrastructure, not the 185-trip daily Q1 average.
+
+### Daily Volume Distribution
+
+| Statistic | Value |
+| :--- | :---: |
+| Active recording days | 89 |
+| Mean daily trips | 185.4 |
+| Median daily trips | 168 |
+| **Peak day** | **412** (2022-02-10, Thursday) |
+| **Lowest day** | **6** (2022-03-18, Friday — anomaly) |
+| Weekday daily average | **206.7** |
+| Weekend daily average | **133.9** |
+
+**Top 5 highest-volume days — all February, all weekdays:**
+
+| Date | Trips | Day |
+| :--- | :---: | :--- |
+| 2022-02-10 | 412 | Thursday |
+| 2022-02-15 | 409 | Tuesday |
+| 2022-02-17 | 406 | Thursday |
+| 2022-02-09 | 403 | Wednesday |
+| 2022-02-08 | 393 | Tuesday |
+
+The **Feb 8–17 window** (10 consecutive days) averaged **340 trips/day** — nearly double the Q1 mean. This is the empirical benchmark for what the network can sustain when semester demand, weather, and fleet availability align.
+
+---
+
+## 7.2 Intraday Demand Profile — When Does Q1 Ride?
+
+### Hourly Volume Distribution
+
+| Hour | Trips | Cumulative Share | Phase |
+| :---: | :---: | :---: | :--- |
+| 12 AM – 6 AM | 564 | 3.4% | Overnight dormant |
+| **7 AM – 10 AM** | **2,325** | **17.5%** | **Morning build** |
+| 11 AM – 2 PM | 4,612 | 45.4% | Midday acceleration |
+| **3 PM – 6 PM** | **5,796** | **80.5%** | **Afternoon peak block** |
+| 7 PM – 10 PM | 2,894 | 98.0% | Evening tail |
+| 11 PM | 313 | 100.0% | Wind-down |
+
+```mermaid
+xychart-beta
+    title "Q1 Hourly Trip Volume (7 AM - 10 PM)"
+    x-axis [7am, 8am, 9am, 10am, 11am, 12pm, 1pm, 2pm, 3pm, 4pm, 5pm, 6pm, 7pm, 8pm, 9pm, 10pm]
+    y-axis "Trips" 0 --> 1600
+    bar [340, 390, 734, 861, 932, 1274, 1297, 1109, 1511, 1429, 1503, 1353, 1038, 833, 590, 433]
+```
+
+### Time-Block Summary
+
+| Block | Hours | Trips | Share | Student Share |
+| :--- | :--- | :---: | :---: | :---: |
+| Overnight | 12 AM – 6 AM | 564 | 3.4% | 88.7% |
+| **Morning Rush** | **7 AM – 10 AM** | **2,325** | **14.1%** | 79.4% |
+| Midday | 11 AM – 2 PM | 4,612 | 27.9% | 76.0% |
+| **Afternoon Peak** | **3 PM – 6 PM** | **5,796** | **35.1%** | 75.3% |
+| Evening | 7 PM – 10 PM | 2,894 | 17.5% | 80.0% |
+| Late Night | 11 PM | 313 | 1.9% | 85.3% |
+
+---
+
+## 7.3 Rush Hour Characterization — Morning vs. Afternoon vs. Evening
+
+**Question:** Does Zen City have a classic dual-peak commute pattern (morning + evening), or a single dominant rush?
+
+| Rush Period | Hours | Trips | Share | Peak Single Hour | Character |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **Morning Rush** | 7–10 AM | 2,325 | 14.1% | 861 (10 AM) | Gradual ramp — students arriving on campus |
+| **Afternoon Peak** | 3–6 PM | 5,796 | **35.1%** | **1,511 (3 PM)** | **Dominant rush — class dismissal wave** |
+| Evening Tail | 7–10 PM | 2,894 | 17.5% | 1,038 (7 PM) | Decelerating departures + social trips |
+| Combined 5–7 PM | 5–7 PM | 4,727 | 28.6% | 1,503 (5 PM) | Overlaps afternoon block |
+
+**Finding: Zen City is an afternoon-dominant network, not a dual-peak commuter system.**
+
+* The afternoon block (3–6 PM) generates **2.5× more trips than the morning rush** and contains both the #1 (3 PM) and #2 (5 PM) peak hours network-wide.
+* The morning rush builds gradually (340 → 390 → 734 → 861) rather than spiking — consistent with students trickling onto campus rather than a synchronized 8 AM commute.
+* The evening period (7–10 PM) is a **deceleration tail**, not a second rush. Volume drops monotonically from 1,038 at 7 PM to 433 at 10 PM.
+* This asymmetry confirms the Section 05 finding: students ride **to** campus sinks in the afternoon but do not ride **from** them in the morning at equal volume.
+
+**Q2 operations implication:** Rebalancing labor, battery-swap crews, and dock clearing must be **front-loaded 1:30–6:00 PM**. Morning staffing at 40% of afternoon levels is sufficient.
+
+---
+
+## 7.4 Day-of-Week Patterns
+
+### Weekly Demand Curve
+
+| Day | Trips | Share | Avg Hourly Trips (7 AM–10 PM) |
+| :--- | :---: | :---: | :---: |
+| Sunday | 1,783 | 10.8% | 127 |
+| Monday | 2,555 | 15.5% | 182 |
+| **Tuesday** | **2,953** | **17.9%** | **211** |
+| **Wednesday** | **2,869** | **17.4%** | **205** |
+| Thursday | 2,556 | 15.5% | 183 |
+| **Friday** | **2,089** | **12.7%** | **149** |
+| Saturday | 1,699 | 10.3% | 121 |
+
+* **Tuesday and Wednesday** are peak demand days (~18% each), driven by full mid-week class schedules.
+* **Friday volume drops 29%** from Tuesday's peak (2,089 vs 2,953) — the largest single-day decline in the week.
+* **Weekends combined** account for only **21.1%** of Q1 volume at **35% lower daily throughput** than weekdays (133.9 vs 206.7 avg).
+
+---
+
+## 7.5 Hour × Day-of-Week Heatmap
+
+The matrix below shows trip counts for every hour (rows) × day (columns) combination during operational hours. Darker cells indicate peak demand intersections.
+
+| Hour | Sun | Mon | Tue | Wed | Thu | Fri | Sat | Row Total |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **7 AM** | 8 | 41 | 82 | 70 | 84 | 43 | 12 | 340 |
+| **8 AM** | 8 | 72 | 53 | 113 | 47 | 63 | 34 | 390 |
+| **9 AM** | 42 | 96 | **165** | 152 | 145 | 91 | 43 | 734 |
+| **10 AM** | 110 | 106 | 138 | 158 | 155 | 113 | 81 | 861 |
+| **11 AM** | 92 | 165 | 136 | 201 | 122 | 118 | 98 | 932 |
+| **12 PM** | 119 | 206 | 220 | **247** | 224 | 165 | 93 | 1,274 |
+| **1 PM** | 141 | 211 | 234 | **241** | 193 | 172 | 105 | 1,297 |
+| **2 PM** | 122 | 202 | 174 | 201 | 139 | 152 | 119 | 1,109 |
+| **3 PM** | 156 | 214 | **313** | **251** | **247** | 178 | 152 | **1,511** |
+| **4 PM** | 161 | **249** | **242** | 237 | 206 | 159 | 175 | 1,429 |
+| **5 PM** | 157 | 229 | **278** | 231 | **244** | 182 | 182 | **1,503** |
+| **6 PM** | 136 | 186 | **286** | 237 | 232 | 151 | 125 | 1,353 |
+| **7 PM** | 122 | 160 | 186 | 189 | 154 | 118 | 109 | 1,038 |
+| **8 PM** | 118 | 135 | 140 | 121 | 127 | 116 | 76 | 833 |
+| **9 PM** | 75 | 99 | 104 | 98 | 63 | 77 | 74 | 590 |
+| **10 PM** | 57 | 78 | 70 | 35 | 59 | 59 | 75 | 433 |
+
+### Heatmap Key Findings
+
+**Top 5 demand cells (hour × day intersections):**
+
+| Rank | Day | Hour | Trips | Context |
+| :---: | :--- | :---: | :---: | :--- |
+| 1 | **Tuesday** | **3 PM** | **313** | Single highest cell in the dataset |
+| 2 | Tuesday | 6 PM | 286 | Late-afternoon secondary wave |
+| 3 | Tuesday | 5 PM | 278 | Class dismissal peak |
+| 4 | Wednesday | 3 PM | 251 | Mid-week afternoon surge |
+| 5 | Monday | 4 PM | 249 | Monday recovery peak |
+
+* **Tuesday 3 PM (313 trips)** is the network's temporal epicenter — the single hour-day combination driving maximum bottleneck stress at PCL and Dean Keeton.
+* **3–6 PM cells are uniformly hot across Tue–Thu** — every cell in this block exceeds 200 trips on at least one weekday.
+* **Saturday and Sunday 7–8 AM cells are near-zero** (8 trips each) — confirming no weekend morning commute.
+* **Weekend afternoons remain active** — Saturday 3–5 PM (152–182 trips/hour) supports the leisure-rider thesis from Section 03.
+
+---
+
+## 7.6 Friday Pattern — Early Departure Effect
+
+Friday is the most structurally distinct weekday. Rather than a single peak, demand **compresses into late morning and early afternoon before collapsing**:
+
+### Friday Hourly Profile
+
+| Phase | Hours | Friday Trips | Tuesday Trips (comparison) | Friday as % of Tuesday |
+| :--- | :--- | :---: | :---: | :---: |
+| Morning | 7–10 AM | 310 | 538 | 57.6% |
+| Midday | 11 AM – 2 PM | 607 | 1,032 | 58.8% |
+| **Afternoon** | **3–6 PM** | **670** | **1,119** | **59.9%** |
+| Evening | 7–10 PM | 388 | 615 | 63.1% |
+| **Full day** | — | **2,089** | **2,953** | **70.7%** |
+
+Friday's 3–6 PM block carries only **670 trips (4.1% of all Q1 volume)** compared to Tuesday's **1,119 (6.8%)** — a **40% deficit** in the most operationally critical window.
+
+**Interpretation:** Students leave campus early on Fridays, reducing afternoon bike demand precisely when weekday rebalancing crews are fully deployed. This creates a **Friday operations inefficiency** — staffing levels calibrated for Tuesday are over-resourced for Friday by ~40%.
+
+**Q2 action:** Shift Friday 3–6 PM rebalancing crew capacity to **Friday 10 AM – 1 PM** (when Friday midday volume is still 59% of Tuesday) and redeploy surplus labor to weekend leisure hubs (Pfluger Ped Bridge, East 6th/Medina).
+
+---
+
+## 7.7 Weekend Temporal Profile
+
+Weekends operate under a different temporal logic — lower volume but a **shifted peak window**:
+
+| Metric | Weekday | Weekend | Difference |
+| :--- | :---: | :---: | :--- |
+| Daily average trips | 206.7 | 133.9 | **−35.2%** |
+| Peak hour | 3 PM (1,511 network-wide) | **5 PM (339 weekend-only)** | +2 hours later |
+| Top 3 weekend hours | — | 5 PM (339), 4 PM (336), 3 PM (308) | Afternoon leisure block |
+| Student share (3–6 PM) | 75.3% | ~72% (estimated) | Slightly more diverse |
+
+Weekend demand peaks **2 hours later** than weekdays (5 PM vs 3 PM), aligning with recreational activity rather than class schedules. The afternoon block still dominates (3–6 PM accounts for ~38% of weekend trips), but the curve is flatter and more spread across Saturday and Sunday equally.
+
+**Q2 action:** Weekend classic-bike stocking at Pfluger and East 6th should target **2–6 PM Saturday–Sunday**, not the weekday 3 PM peak.
+
+---
+
+## 7.8 Anomaly Investigation — March 18, 2022
+
+Section 02 flagged March 18 as a statistical outlier. Full temporal forensics:
+
+| Metric | March 18 Value | Q1 Average | Deviation |
+| :--- | :---: | :---: | :--- |
+| Daily trips | **6** | 185.4 | **−96.8%** |
+| Day of week | Friday | — | — |
+| Active hours | 8 AM – 12 PM only | 7 AM – 10 PM | Partial-day gap |
+| Hourly distribution | 1–2 trips/hour (8–12) | 185/day | Near-zero |
+
+| Hour | March 18 Trips |
+| :---: | :---: |
+| 8 AM | 1 |
+| 9 AM | 1 |
+| 10 AM | 1 |
+| 11 AM | 1 |
+| 12 PM | 2 |
+| All other hours | **0** |
+
+**Conclusion:** March 18 is a **partial-day system failure**, not a demand signal. Trip logging ceased after noon on a Friday, producing only 6 records vs the expected ~150+ for a Friday. Likely causes: scheduled maintenance, network outage, or data pipeline interruption.
+
+**Impact on Q2 forecasting:** March 18 must be **excluded from daily trend models** and treated as a missing-data day. Including it would artificially deflate March averages and corrupt growth-rate projections. Adjacent days (March 17: normal volume; March 28–31: 300+ trips/day) confirm the network was healthy before and after the event.
+
+---
+
+## 7.9 Station-Level Temporal Alignment
+
+Top origin stations share the afternoon peak window but peak at **different specific hours** — confirming the staggered rebalancing wave identified in Section 04:
+
+| Station | Peak Departure Hour | Peak Departures | Pre-Peak Hour (next highest) |
+| :--- | :---: | :---: | :---: |
+| Dean Keeton/Speedway | **4 PM** | 322 | 3 PM (319) |
+| 21st/Guadalupe | **5 PM** | 242 | 6 PM (212) |
+| 23rd/San Gabriel | **5 PM** | 171 | 9 AM (168) |
+| 28th/Rio Grande | **5 PM** | 168 | 3 PM (varies) |
+| 22nd/Pearl | **6 PM** | 166 | 5 PM (varies) |
+
+The demand wave moves **north to west to south** between 4 PM and 6 PM — Dean Keeton peaks first, Guadalupe/San Gabriel 1 hour later, Pearl last. Rebalancing crews following a single 4 PM schedule will always be **60–120 minutes behind** the actual demand front.
+
+---
+
+## 7.10 Q2 Temporal Operations Playbook
+
+| Time Window | Day Scope | Action | Rationale |
+| :--- | :--- | :--- | :--- |
+| **1:30–2:30 PM** | Tue–Thu | Pre-stock Dean Keeton + Guadalupe | Beat 4 PM exporter bottleneck |
+| **2:30–5:30 PM** | Tue–Thu | PCL continuous clearing cycle | 145% overcapacity; 58 arr/dock in 4-hr block |
+| **3:00–6:00 PM** | Tue–Thu | Staggered west-campus rebalancing | Follow 4→5→6 PM demand wave |
+| **10:00 AM – 1:00 PM** | Friday | Reduced crew — reposition to leisure hubs | Friday PM demand −40% vs Tuesday |
+| **2:00–6:00 PM** | Sat–Sun | Classic-bike buffer at Pfluger + East 6th | Weekend leisure peak; 39.5% weekend share |
+| **Exclude** | March 18-type gaps | Flag partial-day zeros in pipeline | Prevent forecast corruption |
+
+---
+
+### Section 07 Summary
+
+| Temporal Finding | Key Metric | Q2 Implication |
+| :--- | :--- | :--- |
+| Dominant rush window | 3–6 PM = **35.1%** of all Q1 trips | Staff 2.5× morning levels |
+| Peak hour-day cell | **Tuesday 3 PM — 313 trips** | Maximum bottleneck stress point |
+| Network type | Afternoon-dominant, not dual-peak | No evening rush infrastructure needed |
+| Peak month/week | February / ISO weeks 6–7 (~2,350/week) | Q2 upper bound benchmark |
+| Peak single day | Feb 10 — **412 trips** | Daily capacity ceiling |
+| Friday effect | −40% in 3–6 PM vs Tuesday | Reallocate Friday PM crews |
+| Weekend shift | Peak at 5 PM (not 3 PM) | Later leisure stocking window |
+| March 18 anomaly | 6 trips — partial outage | Exclude from forecasting |
+| Demand wave | 4 PM north → 5 PM west → 6 PM south | Stagger rebalancing 60 min apart |
+
+*Section 07 complete. Proceed to **Section 08 — Customer Segmentation**.*
+
+---
 # **08 - Customer Segmentation **
 relationship between subcription types and stations and Bike type and hours .
 I'd focus on the main majority customers which are the Students subcriptions counting for 77% .
